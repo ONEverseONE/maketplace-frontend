@@ -1,0 +1,211 @@
+.border {
+  position: relative;
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border: 1px solid;
+    border-color: #e5db5a80 #e5db5a80 transparent #e5db5a80;
+  }
+  &::after {
+    top: auto;
+    bottom: 0;
+    border-color: transparent #e5db5a80 #e5db5a80 #e5db5a80;
+  }
+}
+
+.sideBorder {
+  position: absolute;
+  border-left: 2px solid #7e86a040;
+  border-right: 2px solid #7e86a040;
+  top: 21px;
+  bottom: 21px;
+  left: -1.5px;
+  right: -1.5px;
+}
+
+.logItem {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0 6px 0 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(
+      180deg,
+      rgba(125, 207, 182, 0.125) 0%,
+      rgba(125, 207, 182, 0.0625) 32.29%,
+      rgba(125, 207, 182, 0.0625) 66.67%,
+      rgba(125, 207, 182, 0.0625) 99.99%,
+      rgba(125, 207, 182, 0.125) 100%
+    ),
+    #06070e;
+  .triangle {
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .imgBox {
+    margin: 0 10px;
+    display: flex;
+  }
+  .logId,
+  .prices,
+  .btns {
+    height: 123px;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 10px;
+      border-left: 1px solid #e5db5a80;
+    }
+    & > div {
+      height: 100%;
+    }
+  }
+  .logId {
+    width: 155px;
+    flex-shrink: 0;
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    span {
+      margin-left: auto;
+      display: flex;
+      width: 43px;
+      height: 5px;
+      margin-bottom: 5px;
+      background: #e5db5a80;
+    }
+    p {
+      text-align: right;
+      font-size: 12px;
+      line-height: 16px;
+      color: #e5db5a80;
+      letter-spacing: 0.2em;
+      margin-right: -0.2em;
+      margin-bottom: revert;
+    }
+    h2 {
+      font-size: 40px;
+      line-height: 52px;
+      letter-spacing: 0.1em;
+      margin-right: -0.1em;
+      color: #ffffff;
+      margin-top: auto;
+      text-align: right;
+    }
+  }
+  .prices,
+  .btns {
+    width: 100%;
+    padding: 14px 10px;
+
+    .border {
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #06070e80;
+
+      & > p {
+        margin: 2px;
+        display: flex;
+        align-items: flex-end;
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.2em;
+        margin-right: -0.2em;
+        color: #e5db5abf;
+
+        span {
+          font-size: 24px;
+          line-height: 1;
+          margin-right: 8px;
+          color: #ffffff;
+        }
+      }
+      .reportBtn {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        p {
+          font-size: 12px;
+          line-height: 16px;
+          letter-spacing: 0.2em;
+          margin-right: -0.2em;
+          color: #06070e;
+          text-align: center;
+        }
+        background: #e5db5abf;
+      }
+    }
+  }
+}
+
+.active {
+  &.border,
+  .border {
+    &::before,
+    &::after {
+      border-color: #e5db5a #e5db5a transparent #e5db5a;
+    }
+    &::after {
+      border-color: transparent #e5db5a #e5db5a #e5db5a;
+    }
+  }
+
+  .sideBorder {
+    border-left: 2px solid #e5db5a;
+    border-right: 2px solid #e5db5a;
+  }
+
+  &.logItem {
+    background: linear-gradient(
+        180deg,
+        rgba(229, 219, 90, 0.5) 0%,
+        rgba(229, 219, 90, 0.25) 32.29%,
+        rgba(229, 219, 90, 0.25) 66.67%,
+        rgba(229, 219, 90, 0.5) 100%
+      ),
+      #06070e;
+
+    .logId,
+    .prices,
+    .btns {
+      &::before {
+        border-left: 1px solid #e5db5a;
+      }
+    }
+    .logId {
+      span {
+        background: #e5db5a;
+      }
+      p {
+        color: #e5db5a;
+      }
+    }
+    .prices,
+    .btns {
+      .border {
+        & > p {
+          color: #e5db5a;
+        }
+        .reportBtn {
+          background: #e5db5a;
+        }
+      }
+    }
+  }
+}

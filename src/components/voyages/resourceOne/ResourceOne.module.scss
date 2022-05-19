@@ -1,0 +1,35 @@
+.resourcePage {
+  height: 100vh;
+  padding: 90px 100px;
+}
+
+.url {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+
+  p {
+    width: 100%;
+    background: #7dcfb6;
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: 0.2em;
+    color: #06070e;
+    padding: 0 20px;
+  }
+
+  a {
+    margin-left: 20px;
+    flex-shrink: 0;
+    display: flex;
+  }
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 52px;
+  letter-spacing: 0.2em;
+  color: #7dcfb6;
+  margin-bottom: 11px;
+}

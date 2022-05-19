@@ -1,0 +1,441 @@
+.miningPage {
+  height: 100vh;
+  padding: 90px 100px;
+}
+
+.url {
+  display: flex;
+  align-items: center;
+  // margin-bottom: 20px;
+  width: 100%;
+
+  p {
+    width: 100%;
+    background: #7dcfb6;
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: 0.2em;
+    color: #06070e;
+    padding: 0 20px;
+  }
+
+  a {
+    margin-left: 20px;
+    flex-shrink: 0;
+    display: flex;
+  }
+}
+
+.miningLeft {
+  width: 44%;
+}
+
+.miningRight {
+  width: 54.9%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3px 0;
+  .miningLeft {
+    display: flex;
+    justify-content: space-between;
+    height: 63px;
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h1 {
+        font-family: 'Chakra Petch Regular';
+        font-size: 32px;
+        line-height: 42px;
+        letter-spacing: 0.2em;
+        margin-right: -0.2em;
+        color: #7dcfb6;
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 21px;
+        text-align: right;
+        letter-spacing: 0.2em;
+        margin-right: -0.2em;
+        color: #7dcfb6;
+      }
+    }
+  }
+  .miningRight {
+    font-size: 64px;
+    line-height: 83px;
+    letter-spacing: 0.1em;
+    margin-right: -0.1em;
+    text-align: right;
+    color: #7dcfb6;
+  }
+}
+
+.miningBox {
+  display: flex;
+  justify-content: space-between;
+  height: calc(100vh - 323px);
+  .miningLeft {
+    height: 100%;
+    border: 1px solid #7dcfb6;
+    padding: 20px;
+    background: linear-gradient(
+        180deg,
+        rgba(125, 207, 182, 0.15) 0%,
+        rgba(6, 7, 14, 0.15) 6.77%,
+        rgba(6, 7, 14, 0.15) 84.9%,
+        rgba(125, 207, 182, 0.15) 99.96%,
+        rgba(125, 207, 182, 0.03) 99.97%
+      ),
+      linear-gradient(0deg, rgba(6, 7, 14, 0.1), rgba(6, 7, 14, 0.1));
+  }
+  .miningRight {
+    height: 100%;
+  }
+}
+
+.border {
+  position: relative;
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border: 1px solid;
+    border-color: #7dcfb6 #7dcfb6 transparent #7dcfb6;
+  }
+  &::after {
+    top: auto;
+    bottom: 0;
+    border-color: transparent #7dcfb6 #7dcfb6 #7dcfb6;
+  }
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 17px;
+
+  & > div {
+    width: calc((100% - 106px) / 2);
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #8084a0;
+    background: #06070e;
+    font-size: 16px;
+    line-height: 46px;
+    letter-spacing: 0.2em;
+    color: rgba(128, 132, 160, 0.5);
+    position: relative;
+
+    &.log {
+      width: 90px;
+      flex-shrink: 0;
+      border: 1px solid #e5db5a80;
+      color: #e5db5a80;
+      background: linear-gradient(
+          0deg,
+          rgba(229, 219, 90, 0.15),
+          rgba(229, 219, 90, 0.15)
+        ),
+        #06070e;
+    }
+
+    svg {
+      position: absolute;
+      right: 5px;
+    }
+
+    &.active {
+      border: 1px solid #7dcfb6;
+      color: #7dcfb6;
+      &.log {
+        border: 1px solid #e5db5a;
+        color: #e5db5a;
+      }
+    }
+  }
+}
+
+.voyages {
+  height: calc(100% - 198px);
+  background: rgba(6, 7, 14, 0.25);
+}
+
+.voyagesBox {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 8px;
+  margin-left: -5px;
+  margin-right: -5px;
+  max-height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  &::-webkit-scrollbar-track {
+    margin: 10px 0;
+  }
+}
+
+.selectedCount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 118px;
+  margin-top: 20px;
+
+  .countBox {
+    display: flex;
+    align-items: center;
+
+    p {
+      font-family: 'Chakra Petch Regular';
+      font-size: 24px;
+      line-height: 40px;
+      letter-spacing: 0.1em;
+      color: #ffffff;
+      padding: 0 20px;
+      border-right: 1px solid #e3e3e3;
+      margin-right: 30px;
+      font-style: italic;
+
+      span {
+        color: #e5db5a;
+        margin-right: 20px;
+        font-family: 'Chakra Petch';
+      }
+    }
+
+    .selectBtn {
+      background: rgba(229, 219, 90, 0.1);
+      border: 1px solid #e5db5a;
+      width: 191px;
+      height: 77px;
+      font-size: 16px;
+      line-height: 21px;
+      letter-spacing: 0.2em;
+      padding-left: 0.2em;
+      color: #e5db5a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.miningRight {
+  display: flex;
+  flex-direction: column;
+  .rightContent {
+    height: calc(100% - 143px);
+    border: 1px solid #7dcfb6;
+    position: relative;
+
+    .question {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      //   background: linear-gradient(0deg, #7dcfb6, #7dcfb6),
+      //     linear-gradient(180deg, #06070e 88.02%, rgba(125, 207, 182, 0.005) 100%),
+      //     linear-gradient(0deg, #06070e, #06070e);
+      //   border: 1px solid #7dcfb6;
+    }
+  }
+  .rightFooter {
+    height: 123px;
+    flex-shrink: 0;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+
+    .footerRight {
+      display: flex;
+      .triangle {
+        display: flex;
+        height: 87px;
+        align-items: center;
+        margin-right: 33px;
+      }
+    }
+
+    .startBtn,
+    .approveBtn {
+      border: 1px solid #7dcfb6;
+      padding: 8px;
+      margin-bottom: 14px;
+      p {
+        background: #83d0b6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 300px;
+        height: 70px;
+        font-size: 24px;
+        line-height: 31px;
+        text-align: right;
+        letter-spacing: 0.2em;
+        padding-left: 0.2em;
+        color: #06070e;
+        overflow: hidden;
+      }
+    }
+    .approveBtn {
+      margin: auto 0 auto auto;
+      border: 1px solid #e5db5a;
+      p {
+        background: #e5db5a;
+      }
+    }
+  }
+}
+
+input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  & + label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-size: 16px;
+    line-height: 23px;
+    letter-spacing: 0.2em;
+    margin-right: -0.2em;
+    color: #ffffff;
+  }
+  & + label:before {
+    content: '';
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: text-top;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #83d0b6;
+  }
+  &:checked + label:after {
+    content: '\2714';
+    font-size: 18px;
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    color: #fff;
+  }
+}
+
+.activeRightFooter {
+  display: flex;
+  width: 100%;
+  .bgLight {
+    width: 100%;
+    background: url(../../../assets/img/bg-light-top.svg) top center no-repeat,
+      url(../../../assets/img/bg-light-bottom.svg) bottom center no-repeat;
+    background-size: 100% auto;
+  }
+  .bgLogLight {
+    width: 100%;
+    height: calc(100% + 7px);
+    background: url(../../../assets/img/bg-log-light.png);
+    background-size: cover;
+  }
+  .oneVerse {
+    display: flex;
+  }
+  svg {
+    flex-shrink: 0;
+    margin-left: 20px;
+  }
+}
+
+.logPage {
+  .url {
+    p {
+      background: #e5db5a;
+    }
+  }
+
+  .header {
+    .miningLeft {
+      .title {
+        h1 {
+          color: #e5db5a;
+        }
+
+        p {
+          color: #e5db5a;
+        }
+      }
+    }
+    .miningRight {
+      color: #e5db5a;
+    }
+  }
+
+  .miningBox {
+    .miningLeft {
+      border: 1px solid #e5db5a;
+      background: linear-gradient(
+          180deg,
+          rgba(229, 219, 90, 0.15) 0%,
+          rgba(6, 7, 14, 0.15) 6.77%,
+          rgba(6, 7, 14, 0.15) 84.9%,
+          rgba(229, 219, 90, 0.15) 99.96%
+        ),
+        linear-gradient(0deg, rgba(6, 7, 14, 0.1), rgba(6, 7, 14, 0.1));
+    }
+  }
+
+  .border {
+    &::before,
+    &::after {
+      border-color: #e5db5a #e5db5a transparent #e5db5a;
+    }
+    &::after {
+      border-color: transparent #e5db5a #e5db5a #e5db5a;
+    }
+  }
+
+  .tabs {
+    & > div {
+      &.active {
+        border: 1px solid #e5db5a;
+        color: #e5db5a;
+      }
+    }
+  }
+
+  .miningRight {
+    .rightContent {
+      border: 1px solid #e5db5a;
+    }
+  }
+}
+
+.yellow {
+  color: #e5db5a !important;
+}
+.purple {
+  color: #af9fff !important;
+}
+.white {
+  color: white !important;
+}

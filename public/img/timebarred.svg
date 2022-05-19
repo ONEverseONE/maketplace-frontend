@@ -1,0 +1,37 @@
+<svg width="399" height="15" viewBox="0 0 399 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M52 5H47V10H52V5ZM53 10H58V5H53V10ZM59 5V10H64V5H59ZM65 5V10H70V5H65ZM71 5V10H76V5H71ZM77 5V10H82V5H77ZM83 5V10H88V5H83ZM89 5V10H94V5H89ZM95 5V10H100V5H95ZM101 5V10H106V5H101ZM107 5V10H112V5H107ZM113 5V10H118V5H113ZM119 5V10H124V5H119ZM125 5V10H130V5H125ZM131 5V10H136V5H131ZM137 5V10H142V5H137ZM143 5V10H148V5H143ZM149 5V10H154V5H149ZM155 5V10H160V5H155ZM161 5V10H166V5H161ZM167 5V10H172V5H167ZM173 5V10H178V5H173ZM179 5V10H184V5H179ZM185 5V10H190V5H185ZM191 5V10H196V5H191ZM197 5V10H202V5H197ZM203 5V10H208V5H203ZM209 5V10H214V5H209ZM215 5V10H220V5H215ZM221 5V10H226V5H221ZM227 5V10H232V5H227ZM233 5V10H238V5H233ZM239 5V10H244V5H239ZM245 5V10H250V5H245ZM251 5V10H256V5H251ZM257 5V10H262V5H257ZM263 5V10H268V5H263ZM269 5V10H274V5H269ZM275 5V10H280V5H275ZM281 5V10H286V5H281ZM287 5V10H292V5H287ZM293 5V10H298V5H293ZM299 5V10H304V5H299ZM305 5V10H310V5H305ZM311 5V10H316V5H311ZM317 5V10H322V5H317ZM323 5V10H328V5H323ZM329 5V10H334V5H329ZM335 5V10H340V5H335ZM341 5V10H346V5H341ZM347 5V10H352V5H347Z" fill="#E74467"/>
+<path d="M47.0716 1H44V14H47.0716" stroke="#E74467"/>
+<path d="M351.928 14L355 14L355 1L351.928 1" stroke="#E74467"/>
+<rect x="193" y="13" width="20" height="2" fill="#E74467"/>
+<rect x="193" width="20" height="2" fill="#E74467"/>
+<rect width="6" height="2" fill="#E74467"/>
+<rect y="13" width="6" height="2" fill="#E74467"/>
+<rect x="9" width="2" height="2" fill="#E74467"/>
+<rect x="9" y="13" width="2" height="2" fill="#E74467"/>
+<rect x="399" y="15" width="6" height="2" transform="rotate(-180 399 15)" fill="#E74467"/>
+<rect x="399" y="2" width="6" height="2" transform="rotate(-180 399 2)" fill="#E74467"/>
+<rect x="390" y="15" width="2" height="2" transform="rotate(-180 390 15)" fill="#E74467"/>
+<rect x="390" y="2" width="2" height="2" transform="rotate(-180 390 2)" fill="#E74467"/>
+<mask id="mask0_254_4170" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="5" width="39" height="5">
+<rect y="5" width="39" height="5" fill="#C4C4C4"/>
+</mask>
+<g mask="url(#mask0_254_4170)">
+<rect y="1" width="12" height="13" fill="#E74467"/>
+<rect x="14" y="1" width="11" height="13" fill="#E74467"/>
+<rect x="27" y="1" width="12" height="13" fill="#E74467"/>
+<rect y="1" width="12" height="13" fill="#E74467"/>
+<rect x="14" y="1" width="11" height="13" fill="#E74467"/>
+<rect x="27" y="1" width="12" height="13" fill="#E74467"/>
+</g>
+<mask id="mask1_254_4170" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="360" y="5" width="39" height="5">
+<rect x="360" y="5" width="39" height="5" fill="#C4C4C4"/>
+</mask>
+<g mask="url(#mask1_254_4170)">
+<rect x="360" y="1" width="12" height="13" fill="#E74467"/>
+<rect x="374" y="1" width="11" height="13" fill="#E74467"/>
+<rect x="387" y="1" width="12" height="13" fill="#E74467"/>
+<rect x="360" y="1" width="12" height="13" fill="#E74467"/>
+<rect x="374" y="1" width="11" height="13" fill="#E74467"/>
+<rect x="387" y="1" width="12" height="13" fill="#E74467"/>
+</g>
+</svg>

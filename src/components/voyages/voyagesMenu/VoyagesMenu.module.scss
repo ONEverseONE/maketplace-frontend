@@ -1,0 +1,84 @@
+.close {
+  position: fixed;
+  right: 100px;
+  top: 100px;
+}
+
+.menuPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.menu {
+  width: 735px;
+  display: flex;
+  flex-direction: column;
+  h3 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+    color: #ffffff;
+  }
+  p {
+    font-family: 'Chakra Petch Regular';
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 26px;
+    height: 26px;
+    text-align: center;
+    color: #e3e3e3;
+    text-shadow: 0px 4px 4px rgba(6, 7, 14, 0.25);
+  }
+  .menuBox {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 26px;
+    background: linear-gradient(
+      180deg,
+      rgba(125, 207, 182, 0.1) 0%,
+      rgba(125, 207, 182, 0.004) 9.38%,
+      rgba(125, 207, 182, 0.004) 91.67%,
+      rgba(125, 207, 182, 0.1) 100%
+    );
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 15px;
+      border: 1px solid;
+      border-color: #7dcfb6 #7dcfb6 transparent #7dcfb6;
+    }
+    &::after {
+      top: auto;
+      bottom: 0;
+      border-color: transparent #7dcfb6 #7dcfb6 #7dcfb6;
+    }
+
+    a {
+      width: 100%;
+      font-family: 'Chakra Petch Regular';
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 77px;
+      text-align: center;
+      letter-spacing: 0.5em;
+      margin-right: -0.5em;
+      color: #7dcfb6;
+      text-decoration: none;
+
+      &:hover {
+        background: #7dcfb6;
+        color: #06070e;
+      }
+    }
+  }
+}
