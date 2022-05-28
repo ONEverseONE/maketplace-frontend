@@ -35,6 +35,69 @@ export const ABI_MARKETPLACE = [
             {
                 "indexed": true,
                 "internalType": "address",
+                "name": "bidder",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "receivedBid",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "buyer",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "tokenBought",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint8",
+                "name": "listingType",
+                "type": "uint8"
+            }
+        ],
+        "name": "tokenDeListed",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
                 "name": "owner",
                 "type": "address"
             },
@@ -42,6 +105,18 @@ export const ABI_MARKETPLACE = [
                 "indexed": true,
                 "internalType": "uint256",
                 "name": "tokenId",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint8",
+                "name": "listingType",
+                "type": "uint8"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "price",
                 "type": "uint256"
             }
         ],
@@ -59,9 +134,7 @@ export const ABI_MARKETPLACE = [
             }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true,
-        "signature": "0xc57981b5"
+        "type": "function"
     },
     {
         "inputs": [],
@@ -74,9 +147,7 @@ export const ABI_MARKETPLACE = [
             }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true,
-        "signature": "0x0e82c918"
+        "type": "function"
     },
     {
         "inputs": [
@@ -92,6 +163,11 @@ export const ABI_MARKETPLACE = [
                 "internalType": "address",
                 "name": "owner",
                 "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "duration",
+                "type": "uint256"
             },
             {
                 "internalType": "uint256",
@@ -185,9 +261,7 @@ export const ABI_MARKETPLACE = [
             }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true,
-        "signature": "0x8da5cb5b"
+        "type": "function"
     },
     {
         "inputs": [],
@@ -285,6 +359,19 @@ export const ABI_MARKETPLACE = [
             }
         ],
         "name": "retrieveToken",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256[]",
+                "name": "tokenId",
+                "type": "uint256[]"
+            }
+        ],
+        "name": "delistToken",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

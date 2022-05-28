@@ -10,8 +10,8 @@ export const MULTICALL_ADDRESS = '0xd078799c53396616844e2fa97f0dd2b4c145a685';
 //---------------------------------contract address-------------------------------------
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const CONTRACT_NFT_PUFF = '0x701d1907fd9Ed5A1B4d6f005D602C723F9fD47fa';
-export const CONTRACT_MARKETPLACE = '0x57938C3b7D5eb98775Fd159bC0002Fcc0C3748cB';
-export const PUFF_IMAGE_URL = 'https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/'
+export const CONTRACT_MARKETPLACE = '0x9542a61F170478d31d37522E2082aB3d46c28775';
+export const PUFF_IMAGE_URL = 'https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/d'
 
 //------------------------------Info for connect wallet-----------------------------------
 

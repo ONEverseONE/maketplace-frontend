@@ -21,10 +21,12 @@ function getLibrary(provider) {
 
 ReactDOM.render(
   <Web3ReactProvider getLibrary={getLibrary}>
-    <BrowserRouter >
-      <ScrollToTop />
-      <App />
-    </BrowserRouter>
+    <ApolloProvider client={client}>
+      <BrowserRouter >
+        <ScrollToTop />
+        <App />
+      </BrowserRouter>
+    </ApolloProvider>
   </Web3ReactProvider>,
   document.getElementById('root')
 );

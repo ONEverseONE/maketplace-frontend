@@ -15,7 +15,7 @@ const routes = [
   { path: '/explore', component: <Explore /> },
   { path: '/explore/:collection', component: <ExploreCollection />},
   { path: '/live-auctions', component: <LiveAuctions />},
-  { path: '/item-details', component: <ItemDetails />},
+  { path: '/nft/:nftId', component: <ItemDetails />},
   { path: '/activity', component: <Activity />},
   { path: '/help-center', component: <HelpCenter />},
   { path: '/ranking', component: <Ranking />},

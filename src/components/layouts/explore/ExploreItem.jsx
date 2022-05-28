@@ -21,14 +21,14 @@ const ExploreItem = props => {
                         data.map((item,index) => (
                             <div className={`sc-card-product explode style2 mg-bt ${item.listed === 0 ? 'comingsoon' : '' } `} key={index}>
                             <div className="card-media">
-                                <Link to={`/item-details/${item.id}`}><img src={item.img} alt="Axies" /></Link>
+                                <Link to={`/nft/${item.id}`}><img src={item.img} alt="Axies" /></Link>
                                 <div className="button-place-bid">
                                     <button onClick={() => setModalShow(true)} className="sc-button style-place-bid style bag fl-button pri-3"><span>Place Bid</span></button>
                                 </div>
                                 <div className="coming-soon">Not Listed</div>
                             </div>
                             <div className="card-title">
-                                    <h2><Link to="/item-details">"Puff {item.id}"</Link></h2>
+                                    <h2><Link to={`/nft/${item.id}`}>"Puff {item.id}"</Link></h2>
                                     
                                     <div className="tags">ONE</div>
                             </div>

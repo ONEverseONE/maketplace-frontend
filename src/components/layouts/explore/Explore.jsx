@@ -10,10 +10,12 @@ import { ABI_NFT_PUFF, ABI_MARKETPLACE } from '../../../constant/abis.js';
 import { setupMultiCallContract } from '../../../utils';
 import { formatEther } from '@ethersproject/units';
 import { PUFF_RARITY } from '../../../constant/puff.js'
+import { GQL_GETMYLISTED } from '../../../constant/gqls';
+import { useQuery } from '@apollo/client';
 
 const Explore = () => {
     const count = 12;
-    const { library } = useWeb3React();
+    const { account, library } = useWeb3React();
 
     const [status, setStatus] = useState([{ field: 'Buy Now', checked: true }, { field: 'On Auctions', checked: true }]);
     const [isMine, setIsMine] = useState(false);
@@ -144,6 +146,25 @@ const Explore = () => {
             console.log(err);
         }
     }
+
+    const { loading, error, data, refetch } = useQuery(GQL_GETMYLISTED, {
+        variables: { address: account?.toLowerCase() },
+        fetchPolicy: 'no-cache',
+    });
+    useEffect(() => {
+        // setIsLoadingProcessing(loading);
+    
+        if (error) {
+          console.log(error);
+        }
+    
+        console.log('loading nfts...');
+    
+        if (!loading && data) {
+            console.log('##############', data)
+        //   getStatus(data);
+        }
+      }, [loading, error, data]);
 
     // const getMyNftIdsNotList = async () => {
     //     const contract = new Contract(CONTRACT_NFT_PUFF , ABI_NFT_PUFF, library);
