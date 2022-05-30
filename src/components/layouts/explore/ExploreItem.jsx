@@ -5,12 +5,13 @@ import { shortAddress } from '../../../utils';
 import CardModal from '../CardModal';
 
 const ExploreItem = props => {
-    const {data, getMore} = props
+    const { data, getMore, isAll, isMine } = props
+    console.log(props)
 
-    // const [visible , setVisible] = useState(6);
-    // const showMoreItems = () => {
-    //     setVisible((prevValue) => prevValue + 6);
-    // }
+    const [visible , setVisible] = useState(12);
+    const showMoreItems = () => {
+        setVisible((prevValue) => prevValue + 12);
+    }
 
     const [modalShow, setModalShow] = useState(false);
     return (
@@ -18,7 +19,7 @@ const ExploreItem = props => {
             <div className='explore'>
                 <div className="box-epxlore">
                     {
-                        data.map((item,index) => (
+                        (isMine?data.slice(0,visible):data).map((item,index) => (
                             <div className={`sc-card-product explode style2 mg-bt ${item.listed === 0 ? 'comingsoon' : '' } `} key={index}>
                             <div className="card-media">
                                 <Link to={`/nft/${item.id}`}><img src={item.img} alt="Axies" /></Link>
@@ -51,7 +52,7 @@ const ExploreItem = props => {
                                 <div className="price">
                                     <span>Price {item.highestBid > 0 ? '(highest bid)' : ''}</span>
                                         <div className="price-details">
-                                            {item.price === 0 ? <h5>Not listed</h5> :
+                                            {item.listed === 0 ? <h5>Not listed</h5> :
                                                 <>
                                                     <h5>{item.highestBid > 0 ? item.highestBid : item.price} <span>ONE</span></h5>
                                                     <span>= $ {item.price}</span>
@@ -66,9 +67,9 @@ const ExploreItem = props => {
                     }
                 </div>
                 {
-                    // visible < data.length && 
+                    ((isMine && visible < data.length) || (!isAll && !isMine)) && 
                     <div className="btn-auction center"> 
-                        <Link to="#" id="load-more" className="sc-button loadmore fl-button pri-3" onClick={getMore}><span>Load More</span></Link>
+                        <Link to="#" id="load-more" className="sc-button loadmore fl-button pri-3" onClick={isMine? showMoreItems : getMore}><span>Load More</span></Link>
                     </div>
                 }
             </div>

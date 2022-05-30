@@ -17,55 +17,57 @@ import imgdetail1 from '../assets/images/box-item/images-item-details.jpg'
 import { useParams } from 'react-router';
 import { useWeb3React } from '@web3-react/core';
 import { Contract } from '@ethersproject/contracts';
-import { CONTRACT_NFT_PUFF, CONTRACT_MARKETPLACE, PUFF_IMAGE_URL, ZERO_ADDRESS } from '../constant';
+import { BigNumber } from '@ethersproject/bignumber';
+import { CONTRACT_NFT_PUFF, CONTRACT_MARKETPLACE, CONTRACT_TOKEN, PUFF_IMAGE_URL, ZERO_ADDRESS } from '../constant';
 import { PUFF_RARITY } from '../constant/puff.js'
-import { ABI_MARKETPLACE, ABI_NFT_PUFF } from '../constant/abis.js'
+import { ABI_MARKETPLACE, ABI_NFT_PUFF, ABI_TOKEN } from '../constant/abis.js'
 import { setupMultiCallContract, shortAddress } from '../utils';
-import { formatEther } from '@ethersproject/units';
+import { formatEther, parseEther } from '@ethersproject/units';
 import Switch from "react-switch";
 import InputMask from 'react-input-mask';
+import { toast } from 'react-toastify';
 
 const ItemDetails01 = () => {
     const [dataHistory] = useState(
         [
             {
                 img: img1,
-                name:"Mason Woodward",
+                name: "Mason Woodward",
                 time: "8 hours ago",
                 price: "4.89 ETH",
                 priceChange: "$12.246"
             },
             {
                 img: img2,
-                name:"Mason Woodward",
+                name: "Mason Woodward",
                 time: "at 06/10/2021, 3:20 AM",
                 price: "4.89 ETH",
                 priceChange: "$12.246"
             },
             {
                 img: img3,
-                name:"Mason Woodward",
+                name: "Mason Woodward",
                 time: "8 hours ago",
                 price: "4.89 ETH",
                 priceChange: "$12.246"
             },
             {
                 img: img4,
-                name:"Mason Woodward",
+                name: "Mason Woodward",
                 time: "8 hours ago",
                 price: "4.89 ETH",
                 priceChange: "$12.246"
             },
             {
                 img: img5,
-                name:"Mason Woodward",
+                name: "Mason Woodward",
                 time: "8 hours ago",
                 price: "4.89 ETH",
                 priceChange: "$12.246"
             },
             {
                 img: img6,
-                name:"Mason Woodward",
+                name: "Mason Woodward",
                 time: "8 hours ago",
                 price: "4.89 ETH",
                 priceChange: "$12.246"
@@ -76,7 +78,10 @@ const ItemDetails01 = () => {
     const { account, library } = useWeb3React();
 
     const [isAuction, setIsAuction] = useState(false);
-    const [fixPrice, setFixPrice] = useState(0);
+    const [fixPrice, setFixPrice] = useState('');
+    const [auctionPrice, setAuctionPrice] = useState('');
+    const [duration, setDuration] = useState('');
+    const [differentialAmount, setDifferentialAmount] = useState(10);
     
     const [nft, setNft] = useState({
         id: Number(nftId),
@@ -99,7 +104,7 @@ const ItemDetails01 = () => {
             const contract = new Contract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
             const currentOwner = await contract.ownerOf(nftId);
             const [multicallMarketProvider, multicallMarketContract] =
-            await setupMultiCallContract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library);
+                await setupMultiCallContract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library);
             const [listed, saleInfo, auctionInfo] = await multicallMarketProvider.all(
                 [
                     multicallMarketContract.listed(nftId),
@@ -115,10 +120,11 @@ const ItemDetails01 = () => {
                 listed: Number(listed),
                 originalOwner: Number(listed) === 1 ? saleInfo.owner : auctionInfo.owner,
                 price: Number(listed) === 1 ? Number(formatEther(saleInfo.price)) : 0,
-                highestBid: Number(listed) === 2 ? Number(auctionInfo.highestBid) : 0,
-                highestBidder: Number(listed) === 2 ? Number(auctionInfo.highestBidder) : ZERO_ADDRESS,
+                highestBid: Number(listed) === 2 ? Number(formatEther(auctionInfo.highestBid)) : 0,
+                highestBidder: Number(listed) === 2 ? auctionInfo.highestBidder : ZERO_ADDRESS,
                 timeEnd: Number(listed) === 2 ? Number(auctionInfo.timeEnd) * 1000 : 0,
             })
+            console.log(Number(auctionInfo.timeEnd) * 1000 < Date.now(), nft.timeEnd > 0)
             setNft({
                 id: Number(nftId),
                 img: `${PUFF_IMAGE_URL}${nftId}.png`,
@@ -127,10 +133,18 @@ const ItemDetails01 = () => {
                 listed: Number(listed),
                 originalOwner: Number(listed) === 1 ? saleInfo.owner : auctionInfo.owner,
                 price: Number(listed) === 1 ? Number(formatEther(saleInfo.price)) : 0,
-                highestBid: Number(listed) === 2 ? Number(auctionInfo.highestBid) : 0,
-                highestBidder: Number(listed) === 2 ? Number(auctionInfo.highestBidder) : ZERO_ADDRESS,
-                timeEnd: Number(listed) === 2 ? Number(auctionInfo.timeEnd) : 0,
+                highestBid: Number(listed) === 2 ? Number(formatEther(auctionInfo.highestBid)) : 0,
+                highestBidder: Number(listed) === 2 ? auctionInfo.highestBidder : ZERO_ADDRESS,
+                timeEnd: Number(listed) === 2 ? Number(auctionInfo.timeEnd) * 1000 : 0,
             })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    const getDifferentialAmount = async () => {
+        try {
+            const contract = new Contract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library);
+            setDifferentialAmount(Number(formatEther(await contract.differentialAmount())));
         } catch (err) {
             console.log(err);
         }
@@ -138,22 +152,147 @@ const ItemDetails01 = () => {
     useEffect(() => {
         if (nftId && library) {
             getNftInfo();
+            getDifferentialAmount();
         }
     }, [nftId, library])
 
-    const listOnSale = async () => { }
+    const updateDuration = (val) => {
+        const arr = val.replaceAll('_', '0').split('/').map(x => Number(x));
+        const res = (arr[0] * 86400 + arr[1] * 3600 + arr[2] * 60 + arr[3]);
+        return res
+    }
+    const listOnSale = async () => {
+        try {
+            const nftContract = new Contract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library.getSigner());
+            const isApproved = await nftContract.isApprovedForAll(account, CONTRACT_MARKETPLACE);
+
+            if (!isApproved) {
+                const ress = await nftContract.setApprovalForAll(CONTRACT_MARKETPLACE, true);
+                await ress.wait();
+            }
+            const marketContract = new Contract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library.getSigner());
+            if (isAuction) {
+                if (!(auctionPrice > 0)) {
+                    toast.error('Price should be higher than 0')
+                    return;
+                }
+                const time = updateDuration(duration);
+                if (!(time > 0)) {
+                    toast.error('Duration should be higher than 0')
+                    return;
+                }
+                const res = await marketContract['listToken(uint256,uint256,uint256)'](nftId, parseEther(auctionPrice), time);
+                await res.wait();
+                toast.success('Success!');
+            } else {
+                if (!(fixPrice > 0)) {
+                    toast.error('Price should be higher than 0')
+                    return;
+                }
+                const res = await marketContract['listToken(uint256,uint256)'](nftId, parseEther(fixPrice));
+                await res.wait();
+                toast.success('Success!');
+            }
+            getNftInfo();
+        } catch (err) {
+            console.log(err);
+            const msg = JSON.parse(JSON.stringify(err));
+            toast.error(
+                msg.data?.message ?? msg.message ?? 'Something went wrong, please retry'
+            );
+        }
+    }
     const delistOnSale = async () => {
         try {
             const contract = new Contract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library.getSigner());
             const res = await contract.delistToken([nftId]);
             await res.wait();
+            toast.success('Success!');
+            getNftInfo();
         } catch (err) {
             console.log(err);
+            const msg = JSON.parse(JSON.stringify(err));
+            toast.error(
+                msg.data?.message ?? msg.message ?? 'Something went wrong, please retry'
+            );
         }
     }
-    const buyNft = async () => { }
+
+    const buyNft = async () => {
+        try {
+            const contract = new Contract(CONTRACT_TOKEN, ABI_TOKEN, library.getSigner());
+            const allowance = await contract.allowance(
+                account,
+                CONTRACT_MARKETPLACE
+            );
+            const totalSupply = await contract.totalSupply();
+            
+            if (!allowance.gt(totalSupply)) {
+                const ress = await contract.approve(
+                    CONTRACT_MARKETPLACE,
+                    BigNumber.from(2).pow(256).sub(1)
+                  );
+                await ress.wait();
+            }
+            const marketContract = new Contract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library.getSigner());
+            console.log(nft.price)
+            const res = await marketContract.buyToken(nftId, parseEther(nft.price.toString()));
+            await res.wait();
+            toast.success('Success!');
+            getNftInfo();
+        } catch (err) {
+            console.log(err);
+            const msg = JSON.parse(JSON.stringify(err));
+            toast.error(
+                msg.data?.message ?? msg.message ?? 'Something went wrong, please retry'
+            );
+        }
+     }
     const placeBid = async () => {
+        try {
+            const contract = new Contract(CONTRACT_TOKEN, ABI_TOKEN, library.getSigner());
+            const allowance = await contract.allowance(
+                account,
+                CONTRACT_MARKETPLACE
+            );
+            const totalSupply = await contract.totalSupply();
+            
+            if (!allowance.gt(totalSupply)) {
+                const ress = await contract.approve(
+                    CONTRACT_MARKETPLACE,
+                    BigNumber.from(2).pow(256).sub(1)
+                  );
+                await ress.wait();
+            }
+            const marketContract = new Contract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library.getSigner());
+            const res = await marketContract.bidToken(nftId, parseEther(fixPrice));
+            await res.wait();
+            toast.success('Success!');
+            getNftInfo();
+        } catch (err) {
+            console.log(err);
+            const msg = JSON.parse(JSON.stringify(err));
+            toast.error(
+                msg.data?.message ?? msg.message ?? 'Something went wrong, please retry'
+            );
+        }
     }
+    const endAuction = async () => {
+        try {
+            const contract = new Contract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library.getSigner());
+            const res = await contract.retrieveToken(nftId);
+            await res.wait();
+            toast.success('Success!');
+            getNftInfo();
+        } catch (err) {
+            console.log(err);
+            const msg = JSON.parse(JSON.stringify(err));
+            toast.error(
+                msg.data?.message ?? msg.message ?? 'Something went wrong, please retry'
+            );
+        }
+    }
+    
     return (
         <div className='item-details'>
             <Header />
@@ -239,25 +378,25 @@ const ItemDetails01 = () => {
                                                 </div>
                                             </div>
                                         </div> :
-                                    nft.listed === 2 ?
-                                        <div className="meta-item-details style2">
-                                            <div className="item meta-price">
-                                                <span className="heading">Current Bid</span>
-                                                <div className="price">
-                                                    <div className="price-box">
-                                                        <h5> {nft.price} ETH</h5>
-                                                        {/* <span>= ${nft.price * ethPrice}</span> */}
+                                        nft.listed === 2 ?
+                                            <div className="meta-item-details style2">
+                                                <div className="item meta-price">
+                                                    <span className="heading">Minimum Bid</span>
+                                                    <div className="price">
+                                                        <div className="price-box">
+                                                            <h5> {nft.timeEnd === 0? nft.highestBid:nft.highestBid + differentialAmount} ETH</h5>
+                                                            {/* <span>= ${nft.price * ethPrice}</span> */}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="item count-down">
-                                                <span className="heading style-2">Countdown</span>
-                                                <Countdown date={nft.timeEnd}>
-                                                    <span>You are good to go!</span>
-                                                </Countdown>
-                                            </div>
-                                        </div> :
-                                        <div className="meta-item-details style2"></div>
+                                                <div className="item count-down">
+                                                    <span className="heading style-2">Countdown</span>
+                                                    <Countdown date={nft.timeEnd}>
+                                                        <span>{nft.timeEnd === 0 ? 'No bidder yet' : 'You are good to go!'}</span>
+                                                    </Countdown>
+                                                </div>
+                                            </div> :
+                                            <div className="meta-item-details style2"></div>
                                     }
                                     {nft.listed === 0 ? nft.currentOwner === account ?
                                         <>
@@ -268,39 +407,52 @@ const ItemDetails01 = () => {
                                                     checked={isAuction}
                                                     disabled={false}
                                                     height={24}
-                                                    />
+                                                />
                                             </div>
                                             {isAuction ?
                                                 <div className="d-flex">
                                                     <div className="w-50 pr-2">
-                                                        <input id="price" name="price" className="mb-3" tabIndex="1" aria-required="true" type="text" placeholder="Base Price" required />
+                                                        <input name="price" className="mb-3" tabIndex="1" aria-required="true" type="text" placeholder="Base Price" value={auctionPrice} onChange={(e) => { setAuctionPrice(e.target.value) }} required />
                                                     </div>
                                                     <div className="w-50 pl-2">
                                                         <InputMask
                                                             id="duration"
                                                             type="text"
-                                                            mask='99/99/99/99' 
+                                                            mask='99/99/99/99'
                                                             placeholder='DD/HH/MM/SS'
                                                             onChange={(e) => {
-                                                                console.log(e.target.value)
+                                                                setDuration(e.target.value)
                                                             }}
                                                         >
                                                         </InputMask>
                                                     </div>
-                                                </div>:
-                                                <input id="price" name="price" className="mb-3" tabIndex="1" aria-required="true" type="text" placeholder="Price" required />}
-                                            <button className="sc-button loadmore style bag fl-button pri-3 w-100"><span>List on sale</span></button>
-                                        </>: null
-                                        :
-                                        nft.listed === 1 ? nft.originalOwner === account ?
-                                            <button className="sc-button loadmore style bag fl-button pri-3 w-100" onClick={delistOnSale}><span>Delist on sale</span></button>
+                                                </div> :
+                                                <input name="price" className="mb-3" tabIndex="1" aria-required="true" type="text" placeholder="Price" value={fixPrice} onChange={(e) => { setFixPrice(e.target.value) }} required />}
+                                            <button className="sc-button loadmore style bag fl-button pri-3 w-100" onClick={listOnSale}><span>List on sale</span></button>
+                                        </>
+                                        : null
+                                        : nft.listed === 1 ?
+                                            nft.originalOwner === account ?
+                                                <button className="sc-button loadmore style bag fl-button pri-3 w-100" onClick={delistOnSale}><span>Delist on sale</span></button>
+                                                :
+                                                <button className="sc-button loadmore style bag fl-button pri-3 w-100" onClick={buyNft}><span>Buy NFT</span></button>
                                             :
-                                            <button className="sc-button loadmore style bag fl-button pri-3 w-100" onClick={buyNft}><span>Buy NFT</span></button>
-                                        :
-                                        nft.originalOwner === account ?
-                                            <button className="sc-button loadmore style bag fl-button pri-3 w-100" disabled={nft.timeEnd > Date.now() || nft.highestBid === 0} onClick={delistOnSale}><span>Cancel auction</span></button>
+                                            nft.timeEnd < Date.now() && nft.timeEnd > 0 ?
+                                                <button className="sc-button loadmore style bag fl-button pri-3 w-100" disabled={nft.originalOwner !== account && nft.highestBidder !== account} onClick={endAuction}><span>{(nft.originalOwner !== account && nft.highestBidder !== account) ? 'Auction is ended' : 'End auction'}</span></button>
                                             :
-                                            <button className="sc-button loadmore style bag fl-button pri-3 w-100" onClick={placeBid}><span>Place a bid</span></button>
+                                            nft.originalOwner === account ?
+                                                    <button className="sc-button loadmore style bag fl-button pri-3 w-100" disabled={nft.timeEnd > 0} onClick={delistOnSale}><span>Cancel auction</span></button>
+                                                :
+                                                <>
+                                                    <input name="price" className="mb-4" tabIndex="1" aria-required="true" type="text" placeholder="Bid Amount" value={fixPrice} onChange={(e) => { setFixPrice(e.target.value) }} required />
+                                                    <button
+                                                        className="sc-button loadmore style bag fl-button pri-3 w-100"
+                                                        disabled={nft.highestBidder === account || (nft.timeEnd < Date.now() && nft.timeEnd > 0)}
+                                                        onClick={placeBid}
+                                                    >
+                                                        <span>{nft.timeEnd < Date.now() && nft.timeEnd > 0 ? 'Auction is ended' : nft.highestBidder === account ? 'You are highest bidder' : 'Place a bid'}</span>
+                                                    </button>
+                                                </>
                                     }
                                     <div className="flat-tabs themesflat-tabs">
                                     <Tabs>

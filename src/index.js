@@ -7,6 +7,8 @@ import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { GRAPHQL_ENDPOINT } from './constant';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const client = new ApolloClient({
   uri: GRAPHQL_ENDPOINT,
@@ -25,6 +27,10 @@ ReactDOM.render(
       <BrowserRouter >
         <ScrollToTop />
         <App />
+        <ToastContainer
+          autoClose={50000}
+          hideProgressBar
+        />
       </BrowserRouter>
     </ApolloProvider>
   </Web3ReactProvider>,

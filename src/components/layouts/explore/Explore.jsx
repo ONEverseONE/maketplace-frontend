@@ -26,6 +26,7 @@ const Explore = () => {
 
     const [startNft, setStartNft] = useState(0);
     const [nfts, setNfts] = useState([]);
+    const [isAll, setIsAll] = useState(false);
 
     const updateStatus = (val) => {
         setStatus(status.map(item => item.field === val.field ? val : item));
@@ -44,6 +45,7 @@ const Explore = () => {
             const [multicallProvider, multicallContract] =
                 await setupMultiCallContract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
             const possibleCount = Math.min(count, nftCount - start);
+            setIsAll(nftCount <= count + start)
             const nftIds = await multicallProvider.all(
                 Array.from(Array(possibleCount).keys()).map((u, index) =>
                     multicallContract.tokenByIndex(start + index)
@@ -80,9 +82,9 @@ const Explore = () => {
                 listed: Number(listed[index]),
                 originalOwner: info.owner,
                 price: Number(listed[index]) === 1 ? Number(formatEther(info.price)) : 0,
-                highestBid: Number(listed[index]) === 2 ? Number(info.highestBid) : 0,
-                highestBidder: Number(listed[index]) === 2 ? Number(info.highestBidder) : ZERO_ADDRESS,
-                timeEnd: Number(listed[index]) === 2 ? Number(info.timeEnd) : 0,
+                highestBid: Number(listed[index]) === 2 ? Number(formatEther(info.highestBid)) : 0,
+                highestBidder: Number(listed[index]) === 2 ? (info.highestBidder) : ZERO_ADDRESS,
+                timeEnd: Number(listed[index]) === 2 ? Number(info.timeEnd) * 1000 : 0,
             }))
             console.log(newNfts)
             setNfts(start === 0 ? newNfts : [...nfts, ...newNfts]);
@@ -136,8 +138,8 @@ const Explore = () => {
                 originalOwner: info.owner,
                 price: Number(listed[index]) === 1 ? Number(formatEther(info.price)) : 0,
                 highestBid: Number(listed[index]) === 2 ? Number(formatEther(info.highestBid)) : 0,
-                highestBidder: Number(listed[index]) === 2 ? Number(info.highestBidder) : ZERO_ADDRESS,
-                timeEnd: Number(listed[index]) === 2 ? Number(info.timeEnd) : 0,
+                highestBidder: Number(listed[index]) === 2 ? info.highestBidder : ZERO_ADDRESS,
+                timeEnd: Number(listed[index]) === 2 ? Number(info.timeEnd) * 1000 : 0,
             }))
             console.log(newNfts)
             setNfts(start === 0 ? newNfts : [...nfts, ...newNfts]);
@@ -147,7 +149,7 @@ const Explore = () => {
         }
     }
 
-    const { loading, error, data, refetch } = useQuery(GQL_GETMYLISTED, {
+    const { loading, error, data, refetch, fetchMore } = useQuery(GQL_GETMYLISTED, {
         variables: { address: account?.toLowerCase() },
         fetchPolicy: 'no-cache',
     });
@@ -160,85 +162,26 @@ const Explore = () => {
     
         console.log('loading nfts...');
     
-        if (!loading && data) {
-            console.log('##############', data)
+        if (!loading && data && isMine) {
+            const newNfts = data.nfts.map((item, index) => ({
+                id: Number(item.id),
+                img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
+                rarity: PUFF_RARITY[Number(item.id) - 1].nftRarity,
+                currentOwner: item.type===0?item.owner:CONTRACT_MARKETPLACE,
+                listed: item.type,
+                originalOwner: item.owner,
+                price: item.type > 0 ? Number(formatEther(item.originalPrice)) : 0,
+                highestBid: item.type === 2 && item.bids.length > 0 ? Number(formatEther(item.bids[item.bids.length - 1].price)) : 0,
+                highestBidder: item.type === 2 && item.bids.length > 0 ? item.bids[item.bids.length - 1].address : ZERO_ADDRESS,
+                timeEnd: item.type === 2 ? Number(item.timeEnd) : 0,
+            }))
+            console.log('############', data.nfts, newNfts)
+            setNfts(newNfts)
         //   getStatus(data);
         }
-      }, [loading, error, data]);
+      }, [loading, error, data, isMine]);
 
-    // const getMyNftIdsNotList = async () => {
-    //     const contract = new Contract(CONTRACT_NFT_PUFF , ABI_NFT_PUFF, library);
-
-    //     const nftCount = Number(await contract.balanceOf(account));
-
-    //     const [multicallProvider, multicallContract] =
-    //         await setupMultiCallContract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
-    //     const nftIds = await multicallProvider.all(
-    //         Array.from(Array(nftCount).keys()).map((u) =>
-    //             multicallContract.tokenByIndex(u)
-    //         )
-    //     );
-    // }
-
-    // const getMyNfts = async (start) => {
-    //     if (!library) {
-    //         console.log('No provider');
-    //         return;
-    //     }
-    //     try {
-    //         const contract = new Contract(CONTRACT_NFT_PUFF , ABI_NFT_PUFF, library);
-
-    //         const nftCount = Number(await contract.balanceOf(account));
-
-    //         const [multicallProvider, multicallContract] =
-    //             await setupMultiCallContract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
-    //         const possibleCount = Math.min(count, nftCount - start);
-    //         const nftIds = await multicallProvider.all(
-    //             Array.from(Array(possibleCount).keys()).map((u, index) =>
-    //                 multicallContract.tokenByIndex(start + index)
-    //             )
-    //         );
-
-    //         const owners = await multicallProvider.all(
-    //             nftIds.map((id) =>
-    //                 multicallContract.ownerOf(id)
-    //             )
-    //         );
-
-    //         const [multicallMarketProvider, multicallMarketContract] =
-    //             await setupMultiCallContract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library);
-
-    //         const listed = await multicallMarketProvider.all(
-    //             nftIds.map((id) =>
-    //                 multicallMarketContract.listed(id)
-    //             )
-    //         );
-
-    //         const infos = await multicallMarketProvider.all(
-    //             listed.map((listed, index) =>
-    //                 (Number(listed) === 1) ?
-    //                     multicallMarketContract.directSales(nftIds[index])
-    //                     : multicallMarketContract.auctionSales(nftIds[index])
-    //             )
-    //         );
-    //         const newNfts = infos.map((info, index) => ({
-    //             id: Number(nftIds[index]),
-    //             currentOwner: owners[index],
-    //             listed: Number(listed[index]),
-    //             originalOwner: info.owner,
-    //             price: Number(listed[index]) === 1 ? info.price : 0,
-    //             highestBid: Number(listed[index]) === 2 ? info.highestBid : 0,
-    //             highestBidder: Number(listed[index]) === 2 ? info.highestBidder : ZERO_ADDRESS,
-    //             timeEnd: Number(listed[index]) === 2 ? info.timeEnd : 0,
-    //         }))
-    //         console.log(newNfts)
-    //         setNfts(start === 0 ? newNfts : [...nfts, ...newNfts]);
-    //         setStartNft(start + possibleCount);
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
-
+    
     const getMore = (start) => {
         if (isMine) { } else {
             if (isListing) getListedNfts(start);
@@ -252,18 +195,6 @@ const Explore = () => {
         }
     },[library])
 
-    // const temp = async () => {
-    //   const rarities = await Promise.all(
-    //     Array(1000)
-    //       .fill(0)
-    //       .map((u: any, ids: number) => getNftRarity(8000+ids))
-    //     );
-    //     console.log(rarities)
-    // };
-    // useEffect(() => {
-    //     temp();
-    // }, [])
-
     return (
         <section className="tf-explore tf-section">
             <div className="themesflat-container">
@@ -274,7 +205,16 @@ const Explore = () => {
                                 <div className="nft-switch">
                                     My NFT
                                     <Switch
-                                        onChange={() => { setIsMine(!isMine) }}
+                                        onChange={() => {
+                                            if (!isMine) refetch({ address: account?.toLowerCase() });
+                                            else {
+                                                if (!isListing)
+                                                    getListedNfts(0);
+                                                else
+                                                    getAllNfts(0);
+                                            }
+                                            setIsMine(!isMine);
+                                        }}
                                         checked={isMine}
                                         disabled={false}
                                         height={24}
@@ -286,10 +226,12 @@ const Explore = () => {
                                     All / Listing
                                     <Switch
                                         onChange={() => {
-                                            if (!isListing)
-                                                getListedNfts(0);
-                                            else
-                                                getAllNfts(0);
+                                            if (!isMine) {
+                                                if (!isListing)
+                                                    getListedNfts(0);
+                                                else
+                                                    getAllNfts(0);
+                                            }
                                             setIsListing(!isListing);
                                         }}
                                         checked={isListing}
@@ -326,7 +268,14 @@ const Explore = () => {
                     </div>
                     
                     <div className="col-xl-9 col-lg-9 col-md-12">
-                        <ExploreItem data={nfts} getMore={() => {getMore(startNft)}} />
+                        <ExploreItem data={nfts.filter(x => {
+                            console.log(!isListing)
+                            if (!isListing) return true;
+                            if (x.listed === 0) return false;
+                            if (x.listed === 1 && !status[0].checked) return false;
+                            if (x.listed === 2 && !status[1].checked) return false;
+                            return true;
+                        }).sort((a,b)=>a.id-b.id)} isAll={isAll} isMine={isMine} getMore={() => {getMore(startNft)}} />
                     </div>
                 </div>
             </div>
