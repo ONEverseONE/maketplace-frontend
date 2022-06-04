@@ -143,6 +143,140 @@ const Activity02 = () => {
       time: "19th June, 2021",
     },
   ]);
+
+  const [rawData] = useState([
+    {
+      img: img1,
+      title: "Pinky Ocean",
+      status1: "following",
+      author: "Gayle Hicks",
+      time: "19th June, 2021",
+    },
+    {
+      img: img2,
+      title: "Deep Sea Plan",
+      status1: "listed by",
+      status2: "for",
+      price: "0.049 ETH",
+      author: "Trista Francis",
+      time: "10 minutes ago",
+    },
+    {
+      img: img3,
+      title: "Rainbow Style",
+      status1: "following",
+      author: "Gayle Hicks",
+      time: "19th June, 2021",
+    },
+    {
+      img: img4,
+      title: "This is Our Story",
+      status1: "listed by",
+      status2: "for",
+      price: "0.049 ETH",
+      author: "Trista Francis",
+      time: "10 minutes ago",
+    },
+    {
+      img: img5,
+      title: "I Believe I Can Fly",
+      status1: "following",
+      author: "Gayle Hicks",
+      time: "19th June, 2021",
+    },
+    {
+      img: img6,
+      title: "Cute Astronout",
+      status1: "listed by",
+      status2: "for",
+      price: "0.049 ETH",
+      author: "Trista Francis",
+      time: "05 minutes ago",
+    },
+    {
+      img: img7,
+      title: "USA Wordmation",
+      status1: "listed by",
+      status2: "for",
+      price: "0.049 ETH",
+      author: "Trista Francis",
+      time: "10 minutes ago",
+    },
+    {
+      img: img8,
+      title: "Running Puppets",
+      status1: "transferred from",
+      price: "0.049 ETH",
+      author: "Gayle Hicks",
+      time: "19th June, 2021",
+    },
+    {
+      img: img1,
+      title: "Pinky Ocean",
+      status1: "following",
+      author: "Gayle Hicks",
+      time: "19th June, 2021",
+    },
+    {
+      img: img2,
+      title: "Deep Sea Plan",
+      status1: "listed by",
+      status2: "for",
+      price: "0.049 ETH",
+      author: "Trista Francis",
+      time: "10 minutes ago",
+    },
+    {
+      img: img3,
+      title: "Rainbow Style",
+      status1: "following",
+      author: "Gayle Hicks",
+      time: "19th June, 2021",
+    },
+    {
+      img: img4,
+      title: "This is Our Story",
+      status1: "listed by",
+      status2: "for",
+      price: "0.049 ETH",
+      author: "Trista Francis",
+      time: "10 minutes ago",
+    },
+    {
+      img: img5,
+      title: "I Believe I Can Fly",
+      status1: "following",
+      author: "Gayle Hicks",
+      time: "19th June, 2021",
+    },
+    {
+      img: img6,
+      title: "Cute Astronout",
+      status1: "listed by",
+      status2: "for",
+      price: "0.049 ETH",
+      author: "Trista Francis",
+      time: "05 minutes ago",
+    },
+    {
+      img: img7,
+      title: "USA Wordmation",
+      status1: "listed by",
+      status2: "for",
+      price: "0.049 ETH",
+      author: "Trista Francis",
+      time: "10 minutes ago",
+    },
+    {
+      img: img8,
+      title: "Running Puppets",
+      status1: "transferred from",
+      price: "0.049 ETH",
+      author: "Gayle Hicks",
+      time: "19th June, 2021",
+    },
+  ]);
+
   const [change, setChange] = useState(false);
   const [dataFilter, setFilter] = useState([
     {
@@ -202,6 +336,45 @@ const Activity02 = () => {
       : (obj[index].checked = "");
     setFilter(obj);
     console.log(obj);
+
+    let tempvar = rawData
+    let filters = dataFilter
+    let chkdfilters = []
+
+    for (let i = 0; i<filters.length; i++){
+      if (filters[i].checked !== ""){
+        chkdfilters.push(filters[i].name)
+      }
+    }
+
+    for (let i = 0; i<chkdfilters.length; i++){
+      if (chkdfilters[i] === "Listings"){
+        chkdfilters[i] = "listed by"
+      }
+
+      else if (chkdfilters[i] === "Followings"){
+        chkdfilters[i] = "following"
+      }
+
+      else if (chkdfilters[i] === "Transfer"){
+        chkdfilters[i] = "transferred from"
+      }
+    }
+
+    console.log(chkdfilters)
+
+    let finaldata = []
+
+    for (let i = 0; i<tempvar.length; i++){
+      var numOf = chkdfilters.filter(x => x === tempvar[i].status1).length
+      console.log("checking", tempvar[i].status1, chkdfilters, numOf)
+      if (numOf > 0){
+        finaldata.push(tempvar[i])
+        console.log(numOf)
+      }
+    }
+
+    setDataBox(finaldata)
     setChange((change) => !change);
   };
 
