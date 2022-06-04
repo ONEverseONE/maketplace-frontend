@@ -61,8 +61,8 @@ const HelpCenter = () => {
                             <div className="breadcrumbs style2">
                                 <ul>
                                     <li><Link to="/">Home</Link></li>
-                                    <li><Link to="#">Community</Link></li>
-                                    <li>Help Center</li>
+                                    <li><Link to="#">Help Center</Link></li>
+                                    {/* <li>Help Center</li> */}
                                 </ul>
                             </div>
                         </div>

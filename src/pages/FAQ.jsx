@@ -48,7 +48,7 @@ const FAQ = () => {
                             <div className="breadcrumbs style2">
                                 <ul>
                                     <li><Link to="/">Home</Link></li>
-                                    <li><Link to="#">Pages</Link></li>
+                                    {/* <li><Link to="#">Pages</Link></li> */}
                                     <li>FAQ</li>
                                 </ul>
                             </div>
