@@ -75,3 +75,7 @@ button:disabled {
   flex-direction: column;
   justify-content: center;
 }
+
+.auction-image{
+  transition: all 0s !important;
+}

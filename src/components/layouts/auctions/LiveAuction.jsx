@@ -46,8 +46,8 @@ LiveAuction.propTypes = {
 const LiveAuctionItem = props => (
     <div className="fl-item col-xl-3 col-lg-6 col-md-6">
         <div className="sc-card-product">
-            <div className="card-media">
-                <Link to={`/nft/${props.item.id}`}><img src={props.item.img} alt="axies" /></Link>
+            <div className="card-media custom-media">
+                <Link to={`/nft/${props.item.id}`}><img src={props.item.img} alt="axies" className='auction-image'/></Link>
                 <Link to="/login" className="wishlist-button heart"><span className="number-like">{props.item.wishlist}</span></Link>
                 <div className="featured-countdown">
                     <span className="slogan"></span>
@@ -66,7 +66,7 @@ const LiveAuctionItem = props => (
             <div className="meta-info">
                 <div className="author">
                     <div className="avatar">
-                        <img src={props.item.imgAuthor} alt="axies" />
+                        <img src={props.item.imgAuthor} alt="axies"/>
                     </div>
                     <div className="info">
                         <span>Creator</span>
