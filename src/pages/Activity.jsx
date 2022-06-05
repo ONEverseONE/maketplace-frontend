@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
+import fuzzysort from 'fuzzysort'
+
 import img1 from "../assets/images/box-item/imgactivity2.jpg";
 import img2 from "../assets/images/box-item/image-box-21.jpg";
 import img3 from "../assets/images/box-item/image-box-6.jpg";
@@ -324,6 +326,7 @@ const Activity02 = () => {
     setFilter(obj);
     setChange((change) => !change);
     console.log("filters cleared");
+    setDataBox([])
     console.log(dataFilter);
     console.log(change);
   };
@@ -377,6 +380,31 @@ const Activity02 = () => {
     setDataBox(finaldata)
     setChange((change) => !change);
   };
+
+  const searchParam = useRef()
+
+  const fuzzySearch = () => {
+    let param = searchParam.current.value
+    console.log(param)
+
+    let finalRes = []
+
+    const results = fuzzysort.go(param, dataBox, { key: 'title'} )
+    for (let i = 0; i < results.length; i++){
+      finalRes.push(results[i].obj)
+    }
+
+    const authResults = fuzzysort.go(param, dataBox, { key: 'author'} )
+    for (let i = 0; i < authResults.length; i++){
+      finalRes.push(authResults[i].obj)
+    }
+
+    // console.log(results)
+    // console.log(authResults)
+    // console.log(finalRes)
+
+    setDataBox(finalRes)
+  }
 
   return (
     <div>
@@ -449,9 +477,10 @@ const Activity02 = () => {
                       className="style-2"
                       type="text"
                       placeholder="Enter your word art"
+                      ref={searchParam}
                       required
                     />
-                    <button className="style-2">
+                    <button className="style-2" onClick={fuzzySearch}>
                       <i className="icon-fl-search-filled"></i>
                     </button>
                   </form>
