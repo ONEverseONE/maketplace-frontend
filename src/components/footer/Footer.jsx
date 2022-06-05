@@ -17,10 +17,10 @@ const Footer = () => {
         },
     ]
     const resourcesList = [
-        {
-            title: "Help & Support",
-            link: "/help-center"
-        },
+        // {
+        //     title: "Help & Support",
+        //     link: "/help-center"
+        // },
         {
             title: "Live Auctions",
             link: "/live-auctions"
@@ -155,13 +155,13 @@ const Footer = () => {
                         </div>
                         <div className="col-lg-3 col-md-6 col-sm-7 col-12">
                             <div className="widget widget-subcribe">
-                                <h5 className="title-widget">Subscribe Us</h5>
-                                <div className="form-subcribe">
+                                <h5 className="title-widget">Our Socials</h5>
+                                {/* <div className="form-subcribe">
                                     <form id="subscribe-form" action="#" method="GET" acceptCharset="utf-8" className="form-submit">
                                         <input name="email"  className="email" type="email" placeholder="info@yourgmail.com" required />
                                         <button id="submit" name="submit" type="submit"><i className="icon-fl-send"></i></button>
                                     </form>
-                                </div>
+                                </div> */}
                                 <div className="widget-social style-1 mg-t32">
                                     <ul>
                                         {

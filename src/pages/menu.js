@@ -13,11 +13,11 @@ const menus = [
         name: 'Activity',
         links: '/activity',
     },
-    {
-        id: 5,
-        name: 'Ranking',
-        links: '/ranking'
-    },
+    // {
+    //     id: 5,
+    //     name: 'Ranking',
+    //     links: '/ranking'
+    // },
     {
         id: 6,
         name: 'FAQ',
@@ -25,8 +25,8 @@ const menus = [
     },
     {
         id: 4,
-        name: 'Help',
-        links: '/help-center',
+        name: 'Live Auctions',
+        links: '/live-auctions',
     },
     {
         id: 7,

@@ -383,18 +383,20 @@ const Activity02 = () => {
 
   const searchParam = useRef()
 
+// use filter results in search too
+
   const fuzzySearch = () => {
     let param = searchParam.current.value
     console.log(param)
 
     let finalRes = []
 
-    const results = fuzzysort.go(param, dataBox, { key: 'title'} )
+    const results = fuzzysort.go(param, rawData, { key: 'title'} )
     for (let i = 0; i < results.length; i++){
       finalRes.push(results[i].obj)
     }
 
-    const authResults = fuzzysort.go(param, dataBox, { key: 'author'} )
+    const authResults = fuzzysort.go(param, rawData, { key: 'author'} )
     for (let i = 0; i < authResults.length; i++){
       finalRes.push(authResults[i].obj)
     }
@@ -404,6 +406,8 @@ const Activity02 = () => {
     // console.log(finalRes)
 
     setDataBox(finalRes)
+
+    // process through filters after this
   }
 
   return (

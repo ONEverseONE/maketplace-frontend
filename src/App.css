@@ -41,3 +41,14 @@ button:disabled {
   cursor: not-allowed;
   opacity: 0.6;
 }
+
+#custom-search-div{
+  width: 400px;
+}
+
+.custom-search{
+  display: flex;
+  justify-content: center;
+  background-color: var(--bg-section);
+  padding-top: 50px;
+}
