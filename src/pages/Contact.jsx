@@ -1,41 +1,43 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
-import Header from '../components/header/Header';
-import Footer from '../components/footer/Footer';
-import img1 from '../assets/images/blog/thumb-8.png'
+import React from "react";
+import { Link } from "react-router-dom";
+import Header from "../components/header/Header";
+import Footer from "../components/footer/Footer";
+import img1 from "../assets/images/blog/thumb-8.png";
+import { useState } from "react";
 
 const Contact01 = () => {
-    return (
-        <div>
-            <Header />
-            <section className="flat-title-page inner">
-                <div className="overlay"></div>
-                <div className="themesflat-container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="page-title-heading mg-bt-12">
-                                <h1 className="heading text-center">Contact</h1>
-                            </div>
-                            <div className="breadcrumbs style2">
-                                <ul>
-                                    <li><Link to="/">Home</Link></li>
-                                    {/* <li><Link to="#">Contact</Link></li> */}
-                                    <li>Contact</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>                    
-            </section>
-            <section className="tf-contact tf-section">
-                <div className="themesflat-container">
-                    <div className="row">
-                        <div className="col-lg-6 col-md-6 col-12">
+  return (
+    <div>
+      <Header />
+      <section className="flat-title-page inner">
+        <div className="overlay"></div>
+        <div className="themesflat-container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="page-title-heading mg-bt-12">
+                <h1 className="heading text-center">Contact</h1>
+              </div>
+              <div className="breadcrumbs style2">
+                <ul>
+                  <li>
+                    <Link to="/">Home</Link>
+                  </li>
+                  {/* <li><Link to="#">Contact</Link></li> */}
+                  <li>Contact</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="tf-contact tf-section">
+        <div className="themesflat-container">
+          {/* <div className="col-lg-6 col-md-6 col-12">
                             <div className="box-feature-contact">
                                 <img src={img1} alt="Axies" />
                             </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6 col-12">
+                        </div> */}
+          {/* <div className="col-lg-6 col-md-6 col-12">
                             <h2 className="tf-title-heading style-2 mg-bt-40">
                                 Drop Up A Message
                             </h2>
@@ -55,13 +57,22 @@ const Contact01 = () => {
                                     <button className="submit">Send message</button>
                                 </form>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <Footer />
+                        </div> */}
+          <h2 className="heading text-center">Join our discord server</h2>
+          <div className="text-center custom-discord">
+            <form action="https://discord.gg/ONEverse" target="_blank">
+              <input
+                type="submit"
+                className="button hover-new-button"
+                value={"https://discord.gg/ONEverse"}
+              ></input>
+            </form>
+          </div>
         </div>
-    );
-}
+      </section>
+      <Footer />
+    </div>
+  );
+};
 
 export default Contact01;
