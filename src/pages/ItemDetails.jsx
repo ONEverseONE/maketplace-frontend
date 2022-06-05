@@ -307,7 +307,7 @@ const ItemDetails01 = () => {
                             <div className="breadcrumbs style2">
                                 <ul>
                                     <li><Link to="/">Home</Link></li>
-                                    <li><Link to="#">Explore</Link></li>
+                                    <li><Link to="/explore">Explore</Link></li>
                                     <li>NFT - { nftId}</li>
                                 </ul>
                             </div>
