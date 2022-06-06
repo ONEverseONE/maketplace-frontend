@@ -89,9 +89,9 @@ const ExploreItem = (props) => {
                     )}
                   </div>
                 </div>
-                <Link to="/activity" className="view-history reload">
+                {/* <Link to="/activity" className="view-history reload">
                   View History
-                </Link>
+                </Link> */}
               </div>
             </div>
             </Link>

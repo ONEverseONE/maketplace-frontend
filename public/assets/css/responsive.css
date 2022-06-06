@@ -301,7 +301,7 @@
   }
 
   .box-epxlore .sc-card-product {
-    width: 48%;
+    width: 250px;
   }
   
   .sub-title.pad-400{
@@ -565,6 +565,7 @@
   background: linear-gradient(
 216.56deg,#E250E5 5.32%,#4B50E6 94.32%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .main-nav>ul>li .sub-menu li.current-item a {
@@ -584,6 +585,7 @@
   background: linear-gradient(
 216.56deg,#E250E5 5.32%,#4B50E6 94.32%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -621,6 +623,7 @@
   background: linear-gradient(
       216.56deg,#E250E5 5.32%,#4B50E6 94.32%);
           -webkit-background-clip: text;
+          background-clip: text;
           -webkit-text-fill-color: transparent;
 }
 
@@ -1189,7 +1192,7 @@
   .meta-item-details .item.count-down,
   .tab-authors .author-profile .feature-profile,
   .tab-authors .author-profile .infor-profile,
-  .box-epxlore .sc-card-product,
+  /* .box-epxlore .sc-card-product, */
   .mainslider.home .image,
   .mainslider.home .wrap-heading .content,
   .box-activity .sc-card-activity.style-2,

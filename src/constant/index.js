@@ -14,6 +14,8 @@ export const CONTRACT_NFT_PUFF = '0x701d1907fd9Ed5A1B4d6f005D602C723F9fD47fa';
 export const CONTRACT_MARKETPLACE = '0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944';
 export const PUFF_IMAGE_URL = 'https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/d'
 
+// puff image URL is broken
+
 //------------------------------Info for connect wallet-----------------------------------
 
 export const DefaultNetwork = Number(CHAIN_ID);

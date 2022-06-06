@@ -2008,7 +2008,7 @@
 
 .breadcrumbs ul li a {
     position     : relative;
-    color        : #8A8AA0;
+    color        : #b6b6b6;
     padding-right: 15px;
 }
 
@@ -2019,7 +2019,7 @@
 .breadcrumbs ul li a::after {
     content         : "";
     position        : absolute;
-    background-color: #8A8AA0;
+    background-color: #b6b6b6;
     ;
     width    : 1px;
     height   : 14px;
@@ -3371,7 +3371,7 @@ section.today-picks {
 }
 
 .form-inner .btn-checkbox {
-    border: 1px solid #8A8AA0;
+    border: 1px solid #b6b6b6;
 }
 
 .form-inner form label input:checked~.btn-checkbox {
@@ -3425,7 +3425,7 @@ section.today-picks {
     border-radius: 8px;
     padding      : 16px 20px;
     margin-bottom: 24px;
-    color        : #8A8AA0;
+    color        : #b6b6b6;
     background   : transparent;
 }
 
@@ -3464,7 +3464,7 @@ section.today-picks {
     position: absolute;
     top     : 20px;
     right   : 23px;
-    color   : #8A8AA0;
+    color   : #b6b6b6;
     z-index : -1;
 }
 
@@ -4082,7 +4082,7 @@ section.today-picks {
 
 .tf-item-details .content-right .themesflat-tabs .react-tabs__tab-panel::-webkit-scrollbar-thumb,
 .home-8 .side-bar::-webkit-scrollbar {
-    background-color: #8A8AA0;
+    background-color: #b6b6b6;
     height          : 30px;
     border-radius   : 100px;
 }
@@ -4214,7 +4214,7 @@ section.today-picks {
 .tf-item-details.style-2 .content-right .meta-item-details .js-countdown .countdown__label {
     margin   : 0 11.1px;
     font-size: 30px;
-    color    : #8A8AA0;
+    color    : #b6b6b6;
 }
 .tf-item-details.style-2 .content-right .meta-item-details .countdown__item:last-child .countdown__label {
     margin: 0;
@@ -4282,12 +4282,13 @@ section.today-picks {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
+    gap: 20px;
 }
 
 .box-epxlore .sc-card-product {
-    width: 31.5%;
+    width: 250px;
 }
 
 
@@ -4476,7 +4477,7 @@ section.today-picks {
 
 .create-item .react-tabs__tab,
 .create-item .react-tabs__tab span {
-    color: #8A8AA0;
+    color: #b6b6b6;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition   : all 0.3s ease-in-out;
     -ms-transition    : all 0.3s ease-in-out;
@@ -4888,7 +4889,7 @@ button.accordion-button {
 
 .option-profile .image.style2{
     padding: 1px;
-    background: #8A8AA0;
+    background: #b6b6b6;
     margin-right: 0;
 }
 
@@ -5496,7 +5497,7 @@ button.accordion-button {
 }
 
 .wrap-cart .cart_item .progress{
-    background: #8A8AA0;
+    background: #b6b6b6;
     border-radius: 17px;
     height: 3px;
     position: absolute;
@@ -5622,7 +5623,7 @@ button.accordion-button {
     width: 33.33%;
     height: 3px;
     border-radius: 17px;
-    background-color: #8A8AA0;
+    background-color: #b6b6b6;
 }
 .carousel5.swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet.swiper-pagination-bullet-active{
     background-color: #fff;
@@ -6322,7 +6323,7 @@ button.accordion-button {
 .sc-card-collection.style-2.home5 .content .description span{
     font-size: 13px;
     line-height: 20px;
-    color: #8A8AA0;
+    color: #b6b6b6;
     margin-right: 7px;
 }
 .sc-card-collection.style-2.home5 .content .description .name{
@@ -6478,7 +6479,7 @@ button.accordion-button {
 .home-6 .live-auctions .sc-card-product .meta-info .author .info span,
 .home-6 .live-auctions .sc-card-product .price span {
     letter-spacing: 0.5px;
-    color: #8A8AA0;
+    color: #b6b6b6;
 }
 
 .carousel6 .sc-card-product.style2 .meta-info .price h5 {
@@ -6833,7 +6834,7 @@ button.accordion-button {
 .sc-card-product.style-h7 .meta-info .author .info span {
     font-size: 13px;
     line-height: 21px;
-    color: #8A8AA0;
+    color: #b6b6b6;
     margin-right: 3px;
 }
 
@@ -7001,7 +7002,7 @@ button.accordion-button {
 }
 
 .home-7 .top-seller .sc-author-box .author-infor .tag{
-    color: #8A8AA0;
+    color: #b6b6b6;
     font-size: 13px;
     line-height: 20px;
 }
@@ -7026,7 +7027,7 @@ button.accordion-button {
     font-size: 20px;
     line-height: 26px;
     font-weight: 700;
-    color: #8A8AA0;
+    color: #b6b6b6;
     margin-bottom: 17px;
 }
 
@@ -7124,7 +7125,7 @@ button.accordion-button {
 .sc-card-product.menu_card.style-h7 .card-bottom .view-history {
     font-size: 13px;
     line-height: 20px;
-    color: #8A8AA0;
+    color: #b6b6b6;
     display: flex;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -7240,7 +7241,7 @@ button.accordion-button {
 .sc-card-collection.style-2.sc-card-style7 .card-bottom .author .infor span {
     font-size: 12px;
     line-height: 20px;
-    color: #8A8AA0;
+    color: #b6b6b6;
 }
 
 .sc-card-collection.style-2.sc-card-style7 .card-bottom .author .infor .name a {
@@ -7503,7 +7504,7 @@ button.accordion-button {
 
     font-size: 20px;
     line-height: 25px;
-    color: #8A8AA0;
+    color: #b6b6b6;
     -webkit-transition: all 0.3s ease;
     -moz-transition   : all 0.3s ease;
     -ms-transition    : all 0.3s ease;
@@ -7654,7 +7655,7 @@ button.accordion-button {
     line-height: 24px;
     text-transform: uppercase;
     font-weight: 700;
-    color: #8A8AA0;
+    color: #b6b6b6;
 }
 
 .content-item2 .sc-card-product.menu_card.style-h7 .meta-info .info p{
@@ -7711,7 +7712,7 @@ button.accordion-button {
 }
 
 .is_dark .content-item2 .sc-button.style-place-bid {
-    border: 1px solid #8A8AA0;
+    border: 1px solid #b6b6b6;
 }
 
 .is_dark .content-item2 .sc-button.style-place-bid span{
@@ -8241,7 +8242,7 @@ button.accordion-button {
 }
 
 .slider-labels .title {
-    color: #8A8AA0;
+    color: #b6b6b6;
     margin-right: 3px;
 }
 
