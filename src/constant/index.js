@@ -9,9 +9,16 @@ export const MULTICALL_ADDRESS = '0xd078799c53396616844e2fa97f0dd2b4c145a685';
 
 //---------------------------------contract address-------------------------------------
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
-export const CONTRACT_TOKEN = '0x8f6cdaA89122Bd9FaE6d006d8DC88B738F1B537d';
-export const CONTRACT_NFT_PUFF = '0x701d1907fd9Ed5A1B4d6f005D602C723F9fD47fa';
-export const CONTRACT_MARKETPLACE = '0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944';
+
+// export const CONTRACT_TOKEN = '0x8f6cdaA89122Bd9FaE6d006d8DC88B738F1B537d'; //old
+export const CONTRACT_TOKEN = '0xD23EA0cd70E3faD058176B5a307bDdfAF2a533e0'; //new
+
+// export const CONTRACT_NFT_PUFF = '0x701d1907fd9Ed5A1B4d6f005D602C723F9fD47fa'; //old
+export const CONTRACT_NFT_PUFF = '0x4400B53E5d2AA2738a92c193b4D9bD741A3ce22D'; //new
+
+// export const CONTRACT_MARKETPLACE = '0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944'; //old
+export const CONTRACT_MARKETPLACE = '0xe206Bd5eCD23C9d789062442F7DB015b80262802'; //new
+
 export const PUFF_IMAGE_URL = 'https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/d'
 
 // puff image URL is broken
