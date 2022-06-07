@@ -14,7 +14,8 @@ import imgCollection3 from '../images/avatar/avt-17.jpg'
 const liveAuctionData = [
     {
         img: img1,
-        title: "Hamlet Contemplates Contemplates ",
+        title: "click me lol",
+        id: 19,
         tags: "bsc",
         imgAuthor: imga1,
         nameAuthor: "SalvadorDali",

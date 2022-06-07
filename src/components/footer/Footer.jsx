@@ -238,7 +238,7 @@ const Footer = () => {
                 <p className="text-right price color-popup"> 4.89 ETH </p>
               </div>
               <div className="d-flex justify-content-between">
-                <p> Service free:</p>
+                <p> Service fee:</p>
                 <p className="text-right price color-popup"> 0,89 ETH </p>
               </div>
               <div className="d-flex justify-content-between">
