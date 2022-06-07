@@ -84,7 +84,7 @@ const LiveAuctionItem = (props) => (
       </div>
       <div className="card-title">
         <h5>
-          <Link to={`/nft/${props.item.tokenId}`}>{props.item.title}</Link> { /* change here */}
+          <Link to={`/nft/${props.item.tokenId}`}>"NFT {props.item.id}"</Link> { /* change here */}
         </h5>
         <div className="tags">{props.item.tags}</div>
       </div>
@@ -97,7 +97,7 @@ const LiveAuctionItem = (props) => (
             <span>Creator</span>
             <h6>
               {" "}
-              <Link to="/authors">{props.item.nameAuthor}</Link>{" "}
+              <Link to="/authors">{props.item.originalOwner}</Link>{" "}
             </h6>
           </div>
         </div>

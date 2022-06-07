@@ -1,45 +1,94 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import { Link } from "react-router-dom";
 import liveAuctionData from "../assets/fake-data/data-live-auction";
 import LiveAuction from "../components/layouts/auctions/LiveAuction";
 import fuzzysort from "fuzzysort";
+import { useQuery } from "@apollo/client";
+import { GQL_GETLISTED, GQL_GETALL } from "../constant/gqls";
+import { formatEther } from "@ethersproject/units";
+import {
+  CONTRACT_MARKETPLACE,
+  ZERO_ADDRESS,
+  PUFF_IMAGE_URL,
+} from "../constant/index.js";
 
 const LiveAuctions = () => {
-  
-  const searchParam = useRef()
+  const searchParam = useRef();
 
-  const [rawData] = useState(liveAuctionData)
-  const [dataBox, setDataBox] = useState(liveAuctionData)
+  const [rawData] = useState(liveAuctionData);
+  const [dataBox, setDataBox] = useState(liveAuctionData);
+  const [nfts, setNfts] = useState([]);
+
+  const {
+    loading: listed_loading,
+    error: listed_error,
+    data: listed_data,
+    refetch: listed_refetch,
+    fetchMore: listed_fetchMore,
+  } = useQuery(GQL_GETLISTED, {
+    // variables: { address: account?.toLowerCase() },
+    fetchPolicy: "no-cache",
+  });
+
+  if (listed_loading) return <></>;
+
+  console.log("data here");
+  console.log(listed_data);
+
+  const newNfts = listed_data.nfts.map((item, index) => ({
+    id: Number(item.tokenId),
+    img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
+    // rarity: PUFF_RARITY[Number(item.id) - 1].nftRarity,
+    currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
+    listed: item.type,
+    originalOwner: item.owner,
+    price: item.type > 0 ? Number(formatEther(item.originalPrice)) : 0,
+    highestBid:
+      item.type === 2 && item.bids.length > 0
+        ? Number(formatEther(item.bids[item.bids.length - 1].price))
+        : 0,
+    highestBidder:
+      item.type === 2 && item.bids.length > 0
+        ? item.bids[item.bids.length - 1].address
+        : ZERO_ADDRESS,
+    timeEnd: item.type === 2 ? Number(item.timeEnd) : 0,
+  }));
+  console.log("############", listed_data.nfts, newNfts);
+  // setNfts(newNfts);
+
+  // useEffect(() => {
+  //   setNfts(newNfts);
+  // }, [listed_loading]);
 
   const fuzzySearch = () => {
-    let param = searchParam.current.value
-    console.log(param)
+    let param = searchParam.current.value;
+    console.log(param);
 
-    let finalRes = []
+    let finalRes = [];
 
-    const results = fuzzysort.go(param, rawData, { key: 'title'} )
-    for (let i = 0; i < results.length; i++){
-      finalRes.push(results[i].obj)
+    const results = fuzzysort.go(param, rawData, { key: "title" });
+    for (let i = 0; i < results.length; i++) {
+      finalRes.push(results[i].obj);
     }
 
-    const authResults = fuzzysort.go(param, rawData, { key: 'nameAuthor'} )
-    for (let i = 0; i < authResults.length; i++){
-      finalRes.push(authResults[i].obj)
+    const authResults = fuzzysort.go(param, rawData, { key: "nameAuthor" });
+    for (let i = 0; i < authResults.length; i++) {
+      finalRes.push(authResults[i].obj);
     }
 
-    const colResults = fuzzysort.go(param, rawData, { key: 'nameCollection'} )
-    for (let i = 0; i < colResults.length; i++){
-      finalRes.push(colResults[i].obj)
+    const colResults = fuzzysort.go(param, rawData, { key: "nameCollection" });
+    for (let i = 0; i < colResults.length; i++) {
+      finalRes.push(colResults[i].obj);
     }
 
     // console.log(results)
     // console.log(authResults)
-    console.log(finalRes)
+    console.log(finalRes);
 
-    setDataBox(finalRes)
-  }
+    setDataBox(finalRes);
+  };
 
   return (
     <div className="auctions">
@@ -81,7 +130,7 @@ const LiveAuctions = () => {
           </form>
         </div>
       </section>
-      <LiveAuction data={dataBox} />
+      <LiveAuction data={newNfts} />
       <Footer />
     </div>
   );
