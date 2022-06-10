@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import Countdown from "react-countdown";
 import CardModal from "../CardModal";
 
-
 const LiveAuction = (props) => {
   const data = props.data;
   const [modalShow, setModalShow] = useState(false);
@@ -24,7 +23,12 @@ const LiveAuction = (props) => {
           </div>
 
           {data.slice(0, visible).map((item, index) => (
-            <LiveAuctionItem key={index} item={item} modalShow = {modalShow} setfunc = {setModalShow}/>
+            <LiveAuctionItem
+              key={index}
+              item={item}
+              modalShow={modalShow}
+              setfunc={setModalShow}
+            />
           ))}
           {visible < data.length && (
             <div className="col-md-12 wrap-inner load-more text-center">
@@ -49,11 +53,15 @@ LiveAuction.propTypes = {
 };
 
 const LiveAuctionItem = (props) => (
-
   <div className="fl-item col-xl-3 col-lg-6 col-md-6">
     <div className="sc-card-product">
       <div className="card-media custom-media">
-        <Link to={`/nft/${props.item.tokenId}`}> { /* change here */}
+        <div className="custom-image-container">
+          <img src={props.item.img} alt="axies" />
+        </div>
+        <Link to={`/nft/${props.item.id}`}>
+          {" "}
+          {/* change here */}
           <img src={props.item.img} alt="axies" className="auction-image" />
         </Link>
         {/* <Link to="/login" className="wishlist-button heart">
@@ -84,7 +92,8 @@ const LiveAuctionItem = (props) => (
       </div>
       <div className="card-title">
         <h5>
-          <Link to={`/nft/${props.item.tokenId}`}>"NFT {props.item.id}"</Link> { /* change here */}
+          <Link to={`/nft/${props.item.id}`}>"NFT {props.item.id}"</Link>{" "}
+          {/* change here */}
         </h5>
         <div className="tags">{props.item.tags}</div>
       </div>
@@ -97,7 +106,8 @@ const LiveAuctionItem = (props) => (
             <span>Creator</span>
             <h6>
               {" "}
-              <Link to="/authors">{props.item.originalOwner}</Link>{" "}
+              {/* <Link to="/authors">{props.item.originalOwner}</Link>{" "} */}
+              me
             </h6>
           </div>
         </div>
@@ -107,7 +117,11 @@ const LiveAuctionItem = (props) => (
         </div>
       </div>
     </div>
-    <CardModal show={props.modalShow} onHide={() => props.setfunc(false)} placebidfunc={props.placebidfunc}/>
+    <CardModal
+      show={props.modalShow}
+      onHide={() => props.setfunc(false)}
+      placebidfunc={props.placebidfunc}
+    />
   </div>
 );
 

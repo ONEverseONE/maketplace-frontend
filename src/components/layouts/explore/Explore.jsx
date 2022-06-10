@@ -21,6 +21,7 @@ import {
   GQL_GETALL,
 } from "../../../constant/gqls";
 import { useQuery } from "@apollo/client";
+import { toast } from "react-toastify";
 
 const Explore = () => {
   const count = 12;
@@ -221,7 +222,13 @@ const Explore = () => {
     fetchPolicy: "no-cache",
   });
 
-  const { loading: all_loading, error: all_error, data: all_data, refetch: all_refetch, fetchMore: all_fetchMore } = useQuery(GQL_GETALL, {
+  const {
+    loading: all_loading,
+    error: all_error,
+    data: all_data,
+    refetch: all_refetch,
+    fetchMore: all_fetchMore,
+  } = useQuery(GQL_GETALL, {
     // variables: { address: account?.toLowerCase() },
     fetchPolicy: "no-cache",
   });
@@ -348,9 +355,10 @@ const Explore = () => {
                   My NFT
                   <Switch
                     onChange={() => {
-                      if (!isMine)
+                      if (!isMine) {
                         your_refetch({ address: account?.toLowerCase() });
-                      else {
+                        toast.info("Connect Your wallet if you can't see your NFTs");
+                      } else {
                         if (!isListing)
                           // getListedNfts(0);
                           // listed_refetch();
@@ -369,7 +377,7 @@ const Explore = () => {
               </div>
               <div className="widget widget-category mgbt-24">
                 <div className="nft-switch">
-                  {isListing ? "Listed Tokens Only": "All Tokens"}
+                  {isListing ? "Listed Tokens Only" : "All Tokens"}
                   <Switch
                     onChange={() => {
                       if (!isMine) {
