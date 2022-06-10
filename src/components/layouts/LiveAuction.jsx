@@ -58,17 +58,19 @@ const LiveAuction = (props) => {
                           <div className="slider-item">
                             <div className="sc-card-product">
                               <div className="card-media">
-                                <Link to={`/nft/${item.id}`}>
+                                <Link to={`/nft/${item.tokenId}`}>
+                                    <div className="custom-image-container">
                                   <img src={item.img} alt="axies" />
+                                  </div>
                                 </Link>
-                                <Link
+                                {/* <Link
                                   to="/login"
                                   className="wishlist-button heart"
                                 >
                                   <span className="number-like">
                                     {item.wishlist}
                                   </span>
-                                </Link>
+                                </Link> */}
                                 <div className="featured-countdown">
                                   <span className="slogan"></span>
                                   <Countdown date={Date.now() + 500000000}>
@@ -86,30 +88,31 @@ const LiveAuction = (props) => {
                               </div>
                               <div className="card-title">
                                 <h5>
-                                  <Link to={`/nft/${item.id}`}>
-                                    "{item.title}"
+                                  <Link to={`/nft/${item.tokenId}`}>
+                                    "Puff {item.tokenId}"
                                   </Link>
                                 </h5>
-                                <div className="tags">{item.tags}</div>
+                                <div className="tags">{item.tags}</div> {/* this does not exist */}
                               </div>
                               <div className="meta-info">
                                 <div className="author">
                                   <div className="avatar">
-                                    <img src={item.imgAuthor} alt="axies" />
+                                    <img src={item.imgAuthor} alt="axies" /> {/* this does not exist */}
                                   </div>
                                   <div className="info">
-                                    <span>Creator</span>
+                                    <span>Listed By</span>
                                     <h6>
                                       {" "}
                                       <Link to="/authors">
-                                        {item.nameAuthor}
+                                        {/* {item.nameAuthor} this does not exist */}
+                                        me
                                       </Link>{" "}
                                     </h6>
                                   </div>
                                 </div>
                                 <div className="price">
                                   <span>Current Bid</span>
-                                  <h5> {item.price}</h5>
+                                  <h5> {item.bids.length === 0 ? item.originalPrice : item.bids[0]}</h5>
                                 </div>
                               </div>
                             </div>
