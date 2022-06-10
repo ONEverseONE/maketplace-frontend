@@ -20,80 +20,82 @@ const ExploreItem = (props) => {
         <div className="box-epxlore">
           {(isMine ? data.slice(0, visible) : data).map((item, index) => (
             <Link to={`/nft/${item.id}`}>
-            <div
-              className={`sc-card-product explode style2 mg-bt ${
-                item.listed === 0 ? "comingsoon" : ""
-              } `}
-              key={index}
-            >
-              <div className="card-media">
-                <Link to={`/nft/${item.id}`}>
-                  <img src={item.img} alt="Axies" />
-                </Link>
-                <div className="button-place-bid">
-                  <button
-                    onClick={() => setModalShow(true)}
-                    className="sc-button style-place-bid style bag fl-button pri-3"
-                  >
-                    <span>Place Bid</span>
-                  </button>
+              <div
+                className={`sc-card-product explode style2 mg-bt ${
+                  item.listed === 0 ? "comingsoon" : ""
+                } `}
+                key={index}
+              >
+                <div className="card-media">
+                  <Link to={`/nft/${item.id}`}>
+                    <div className="custom-image-container">
+                      <img src={item.img} alt="Axies" className="img-custom" />
+                    </div>
+                  </Link>
+                  <div className="button-place-bid">
+                    <button
+                      onClick={() => setModalShow(true)}
+                      className="sc-button style-place-bid style bag fl-button pri-3"
+                    >
+                      <span>Place Bid</span>
+                    </button>
+                  </div>
+                  <div className="coming-soon">Not Listed</div>
                 </div>
-                <div className="coming-soon">Not Listed</div>
-              </div>
-              <div className="card-title">
-                <h2>
-                  <Link to={`/nft/${item.id}`}>"Puff {item.id}"</Link>
-                </h2>
+                <div className="card-title">
+                  <h2>
+                    <Link to={`/nft/${item.id}`}>"Puff {item.id}"</Link>
+                  </h2>
 
-                <div className="tags">ONE</div>
-              </div>
-              <div className="meta-info">
-                <div className="author">
-                  <div className="info">
-                    <span>Owner</span>
-                    <h6>
-                      {shortAddress(
-                        item.currentOwner === CONTRACT_MARKETPLACE
-                          ? item.originalOwner
-                          : item.currentOwner
-                      )}
-                    </h6>
+                  <div className="tags">ONE</div>
+                </div>
+                <div className="meta-info">
+                  <div className="author">
+                    <div className="info">
+                      <span>Owner</span>
+                      <h6>
+                        {shortAddress(
+                          item.currentOwner === CONTRACT_MARKETPLACE
+                            ? item.originalOwner
+                            : item.currentOwner
+                        )}
+                      </h6>
+                    </div>
+                  </div>
+
+                  <div className="author">
+                    {/* <div className="info align-items-end">
+                      <span className="w-100 d-flex justify-content-end">
+                        Rarity
+                      </span>
+                      <h6>{item.rarity}</h6>
+                    </div> */}
                   </div>
                 </div>
-
-                <div className="author">
-                  <div className="info align-items-end">
-                    <span className="w-100 d-flex justify-content-end">
-                      Rarity
+                <div className="card-bottom style-explode">
+                  <div className="price">
+                    <span>
+                      Price {item.highestBid > 0 ? "(highest bid)" : ""}
                     </span>
-                    <h6>{item.rarity}</h6>
+                    <div className="price-details">
+                      {item.listed === 0 ? (
+                        <h5>Not listed</h5>
+                      ) : (
+                        <>
+                          <h5>
+                            {item.highestBid > 0 ? item.highestBid : item.price}{" "}
+                            <span>ONE</span>
+                          </h5>
+                          <span>= $ {item.price}</span>
+                        </>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="card-bottom style-explode">
-                <div className="price">
-                  <span>
-                    Price {item.highestBid > 0 ? "(highest bid)" : ""}
-                  </span>
-                  <div className="price-details">
-                    {item.listed === 0 ? (
-                      <h5>Not listed</h5>
-                    ) : (
-                      <>
-                        <h5>
-                          {item.highestBid > 0 ? item.highestBid : item.price}{" "}
-                          <span>ONE</span>
-                        </h5>
-                        <span>= $ {item.price}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-                {/* <Link to="/activity" className="view-history reload">
+                  {/* <Link to="/activity" className="view-history reload">
                   View History
                 </Link> */}
+                </div>
               </div>
-            </div>
             </Link>
           ))}
         </div>
