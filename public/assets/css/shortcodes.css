@@ -876,6 +876,7 @@
     -webkit-filter: grayscale(0%);
     -ms-filter: grayscale(0%);
     -moz-filter: grayscale(0%);
+    filter: grayscale(0%);
     transition: all 0.3s ease;
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
@@ -885,9 +886,10 @@
 }
 
 .sc-card-product .card-media img {
-    webkit-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
+    /* -webkit-filter: grayscale(100%); */
+    /* -ms-filter: grayscale(100%); */
+    /* -moz-filter: grayscale(100%); */
+    /* filter: grayscale(100%); */
     transition: all 0.3s ease;
     -webkit-transition: all 0.4s ease;
     -moz-transition: all 0.4s ease;
@@ -1047,7 +1049,10 @@
 .sc-card-product .card-media img {
     width: 100%;
 }
-
+.custom-image-container{
+    width: 100%;
+    aspect-ratio: 1;
+}
 .sc-card-product .card-title {
     display        : flex;
     align-items    : center;
@@ -1746,6 +1751,7 @@
     background: linear-gradient(-45deg, #E250E5, #4B50E6, #E250E5, #4B50E6);
     background-size: 100% 100%;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-stroke: 3px transparent;
     -webkit-text-fill-color  : #14141f;
 }
@@ -1753,6 +1759,7 @@
 .flat-slider .heading .fill {
     background: linear-gradient(178.56deg, #E250E5 5.32%, #4B50E6 94.32%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -2749,6 +2756,7 @@ section.today-picks {
     background: var(--primary-color);
     box-shadow: 0px 3px 16px rgb(47 83 109 / 12%);
     -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     border: 2px solid var(--primary-color3);
 }
 
@@ -4732,6 +4740,7 @@ button.accordion-button {
     line-height: 26px;
 	font-weight: 700;
 	-webkit-transition: all .1s ease;
+    transition: all .1s ease;
     margin-bottom: 13px;
 }
 
@@ -5635,9 +5644,10 @@ button.accordion-button {
 
 .inner-cart img {
     width: 100%;
-    webkit-filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
     transition: all .3s ease;
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
@@ -5651,6 +5661,7 @@ button.accordion-button {
     -webkit-filter: grayscale(0%);
     -ms-filter: grayscale(0%);
     -moz-filter: grayscale(0%);
+    filter: grayscale(0%);
     transition: all .3s ease;
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
@@ -5749,6 +5760,7 @@ button.accordion-button {
     background: linear-gradient(
 178.56deg, #E250E5 5.32%, #4B50E6 94.32%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -5756,6 +5768,7 @@ button.accordion-button {
     background: linear-gradient( 
 178.56deg, #E250E5 -50.68%, #4B50E6 94.32%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -7155,6 +7168,7 @@ button.accordion-button {
     background: linear-gradient(
 178.56deg, #E250E5 5.32%, #4B50E6 94.32%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
