@@ -6,7 +6,7 @@ import liveAuctionData from "../assets/fake-data/data-live-auction";
 import LiveAuction from "../components/layouts/auctions/LiveAuction";
 import fuzzysort from "fuzzysort";
 import { useQuery } from "@apollo/client";
-import { GQL_GETLISTED, GQL_GETALL } from "../constant/gqls";
+import { GQL_GETLIVE, GQL_GETALL } from "../constant/gqls";
 import { formatEther } from "@ethersproject/units";
 import {
   CONTRACT_MARKETPLACE,
@@ -27,7 +27,7 @@ const LiveAuctions = () => {
     data: listed_data,
     refetch: listed_refetch,
     fetchMore: listed_fetchMore,
-  } = useQuery(GQL_GETLISTED, {
+  } = useQuery(GQL_GETLIVE, {
     // variables: { address: account?.toLowerCase() },
     fetchPolicy: "no-cache",
   });

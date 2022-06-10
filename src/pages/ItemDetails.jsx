@@ -32,7 +32,7 @@ import { formatEther, parseEther } from "@ethersproject/units";
 import Switch from "react-switch";
 import InputMask from "react-input-mask";
 import { toast } from "react-toastify";
-import { GQL_GETLISTED } from "../constant/gqls";
+import { GQL_GETALL, GQL_GETLISTED } from "../constant/gqls";
 import { useQuery } from "@apollo/client";
 
 const ItemDetails01 = () => {
@@ -108,6 +108,9 @@ const ItemDetails01 = () => {
     // variables: { address: account?.toLowerCase() },
     fetchPolicy: "no-cache",
   });
+
+  console.log(listed_loading, listed_data)
+
   // const [ethPrice, setEthPrice] = useState(2000);
 
   // useEffect(() => {
@@ -131,13 +134,17 @@ const ItemDetails01 = () => {
           library
         );
 
+        console.log("breakpoint 1")
+
       const [listed, saleInfo, auctionInfo] = await multicallMarketProvider.all(
         [
-          multicallMarketContract.listed(nftId),
-          multicallMarketContract.directSales(nftId),
-          multicallMarketContract.auctionSales(nftId),
+          multicallMarketContract.listed(CONTRACT_NFT_PUFF, nftId),
+          multicallMarketContract.directSales(CONTRACT_NFT_PUFF, nftId),
+          multicallMarketContract.auctionSales(CONTRACT_NFT_PUFF, nftId),
         ]
       );
+
+      console.log("breakpoint 2")
 
       console.log({
         id: Number(nftId),
@@ -204,6 +211,18 @@ const ItemDetails01 = () => {
       getDifferentialAmount();
     }
   }, [nftId, library]);
+
+  //   useEffect(() => {
+  //       if (typeof listed_data === 'undefined'){
+  //           console.log("data not loaded yet")
+  //       }
+  //       else if (listed_data.length === 0){
+  //         console.log("data empty", listed_data)
+  //       }
+  //       else{
+  //           console.log("data here", listed_data)
+  //       }
+  //   }, [listed_loading])
 
   const updateDuration = (val) => {
     const arr = val
@@ -529,6 +548,8 @@ const ItemDetails01 = () => {
                     faucibus cursus lectus pulvinar dolor non ultrices eget.
                     Facilisi lobortisal morbi fringilla urna amet sed ipsum
                   </p>
+                  <br />
+                  <br />
                   <button
                     className="sc-button loadmore style bag fl-button pri-3 w-100"
                     disabled={
@@ -815,7 +836,11 @@ const ItemDetails01 = () => {
           </div>
         </div>
       </div>
-      <LiveAuction data={listed_data} placebidfunc={placeBid} />
+      {listed_loading ? (
+         <LiveAuction data={[]} placebidfunc={placeBid} />
+      ) : (
+        <LiveAuction data={listed_data.nfts} placebidfunc={placeBid} />
+      )}
       <Footer />
     </div>
   );
