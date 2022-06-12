@@ -32,8 +32,9 @@ import { formatEther, parseEther } from "@ethersproject/units";
 import Switch from "react-switch";
 import InputMask from "react-input-mask";
 import { toast } from "react-toastify";
-import { GQL_GETALL, GQL_GETLISTED } from "../constant/gqls";
+import { GQL_GETLISTED } from "../constant/gqls";
 import { useQuery } from "@apollo/client";
+import CardModal from "../components/layouts/CardModal";
 
 const ItemDetails01 = () => {
   const [dataHistory] = useState([
@@ -83,6 +84,7 @@ const ItemDetails01 = () => {
 
   const { nftId } = useParams();
   const { account, library } = useWeb3React();
+  const [modalShow, setModalShow] = useState(false);
 
   const [isAuction, setIsAuction] = useState(false);
   const [fixPrice, setFixPrice] = useState("10");
@@ -359,6 +361,7 @@ const ItemDetails01 = () => {
       );
     }
   };
+
   const placeBid = async (bidvalue) => {
     console.log("place bid try");
     console.log("nftID", nftId);
@@ -426,6 +429,7 @@ const ItemDetails01 = () => {
       toast.success("Success!");
       getNftInfo();
     } catch (err) {
+        console.log(err)
       const msg = JSON.parse(JSON.stringify(err));
       toast.error(
         msg.data?.message ?? msg.message ?? "Something went wrong, please retry"
@@ -550,20 +554,22 @@ const ItemDetails01 = () => {
                   </p>
                   <br />
                   <br />
+                  {/* FIX THIS */}
                   <button
                     className="sc-button loadmore style bag fl-button pri-3 w-100"
                     disabled={
                       nft.highestBidder === account ||
-                      (nft.timeEnd < Date.now() && nft.timeEnd > 0)
+                      ((nft.timeEnd < Date.now() && nft.timeEnd > 0) || nft.originalOwner === account)
                     }
-                    onClick={placeBid}
+                    // onClick={placeBid}
+                    onClick={() => setModalShow(true)}
                   >
                     <span>
                       {nft.timeEnd < Date.now() && nft.timeEnd > 0
                         ? "Auction is ended"
                         : nft.highestBidder === account
                         ? "You are highest bidder"
-                        : "Place a bid"}
+                        : "Place a bid type"}
                     </span>
                   </button>
 
@@ -842,6 +848,7 @@ const ItemDetails01 = () => {
         <LiveAuction data={listed_data.nfts} placebidfunc={placeBid} />
       )}
       <Footer />
+      <CardModal show={modalShow} onHide={() => setModalShow(false)} placebidfunc={placeBid}/>
     </div>
   );
 };

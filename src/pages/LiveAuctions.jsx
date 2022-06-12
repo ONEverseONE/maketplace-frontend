@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import { Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import liveAuctionData from "../assets/fake-data/data-live-auction";
 import LiveAuction from "../components/layouts/auctions/LiveAuction";
 import fuzzysort from "fuzzysort";
 import { useQuery } from "@apollo/client";
-import { GQL_GETLIVE, GQL_GETALL } from "../constant/gqls";
+import { GQL_GETLIVE } from "../constant/gqls";
 import { formatEther } from "@ethersproject/units";
 import {
   CONTRACT_MARKETPLACE,
@@ -19,7 +19,6 @@ const LiveAuctions = () => {
 
   const [rawData] = useState(liveAuctionData);
   const [dataBox, setDataBox] = useState(liveAuctionData);
-  const [nfts, setNfts] = useState([]);
 
   const {
     loading: listed_loading,
@@ -36,6 +35,10 @@ const LiveAuctions = () => {
 
   console.log("data here");
   console.log(listed_data);
+
+  const placeBid = () => {
+    console.log("working yay")
+  }
 
   const newNfts = listed_data.nfts.map((item, index) => ({
     id: Number(item.tokenId),
@@ -130,7 +133,7 @@ const LiveAuctions = () => {
           </form>
         </div>
       </section>
-      <LiveAuction data={newNfts} />
+      <LiveAuction data={newNfts} placebidfunc={placeBid}/>
       <Footer />
     </div>
   );

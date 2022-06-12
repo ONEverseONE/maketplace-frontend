@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import Countdown from "react-countdown";
-import CardModal from "../CardModal";
+// import CardModal from "../CardModal";
 
 const LiveAuction = (props) => {
   const data = props.data;
-  const [modalShow, setModalShow] = useState(false);
+//   const [modalShow, setModalShow] = useState(false);
 
   const [visible, setVisible] = useState(8);
   const showMoreItems = () => {
@@ -26,8 +26,10 @@ const LiveAuction = (props) => {
             <LiveAuctionItem
               key={index}
               item={item}
-              modalShow={modalShow}
-              setfunc={setModalShow}
+            //   modalShow={modalShow}
+            //   setfunc={setModalShow}
+              placebidfunc={props.placebidfunc}
+            //   here???????
             />
           ))}
           {visible < data.length && (
@@ -75,20 +77,20 @@ const LiveAuctionItem = (props) => (
         </div>
         <div className="button-place-bid">
           <Link
-            to="/wallet-connect"
+            to={`/nft/${props.item.id}`}
             className="sc-button style-place-bid style bag fl-button pri-3"
           >
             <span>Place Bid</span>
           </Link>
         </div>
-        <div className="button-place-bid">
+        {/* <div className="button-place-bid">
           <button
             onClick={() => props.setfunc(true)}
             className="sc-button style-place-bid style bag fl-button pri-3"
           >
             <span>Place Bid</span>
           </button>
-        </div>
+        </div> */}
       </div>
       <div className="card-title">
         <h5>
@@ -117,11 +119,11 @@ const LiveAuctionItem = (props) => (
         </div>
       </div>
     </div>
-    <CardModal
+    {/* <CardModal
       show={props.modalShow}
       onHide={() => props.setfunc(false)}
       placebidfunc={props.placebidfunc}
-    />
+    /> */}
   </div>
 );
 
