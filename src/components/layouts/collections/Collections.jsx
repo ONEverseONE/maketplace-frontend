@@ -58,7 +58,7 @@ const Collections = () => {
             },
             {
                 img: img2,
-                title: "Puff Skings/Ship Skins",
+                title: "Puff Skins/Ship Skins",
                 tags: "COMING SOON",
                 name: 'skins'
             },

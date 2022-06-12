@@ -32,7 +32,7 @@ import { formatEther, parseEther } from "@ethersproject/units";
 import Switch from "react-switch";
 import InputMask from "react-input-mask";
 import { toast } from "react-toastify";
-import { GQL_GETLISTED } from "../constant/gqls";
+import { GQL_GETLIVE } from "../constant/gqls";
 import { useQuery } from "@apollo/client";
 import CardModal from "../components/layouts/CardModal";
 
@@ -106,7 +106,7 @@ const ItemDetails01 = () => {
     data: listed_data,
     refetch: listed_refetch,
     fetchMore: listed_fetchMore,
-  } = useQuery(GQL_GETLISTED, {
+  } = useQuery(GQL_GETLIVE, {
     // variables: { address: account?.toLowerCase() },
     fetchPolicy: "no-cache",
   });
@@ -344,11 +344,11 @@ const ItemDetails01 = () => {
         ABI_MARKETPLACE,
         library.getSigner()
       );
-      console.log(nft.price);
+      console.log("price is", nft.price);
       const res = await marketContract.buyToken(
         CONTRACT_NFT_PUFF,
         nftId,
-        parseEther(nft.price.toString())
+        // parseEther(nft.price.toString())
       );
       await res.wait();
       toast.success("Success!");
@@ -559,17 +559,17 @@ const ItemDetails01 = () => {
                     className="sc-button loadmore style bag fl-button pri-3 w-100"
                     disabled={
                       nft.highestBidder === account ||
-                      ((nft.timeEnd < Date.now() && nft.timeEnd > 0) || nft.originalOwner === account)
+                      ((nft.timeEnd < Date.now() && nft.timeEnd > 0) || nft.originalOwner === account || nft.listed !== 2)
                     }
                     // onClick={placeBid}
                     onClick={() => setModalShow(true)}
                   >
                     <span>
-                      {nft.timeEnd < Date.now() && nft.timeEnd > 0
+                      {nft.listed !== 2 ? "Item Not Listed for Auction":  nft.timeEnd < Date.now() && nft.timeEnd > 0
                         ? "Auction is ended"
                         : nft.highestBidder === account
                         ? "You are highest bidder"
-                        : "Place a bid type"}
+                        : "Place a bid"}
                     </span>
                   </button>
 
@@ -724,7 +724,7 @@ const ItemDetails01 = () => {
                     </button>
                   ) : (
                     <>
-                      <input
+                      {/* <input
                         name="price"
                         className="mb-4"
                         tabIndex="1"
@@ -752,7 +752,7 @@ const ItemDetails01 = () => {
                             ? "You are highest bidder"
                             : "Place a bid"}
                         </span>
-                      </button>
+                      </button> */}
                     </>
                   )}
                   <div className="flat-tabs themesflat-tabs">

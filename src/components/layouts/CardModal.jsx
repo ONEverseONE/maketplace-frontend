@@ -22,10 +22,10 @@ const CardModal = (props) => {
           value={bidValue}
           onChange={(event) => setBidvalue(event.target.value)}
         />
-        <p>
+        {/* <p>
           Enter quantity. <span className="color-popup">5 available</span>
         </p>
-        <input type="number" className="form-control" placeholder="1" />
+        <input type="number" className="form-control" placeholder="1" /> */}
         <div className="hr"></div>
         <div className="d-flex justify-content-between">
           <p> You must bid at least:</p>
@@ -39,7 +39,7 @@ const CardModal = (props) => {
           <p> Total bid amount:</p>
           <p className="text-right price color-popup"> 4 ETH </p>
         </div>
-        <Link
+        {/* <Link
           to="/wallet-connect"
           className="btn btn-primary"
           data-toggle="modal"
@@ -49,7 +49,7 @@ const CardModal = (props) => {
         >
           {" "}
           Place a bid
-        </Link>
+        </Link> */}
         <button
           onClick={() => props.placebidfunc(bidValue)}
           className="sc-button style-place-bid style bag fl-button pri-3"
