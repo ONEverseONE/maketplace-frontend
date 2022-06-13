@@ -334,7 +334,7 @@ const ItemDetails01 = () => {
       if (!allowance.gt(totalSupply)) {
         const ress = await contract.approve(
           CONTRACT_MARKETPLACE,
-          BigNumber.from(2).pow(256).sub(1)
+          BigNumber.from(2).pow(256).sub(1) // maybe this
         );
         await ress.wait();
       }
