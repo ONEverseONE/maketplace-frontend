@@ -79,3 +79,7 @@ button:disabled {
 .auction-image{
   transition: all 0s !important;
 }
+
+.home-slider-img{
+    /* object-fit: contain; */
+}

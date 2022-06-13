@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { formatEther, parseEther } from "@ethersproject/units";
 
 import Countdown from "react-countdown";
 // import CardModal from "../CardModal";
@@ -115,7 +116,7 @@ const LiveAuctionItem = (props) => (
         </div>
         <div className="price">
           <span>Current Bid</span>
-          <h5> {props.item.price}</h5> {/* change needed here */}
+          <h5> {(props.item.price)}</h5> {/* change needed here */}
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { formatEther, parseEther } from "@ethersproject/units";
 import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { CONTRACT_MARKETPLACE } from "../../../constant";
@@ -14,6 +15,9 @@ const ExploreItem = (props) => {
   };
 
   const [modalShow, setModalShow] = useState(false);
+
+  console.log("items here hehehehehe")
+  console.log(data)
   return (
     <Fragment>
       <div className="explore">
@@ -83,7 +87,7 @@ const ExploreItem = (props) => {
                       ) : (
                         <>
                           <h5>
-                            {item.highestBid > 0 ? item.highestBid : item.price}{" "}
+                            {item.highestBid > 0 ? parseEther(item.highestBid) : item.price}{" "}
                             <span>ONE</span>
                           </h5>
                           <span>= $ {item.price}</span>

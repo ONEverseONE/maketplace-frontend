@@ -103,10 +103,10 @@ const LiveAuction = (props) => {
                                     <span>Listed By</span>
                                     <h6>
                                       {" "}
-                                      <Link to="/authors">
+                                      {/* <Link to="/authors"> */}
                                         {/* {item.nameAuthor} this does not exist */}
                                         me
-                                      </Link>{" "}
+                                      {/* </Link>{" "} */}
                                     </h6>
                                   </div>
                                 </div>
