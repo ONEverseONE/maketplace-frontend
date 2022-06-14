@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ExploreItem from "./ExploreItem";
 import Switch from "react-switch";
+import puff from "../../../assets/images/a-slider/puff.png"
 
 import { useWeb3React } from "@web3-react/core";
 import { Contract } from "@ethersproject/contracts";
@@ -22,6 +23,8 @@ import {
 } from "../../../constant/gqls";
 import { useQuery } from "@apollo/client";
 import { toast } from "react-toastify";
+
+const axios = require("axios");
 
 const Explore = () => {
   const count = 12;
@@ -132,6 +135,49 @@ const Explore = () => {
       console.log(err);
     }
   };
+
+  //   const getCharacters = async (id) => {
+  //     console.log("trying to get chars of ", id)
+  //     const response = await axios.get(
+  //       `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${id}.json`
+  //     );
+  //     console.log('found data', response.data);
+
+  //     const req = await response.data.image
+
+  //     return(req)
+  //   }
+
+//   async function getCharacters(id) {
+//     try {
+//       const response = await fetch(
+//         `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${id}.json`
+//       );
+//       if (!response.ok) {
+//         throw new Error(`HTTP error: ${response.status}`);
+//       }
+//       const json = await response.json();
+//       return json;
+//     } catch (error) {
+//       console.error(`Could not get products: ${error}`);
+//     }
+//   }
+
+//   function callingfunc(id) {
+//     const jsonPromise = getCharacters(id);
+//     jsonPromise.then((json) => {
+//       console.log("inner loop shit json", json.image);
+//       return json.image;
+//     });
+//   }
+
+const getURL = (id) => {
+    console.log("get url function called")
+    console.log(typeof id.toString())
+    let str = "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/" + id.toString() + ".png"
+    return str
+}
+
   // through graphql
   const getListedNfts = async (start) => {
     if (!library) {
@@ -176,7 +222,8 @@ const Explore = () => {
 
       const newNfts = infos.map((info, index) => ({
         id: Number(nftIds[index]),
-        img: `${PUFF_IMAGE_URL}${Number(nftIds[index])}.png`,
+        // img: `${PUFF_IMAGE_URL}${Number(nftIds[index])}.png`,
+        // img: getCharacters(Number(nftIds[index])),
         rarity: PUFF_RARITY[Number(nftIds[index]) - 1].nftRarity,
         currentOwner: CONTRACT_MARKETPLACE,
         listed: Number(listed[index]),
@@ -250,9 +297,12 @@ const Explore = () => {
 
     if (!your_loading && your_data && isMine) {
       console.log("inside your loop");
+
       const newNfts = your_data.nfts.map((item, index) => ({
         id: Number(item.tokenId),
-        img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
+        // img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
+        // img: getCharacters(Number(item.tokenId)),
+        img: `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${item.tokenID}.json`,
         // rarity: PUFF_RARITY[Number(item.id) - 1].nftRarity,
         currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
         listed: item.type,
@@ -275,7 +325,9 @@ const Explore = () => {
       console.log("inside listed loop");
       const newNfts = listed_data.nfts.map((item, index) => ({
         id: Number(item.tokenId),
-        img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
+        // img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
+        // img: getCharacters(Number(item.tokenId)),
+        img: `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${Number(item.tokenID)}.json`,
         // rarity: PUFF_RARITY[Number(item.id) - 1].nftRarity,
         currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
         listed: item.type,
@@ -297,7 +349,11 @@ const Explore = () => {
       console.log("inside all loop");
       const newNfts = all_data.nfts.map((item, index) => ({
         id: Number(item.tokenId),
-        img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
+        // img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
+        // img: puff,
+        // img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVeXX6aYNgHs-EH9PB9xuEU0Y37JN97d9ggw&usqp=CAU",
+        img: getURL(Number(item.tokenId)),
+        // img: `puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/${(item.tokenID).toString()}.png`,
         // rarity: PUFF_RARITY[Number(item.id) - 1].nftRarity,
         currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
         listed: item.type,
@@ -357,7 +413,9 @@ const Explore = () => {
                     onChange={() => {
                       if (!isMine) {
                         your_refetch({ address: account?.toLowerCase() });
-                        toast.info("Connect Your wallet if you can't see your NFTs");
+                        toast.info(
+                          "Connect Your wallet if you can't see your NFTs"
+                        );
                       } else {
                         if (!isListing)
                           // getListedNfts(0);

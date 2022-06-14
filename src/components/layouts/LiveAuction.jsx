@@ -13,6 +13,17 @@ import "swiper/scss/pagination";
 const LiveAuction = (props) => {
   const data = props.data;
 
+  console.log("live auction page explore", data)
+
+  const getURL = (id) => {
+    console.log("get url function called")
+    console.log(typeof id.toString())
+    let str = "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/" + id.toString() + ".png"
+    return str
+}
+
+  
+
   const [modalShow, setModalShow] = useState(false);
 
   return (
@@ -60,7 +71,7 @@ const LiveAuction = (props) => {
                               <div className="card-media">
                                 <Link to={`/nft/${item.tokenId}`}>
                                     <div className="custom-image-container">
-                                  <img src={item.img} alt="axies" />
+                                  <img src={getURL(item.tokenId)} alt="axies" />
                                   </div>
                                 </Link>
                                 {/* <Link
@@ -112,7 +123,7 @@ const LiveAuction = (props) => {
                                 </div>
                                 <div className="price">
                                   <span>Current Bid</span>
-                                  <h5> {item.bids.length === 0 ? item.originalPrice : item.bids[0]}</h5>
+                                  <h5> {item.bids.length === 0 ? item.originalPrice : item.bids[0].price}</h5>
                                 </div>
                               </div>
                             </div>

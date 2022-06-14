@@ -362,6 +362,13 @@ const ItemDetails01 = () => {
     }
   };
 
+  const getURL = (id) => {
+    console.log("get url function called")
+    console.log(typeof id.toString())
+    let str = "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/" + id.toString() + ".png"
+    return str
+}
+
   const placeBid = async (bidvalue) => {
     console.log("place bid try");
     console.log("nftID", nftId);
@@ -482,7 +489,7 @@ const ItemDetails01 = () => {
                   <li>
                     <Link to="/explore">Explore</Link>
                   </li>
-                  <li>NFT - {nftId}</li>
+                  {/* <li>NFT - {nftId}</li> here */}
                 </ul>
               </div>
             </div>
@@ -495,7 +502,7 @@ const ItemDetails01 = () => {
             <div className="col-xl-6 col-md-12">
               <div className="content-left">
                 <div className="media">
-                  <img src={imgdetail1} alt="Axies" />
+                  <img src={getURL(nft.id)} alt="Axies" />
                 </div>
               </div>
             </div>
