@@ -51,7 +51,7 @@ const ExploreItem = (props) => {
                     <Link to={`/nft/${item.id}`}>"Puff {item.id}"</Link>
                   </h2>
 
-                  <div className="tags">ONE</div>
+                  <div className="tags">GRAV</div>
                 </div>
                 <div className="meta-info">
                   <div className="author">
@@ -88,9 +88,9 @@ const ExploreItem = (props) => {
                         <>
                           <h5>
                             {item.highestBid > 0 ? (item.highestBid) : item.price}{" "}
-                            <span>ONE</span>
+                            <span>GRAV</span>
                           </h5>
-                          <span>= $ {item.price}</span>
+                          <span>= $ {item.highestBid > 0 ? (item.highestBid) : item.price}</span>
                         </>
                       )}
                     </div>

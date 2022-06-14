@@ -37,7 +37,7 @@ import { useQuery } from "@apollo/client";
 import CardModal from "../components/layouts/CardModal";
 
 const ItemDetails01 = () => {
-  const [dataHistory] = useState([
+  const [dataHistory, setDataHistory] = useState([
     {
       img: img1,
       name: "Mason Woodward",
@@ -125,6 +125,7 @@ const ItemDetails01 = () => {
   const getNftInfo = async () => {
     try {
       const contract = new Contract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
+      console.log("initial", contract)
       const currentOwner = await contract.ownerOf(nftId);
       console.log(currentOwner, "this is the owner");
 
@@ -135,6 +136,8 @@ const ItemDetails01 = () => {
           ABI_MARKETPLACE,
           library
         );
+
+        console.log(multicallMarketProvider)
 
         console.log("breakpoint 1")
 
@@ -147,6 +150,9 @@ const ItemDetails01 = () => {
       );
 
       console.log("breakpoint 2")
+      console.log(listed)
+      console.log(saleInfo)
+      console.log(auctionInfo)
 
       console.log({
         id: Number(nftId),
@@ -156,10 +162,10 @@ const ItemDetails01 = () => {
         listed: Number(listed),
         originalOwner:
           Number(listed) === 1 ? saleInfo.owner : auctionInfo.owner,
-        price: Number(listed) === 1 ? Number(formatEther(saleInfo.price)) : 0,
+        price: Number(listed) === 1 ? Number((saleInfo.price)) : 0,
         highestBid:
           Number(listed) === 2
-            ? Number(formatEther(auctionInfo.highestBid))
+            ? Number((auctionInfo.highestBid))
             : 0,
         highestBidder:
           Number(listed) === 2 ? auctionInfo.highestBidder : ZERO_ADDRESS,
@@ -178,10 +184,10 @@ const ItemDetails01 = () => {
         listed: Number(listed),
         originalOwner:
           Number(listed) === 1 ? saleInfo.owner : auctionInfo.owner,
-        price: Number(listed) === 1 ? Number(formatEther(saleInfo.price)) : 0,
+        price: Number(listed) === 1 ? Number((saleInfo.price)) : 0,
         highestBid:
           Number(listed) === 2
-            ? Number(formatEther(auctionInfo.highestBid))
+            ? Number((auctionInfo.highestBid))
             : 0,
         highestBidder:
           Number(listed) === 2 ? auctionInfo.highestBidder : ZERO_ADDRESS,
@@ -297,6 +303,17 @@ const ItemDetails01 = () => {
       );
     }
   };
+
+  console.log("here", nft.timeEnd, Date.now())
+
+  const getBids = (id, data) => {
+    for (let i = 0; i<data.length; i++){
+        if (data[i].tokenId === id){
+            console.log("found it")
+            return (data[i].bids)
+        }
+    }
+  }
   const delistOnSale = async () => {
     try {
       const contract = new Contract(
@@ -329,27 +346,36 @@ const ItemDetails01 = () => {
         account,
         CONTRACT_MARKETPLACE
       );
+
+      console.info("got allowance", allowance)
       const totalSupply = await contract.totalSupply();
+      console.info("got supply", totalSupply)
+
+      console.log(contract)
 
       if (!allowance.gt(totalSupply)) {
-        const ress = await contract.approve(
+        const ress = await contract.increaseAllowance( //not working
           CONTRACT_MARKETPLACE,
-          BigNumber.from(2).pow(256).sub(1) // maybe this
+          parseEther("100") // maybe this
         );
         await ress.wait();
       }
+
+      console.info("got bp3")
 
       const marketContract = new Contract(
         CONTRACT_MARKETPLACE,
         ABI_MARKETPLACE,
         library.getSigner()
       );
-      console.log("price is", nft.price);
+      console.info("got bp4")
+      console.log("price is", (nft.price));
       const res = await marketContract.buyToken(
         CONTRACT_NFT_PUFF,
         nftId,
         // parseEther(nft.price.toString())
       );
+      console.info("got bp5")
       await res.wait();
       toast.success("Success!");
       getNftInfo();
@@ -402,12 +428,12 @@ const ItemDetails01 = () => {
       console.log("auction sales here");
       console.log(auctionsales);
 
-      if (bidvalue <= auctionsales.highestBid.toNumber() + differentialAmount) {
+      if (bidvalue <= auctionsales.highestBid.toString() + differentialAmount) {
         console.log("low bid value");
         console.log(
           "condition failed",
           bidvalue,
-          auctionsales.highestBid.toNumber(),
+          auctionsales.highestBid.toString(),
           differentialAmount
         );
         toast.error("bid too low, please retry");
@@ -415,7 +441,7 @@ const ItemDetails01 = () => {
         console.log(
           "condition matched",
           bidvalue,
-          auctionsales.highestBid.toNumber(),
+          auctionsales.highestBid.toString(),
           differentialAmount
         );
       }
@@ -430,7 +456,7 @@ const ItemDetails01 = () => {
       const res = await marketContract.bidToken(
         CONTRACT_NFT_PUFF,
         nftId,
-        parseEther(fixPrice)
+        parseEther(bidvalue)
       );
       await res.wait();
       toast.success("Success!");
@@ -489,7 +515,7 @@ const ItemDetails01 = () => {
                   <li>
                     <Link to="/explore">Explore</Link>
                   </li>
-                  {/* <li>NFT - {nftId}</li> here */}
+                  <li>NFT - {nftId}</li>
                 </ul>
               </div>
             </div>
@@ -615,7 +641,7 @@ const ItemDetails01 = () => {
                           <span>
                             {nft.timeEnd === 0
                               ? "No bidder yet"
-                              : "You are good to go!"}
+                              : nft.timeEnd - Date.now()}
                           </span>
                         </Countdown>
                       </div>
@@ -724,7 +750,7 @@ const ItemDetails01 = () => {
                   ) : nft.originalOwner === account ? (
                     <button
                       className="sc-button loadmore style bag fl-button pri-3 w-100"
-                      disabled={nft.timeEnd > 0}
+                      disabled={!(nft.timeEnd === 0) || !(nft.timeEnd <  Date.now() )}
                       onClick={delistOnSale}
                     >
                       <span>Cancel auction</span>
@@ -772,35 +798,36 @@ const ItemDetails01 = () => {
 
                       <TabPanel>
                         <ul className="bid-history-list">
-                          {dataHistory.map((item, index) => (
+                            {listed_loading && nft.listed === 2 ? <></> :
+                          dataHistory.map((item, index) => (
                             <li key={index} item={item}>
                               <div className="content">
                                 <div className="client">
                                   <div className="sc-author-box style-2">
                                     <div className="author-avatar">
-                                      <Link to="#">
+                                      {/* <Link to="#">
                                         <img
                                           src={item.img}
                                           alt="Axies"
                                           className="avatar"
                                         />
-                                      </Link>
-                                      <div className="badge"></div>
+                                      </Link> */}
+                                      {/* <div className="badge"></div> */}
                                     </div>
                                     <div className="author-infor">
                                       <div className="name">
                                         <h6>
-                                          <Link to="/author">{item.name} </Link>
+                                          {item.address}
                                         </h6>{" "}
-                                        <span> place a bid</span>
+                                        <span> placed a bid</span>
                                       </div>
-                                      <span className="time">{item.time}</span>
+                                      <span className="time">{item.createdAt}</span>
                                     </div>
                                   </div>
                                 </div>
                                 <div className="price">
-                                  <h5>{item.price}</h5>
-                                  <span>= {item.priceChange}</span>
+                                  <h5>{item.price}GRAV</h5>
+                                  <span></span>
                                 </div>
                               </div>
                             </li>

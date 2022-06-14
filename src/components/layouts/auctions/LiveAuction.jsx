@@ -106,7 +106,7 @@ const LiveAuctionItem = (props) => {
             <Link to={`/nft/${props.item.id}`}>"NFT {props.item.id}"</Link>{" "}
             {/* change here */}
           </h5>
-          <div className="tags">ONE</div>
+          <div className="tags">GRAV</div>
         </div>
         <div className="meta-info">
           <div className="author">

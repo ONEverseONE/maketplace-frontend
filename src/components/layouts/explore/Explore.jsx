@@ -302,7 +302,8 @@ const getURL = (id) => {
         id: Number(item.tokenId),
         // img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
         // img: getCharacters(Number(item.tokenId)),
-        img: `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${item.tokenID}.json`,
+        img: getURL(Number(item.tokenId)),
+        // img: `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${item.tokenID}.json`,
         // rarity: PUFF_RARITY[Number(item.id) - 1].nftRarity,
         currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
         listed: item.type,
@@ -326,16 +327,17 @@ const getURL = (id) => {
       const newNfts = listed_data.nfts.map((item, index) => ({
         id: Number(item.tokenId),
         // img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
-        // img: getCharacters(Number(item.tokenId)),
-        img: `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${Number(item.tokenID)}.json`,
+        img: getURL(Number(item.tokenId)),
+    
+        // img: `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${Number(item.tokenID)}.json`,
         // rarity: PUFF_RARITY[Number(item.id) - 1].nftRarity,
         currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
         listed: item.type,
         originalOwner: item.owner,
-        price: item.type > 0 ? Number(formatEther(item.originalPrice)) : 0,
+        price: item.type > 0 ? Number((item.originalPrice)) : 0,
         highestBid:
           item.type === 2 && item.bids.length > 0
-            ? Number(formatEther(item.bids[item.bids.length - 1].price))
+            ? Number((item.bids[item.bids.length - 1].price))
             : 0,
         highestBidder:
           item.type === 2 && item.bids.length > 0
@@ -358,10 +360,10 @@ const getURL = (id) => {
         currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
         listed: item.type,
         originalOwner: item.owner,
-        price: item.type > 0 ? Number(formatEther(item.originalPrice)) : 0,
+        price: item.type > 0 ? Number((item.originalPrice)) : 0,
         highestBid:
           item.type === 2 && item.bids.length > 0
-            ? Number(formatEther(item.bids[item.bids.length - 1].price))
+            ? Number((item.bids[item.bids.length - 1].price))
             : 0,
         highestBidder:
           item.type === 2 && item.bids.length > 0

@@ -1,5 +1,5 @@
-export const CHAIN_ID = 1666700000;
-export const MULTICALL_ADDRESS = '0xd078799c53396616844e2fa97f0dd2b4c145a685';
+export const CHAIN_ID = 1666600000;
+export const MULTICALL_ADDRESS = '0x34b415f4d3b332515e66f70595ace1dcf36254c5';
 
 
 //----------------------------------MAIN NET------------------------------------------//
@@ -11,15 +11,18 @@ export const MULTICALL_ADDRESS = '0xd078799c53396616844e2fa97f0dd2b4c145a685';
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 // export const CONTRACT_TOKEN = '0x8f6cdaA89122Bd9FaE6d006d8DC88B738F1B537d'; //old
-export const CONTRACT_TOKEN = '0xBf64724d6328008Cf5485FD7Baea87Ffe2a6F16a'; //new
+// export const CONTRACT_TOKEN = '0xBf64724d6328008Cf5485FD7Baea87Ffe2a6F16a'; //new
+export const CONTRACT_TOKEN = '0xa36A484Ccd2Dff252314cc92531EF09D767BaFCC'; //new
 
 // export const CONTRACT_NFT_PUFF = '0x701d1907fd9Ed5A1B4d6f005D602C723F9fD47fa'; //old
-export const CONTRACT_NFT_PUFF = '0x943AE671811877abf303a60d1827C8e5AFf76e83'; //new
+// export const CONTRACT_NFT_PUFF = '0x943AE671811877abf303a60d1827C8e5AFf76e83'; //new
+export const CONTRACT_NFT_PUFF = '0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944'; //new
 
 // export const CONTRACT_MARKETPLACE = '0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944'; //old
-export const CONTRACT_MARKETPLACE = '0xfFC0Fe2Edb4C506Fe3D97Fa3d397EF71d90CEB55'; //new
+// export const CONTRACT_MARKETPLACE = '0xfFC0Fe2Edb4C506Fe3D97Fa3d397EF71d90CEB55'; //new
+export const CONTRACT_MARKETPLACE = '0x08D3C40eE6Cf29D863b1Bf8463d8Ce0DB6b3bd2b'; //new
 
-export const PUFF_IMAGE_URL = 'https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/d'
+export const PUFF_IMAGE_URL = 'https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/'
 
 // puff image URL is broken
 

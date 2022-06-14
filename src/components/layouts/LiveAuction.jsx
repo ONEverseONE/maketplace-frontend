@@ -103,7 +103,7 @@ const LiveAuction = (props) => {
                                     "Puff {item.tokenId}"
                                   </Link>
                                 </h5>
-                                <div className="tags">ONE</div> {/* this does not exist */}
+                                <div className="tags">GRAV</div> {/* this does not exist */}
                               </div>
                               <div className="meta-info">
                                 <div className="author">

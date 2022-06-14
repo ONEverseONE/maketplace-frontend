@@ -35,7 +35,7 @@ const TodayPicks = props => {
                                     </div>
                                     <div className="card-title">
                                         <h5 className="style2"><Link to={`/nft/${item.id}`}>"{item.title}"</Link></h5>
-                                        <div className="tags">ONE</div>
+                                        <div className="tags">GRAV</div>
                                     </div>
                                     <div className="meta-info">
                                         <div className="author">
