@@ -415,9 +415,6 @@ const getURL = (id) => {
                     onChange={() => {
                       if (!isMine) {
                         your_refetch({ address: account?.toLowerCase() });
-                        toast.info(
-                          "Connect Your wallet if you can't see your NFTs"
-                        );
                       } else {
                         if (!isListing)
                           // getListedNfts(0);

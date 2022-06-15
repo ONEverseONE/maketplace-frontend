@@ -8,6 +8,7 @@ export const GQL_GETMYLISTED = gql`
       orderDirection: desc
     ) {
       id
+      tokenId
       owner
       type
       originalPrice
