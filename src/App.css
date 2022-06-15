@@ -94,3 +94,7 @@ button:disabled {
     height: max-content;
     font-size: 12px;
 }
+
+.swiper-img{
+    width: 200px;
+}

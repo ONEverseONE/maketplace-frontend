@@ -57,6 +57,8 @@ const LiveAuctions = () => {
         ? item.bids[item.bids.length - 1].address
         : ZERO_ADDRESS,
     timeEnd: item.type === 2 ? Number(item.timeEnd) : 0,
+    bids: item.bids,
+    auctionDuration: item.auctionDuration,
   }));
   console.log("############", listed_data.nfts, newNfts);
   // setNfts(newNfts);

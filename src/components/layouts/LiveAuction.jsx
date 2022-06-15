@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import Countdown from "react-countdown";
-import CardModal from "./CardModal";
 
 import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/pagination";
+import { formatEther } from "@ethersproject/units";
 
 const LiveAuction = (props) => {
   const data = props.data;
@@ -28,8 +28,6 @@ const LiveAuction = (props) => {
   const formatAddr = (addr) => {
     return (addr.slice(0,6) + '...' + addr.slice(addr.length - 4, addr.length))
   }
-
-  const [modalShow, setModalShow] = useState(false);
 
   return (
     <Fragment>
@@ -90,13 +88,13 @@ const LiveAuction = (props) => {
                                     {item.wishlist}
                                   </span>
                                 </Link> */}
-                                {/* <div className="featured-countdown">
+                                <div className="featured-countdown">
                                   <span className="slogan"></span>
-                                  <Countdown date={parseInt(item.bids[0].createdAt + '00') + parseInt(item.auctionDuration + '00')}>
-                                    <span>{parseInt(item.bids[0].createdAt + '00') + parseInt(item.auctionDuration + '00')}</span>
+                                  <Countdown date={parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '000')}>
+                                    <span>{parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '00')}</span>
                                     
                                   </Countdown>
-                                </div> */}
+                                </div>
                                 <div className="button-place-bid">
                                   <Link
                                     to={`/nft/${item.tokenId}`}
@@ -126,7 +124,9 @@ const LiveAuction = (props) => {
                                     <h6>
                                       {" "}
                                       {/* <Link to="/authors"> */}
-                                      {formatAddr(item.owner)}
+                                      {/* krishanu fix this */}
+                                      fix here
+                                      {/* {formatAddr(item.owner)} */}
                                       {/* </Link>{" "} */}
                                     </h6>
                                   </div>
@@ -136,8 +136,8 @@ const LiveAuction = (props) => {
                                   <h5>
                                     {" "}
                                     {item.bids.length === 0
-                                      ? item.originalPrice
-                                      : item.bids[0].price}{" "}
+                                      ? formatEther(item.originalPrice.toString())
+                                      : formatEther(item.bids[item.bids.length - 1].price.toString())}{" "}
                                     GRAV
                                   </h5>
                                 </div>
@@ -154,7 +154,6 @@ const LiveAuction = (props) => {
           </div>
         </div>
       </section>
-      {/* <CardModal show={modalShow} onHide={() => setModalShow(false)} placebidfunc={props.placebidfunc}/> */}
     </Fragment>
   );
 };

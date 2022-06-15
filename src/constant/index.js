@@ -58,4 +58,4 @@ export const networkInfo = [
   },
 ];
 
-export const GRAPHQL_ENDPOINT = 'http://34.234.63.140:8000/subgraphs/name/oneverse/oneverse-subgraph';
+export const GRAPHQL_ENDPOINT = 'http://34.224.81.163:8000/subgraphs/name/oneverse/oneverse-subgraph'

@@ -8,6 +8,8 @@ import img1 from '../../assets/images/box-item/item-h5.1.png'
 import img2 from '../../assets/images/box-item/item-h5.2.png'
 import img3 from '../../assets/images/box-item/item-h5.3.png'
 
+import puff from "../../assets/images/a-slider/puff.png"
+
 const SliderStyle2 = () => {
     const subtitle = 'NFT MARKETPLACE'
     const title = 'Discover All NFTs In The ONEverse'
@@ -46,7 +48,7 @@ const SliderStyle2 = () => {
                         <SwiperSlide><img src={img2} alt="Axies" /></SwiperSlide>
                         <SwiperSlide><img src={img3} alt="Axies" /></SwiperSlide>
                         <SwiperSlide><img src={img2} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img3} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
 
                     </Swiper>
                     <Swiper

@@ -38,7 +38,6 @@ import { useQuery } from "@apollo/client";
 import CardModal from "../components/layouts/CardModal";
 
 const ItemDetails01 = () => {
-
   const [dataHistory, setDataHistory] = useState([
     {
       img: img1,
@@ -93,6 +92,8 @@ const ItemDetails01 = () => {
   const [auctionPrice, setAuctionPrice] = useState("");
   const [duration, setDuration] = useState("");
   const [differentialAmount, setDifferentialAmount] = useState(10);
+
+  const [retrieved, retrievedSet] = useState(false);
 
   const [nft, setNft] = useState({
     id: Number(nftId),
@@ -191,6 +192,8 @@ const ItemDetails01 = () => {
           Number(listed) === 2 ? auctionInfo.highestBidder : ZERO_ADDRESS,
         timeEnd: Number(listed) === 2 ? Number(auctionInfo.timeEnd) * 1000 : 0,
       });
+
+      retrievedSet(true);
     } catch (err) {
       console.log(err);
     }
@@ -214,7 +217,7 @@ const ItemDetails01 = () => {
   const getData = async () => {
     let response = await fetch(`${PUFF_DATA_URL}${nftId}.json`);
     let data = await response.json();
-    console.log("######## data here", data.attributes)
+    console.log("######## data here", data.attributes);
     setNftData(data.attributes);
   };
 
@@ -576,7 +579,7 @@ const ItemDetails01 = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* <div className="meta-info">
                                             <div className="author">
                                                 <div className="avatar">
@@ -589,23 +592,23 @@ const ItemDetails01 = () => {
                                             </div>
                                         </div> */}
                   </div>
-                  <hr />
+                  {/* <hr />
                   <div className="badges-main">
                     {nftData.map((item, index) => (
                         <div key={index} className="details-badge">{item.value}</div>
                     )
 
                     )}
-                  </div>
+                  </div> */}
                   <br />
                   <hr />
                   {/* <br /> */}
                   <div className="badges-main">
                     {nftData.map((item, index) => (
-                        <div className="details-badge">{item.trait_type} : {item.value}</div>
-                    )
-
-                    )}
+                      <div className="details-badge">
+                        {item.trait_type} : {item.value}
+                      </div>
+                    ))}
                   </div>
                   <br />
                   <hr />
@@ -629,7 +632,6 @@ const ItemDetails01 = () => {
                     </div>
                   </div> */}
                   {/*  */}
-                  
 
                   <br />
                   <br />
@@ -678,11 +680,11 @@ const ItemDetails01 = () => {
                               {" "}
                               {nft.timeEnd === 0
                                 ? formatEther(nft.highestBid.toString())
-                                : formatEther(
-                                    (
-                                      nft.highestBid + differentialAmount
-                                    ).toString()
-                                  )}{" "}
+                                : (
+                                    parseFloat(
+                                      formatEther(nft.highestBid.toString())
+                                    ) + parseFloat(differentialAmount)
+                                  ).toString()}{" "}
                               GRAV
                             </h5>
                             {/* <span>= ${nft.price * ethPrice}</span> */}
@@ -804,9 +806,7 @@ const ItemDetails01 = () => {
                   ) : nft.originalOwner === account ? (
                     <button
                       className="sc-button loadmore style bag fl-button pri-3 w-100"
-                      disabled={
-                        !(nft.timeEnd === 0) || !(nft.timeEnd < Date.now())
-                      }
+                      disabled={nft.timeEnd < Date.now()}
                       onClick={delistOnSale}
                     >
                       <span>Cancel auction</span>
@@ -844,20 +844,20 @@ const ItemDetails01 = () => {
                       </button> */}
                     </>
                   )}
-                  <div className="flat-tabs themesflat-tabs">
-                    <Tabs>
-                      <TabList>
-                        <Tab>Bid History</Tab>
-                        {/* <Tab>Info</Tab>
-                                        <Tab>Provenance</Tab> */}
-                      </TabList>
+                  {listed_loading || !(nft.listed === 2) ? (
+                    <></>
+                  ) : (
+                    <div className="flat-tabs themesflat-tabs">
+                      <Tabs>
+                        <TabList>
+                          <Tab>Bid History</Tab>
+                          {/* <Tab>Info</Tab>
+                        <Tab>Provenance</Tab> */}
+                        </TabList>
 
-                      <TabPanel>
-                        <ul className="bid-history-list">
-                          {listed_loading && nft.listed === 2 ? (
-                            <></>
-                          ) : (
-                            dataHistory.map((item, index) => (
+                        <TabPanel>
+                          <ul className="bid-history-list">
+                            {dataHistory.map((item, index) => (
                               <li key={index} item={item}>
                                 <div className="content">
                                   <div className="client">
@@ -889,11 +889,10 @@ const ItemDetails01 = () => {
                                   </div>
                                 </div>
                               </li>
-                            ))
-                          )}
-                        </ul>
-                      </TabPanel>
-                      {/* <TabPanel>
+                            ))}
+                          </ul>
+                        </TabPanel>
+                        {/* <TabPanel>
                                             <ul className="bid-history-list">
                                                     <li>
                                                         <div className="content">
@@ -927,8 +926,9 @@ const ItemDetails01 = () => {
                                                     and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                                             </div>
                                         </TabPanel> */}
-                    </Tabs>
-                  </div>
+                      </Tabs>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -941,11 +941,23 @@ const ItemDetails01 = () => {
         <LiveAuction data={listed_data.nfts} placebidfunc={placeBid} />
       )}
       <Footer />
-      <CardModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        placebidfunc={placeBid}
-      />
+      {retrieved ? (
+        <CardModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          placebidfunc={placeBid}
+          minbid={
+            nft.timeEnd === 0
+              ? formatEther(nft.highestBid.toString())
+              : (
+                  parseFloat(formatEther(nft.highestBid.toString())) +
+                  parseFloat(differentialAmount)
+                ).toString()
+          }
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

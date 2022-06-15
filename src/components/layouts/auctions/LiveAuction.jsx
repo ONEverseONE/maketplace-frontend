@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import { formatEther, parseEther } from "@ethersproject/units";
 
 import Countdown from "react-countdown";
-// import CardModal from "../CardModal";
 
 const LiveAuction = (props) => {
   const data = props.data;
-  //   const [modalShow, setModalShow] = useState(false);
+
+  console.log("-------- live auction data --------")
+  console.log(data)
+  console.log("-------- end of transmission --------")
 
   const [visible, setVisible] = useState(8);
   const showMoreItems = () => {
@@ -80,9 +82,10 @@ const LiveAuctionItem = (props) => {
         </Link> */}
           <div className="featured-countdown">
             <span className="slogan"></span>
-            <Countdown date={Date.now() + 500000000}>
+            <Countdown date={parseInt(props.item.bids[0].createdAt + '000') + parseInt(props.item.auctionDuration + '000')}>
               <span>You are good to go!</span>
             </Countdown>
+            
           </div>
           <div className="button-place-bid">
             <Link
@@ -110,11 +113,11 @@ const LiveAuctionItem = (props) => {
         </div>
         <div className="meta-info">
           <div className="author">
-            <div className="avatar">
+            {/* <div className="avatar">
               <img src={props.item.imgAuthor} alt="axies" />
-            </div>
+            </div> */}
             <div className="info">
-              <span>Creator</span>
+              <span>Owner</span>
               <h6>
                 {" "}
                 {/* <Link to="/authors">{props.item.originalOwner}</Link>{" "} */}
@@ -124,15 +127,10 @@ const LiveAuctionItem = (props) => {
           </div>
           <div className="price">
             <span>Current Bid</span>
-            <h5> {props.item.price}</h5> {/* change needed here */}
+            <h5> {props.item.highestBid} GRAV</h5> {/* change needed here */}
           </div>
         </div>
       </div>
-      {/* <CardModal
-      show={props.modalShow}
-      onHide={() => props.setfunc(false)}
-      placebidfunc={props.placebidfunc}
-    /> */}
     </div>
   );
 };

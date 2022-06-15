@@ -1,3 +1,6 @@
+// unused file
+
+
 import React, { useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -22,7 +25,7 @@ const LiveAuction = (props) => {
           <div className="row">
             <div className="col-md-12">
               <div className="heading-live-auctions">
-                <h2 className="tf-title pb-24">Live Auctions</h2>
+                <h2 className="tf-title pb-24">Live Auctions her</h2>
                 <Link to="/explore" className="exp style2">
                   EXPLORE MORE
                 </Link>
@@ -129,7 +132,7 @@ const LiveAuction = (props) => {
           </div>
         </div>
       </section>
-      <CardModal show={modalShow} onHide={() => setModalShow(false)} />
+      <CardModal show={modalShow} onHide={() => setModalShow(false)} minbid = "debug here"/>
     </Fragment>
   );
 };

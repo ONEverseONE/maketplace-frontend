@@ -1,4 +1,5 @@
 // import { formatEther, parseEther } from "@ethersproject/units";
+import { formatEther } from "@ethersproject/units";
 import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { CONTRACT_MARKETPLACE } from "../../../constant";
@@ -38,7 +39,7 @@ const ExploreItem = (props) => {
                   </Link>
                   <div className="button-place-bid">
                     <button
-                      onClick={() => setModalShow(true)}
+                    //   onClick={() => setModalShow(true)}
                       className="sc-button style-place-bid style bag fl-button pri-3"
                     >
                       <span>Place Bid</span>
@@ -58,11 +59,13 @@ const ExploreItem = (props) => {
                     <div className="info">
                       <span>Owner</span>
                       <h6>
-                        {shortAddress(
+                        fix here
+                        {/* krishanu fix this */}
+                        {/* {shortAddress(
                           item.currentOwner === CONTRACT_MARKETPLACE
                             ? item.originalOwner
                             : item.currentOwner
-                        )}
+                        )} */}
                       </h6>
                     </div>
                   </div>
@@ -87,10 +90,10 @@ const ExploreItem = (props) => {
                       ) : (
                         <>
                           <h5>
-                            {item.highestBid > 0 ? (item.highestBid) : item.price}{" "}
+                            {item.highestBid > 0 ? formatEther(item.highestBid.toString()) : formatEther(item.price.toString())}{" "}
                             <span>GRAV</span>
                           </h5>
-                          <span>= $ {item.highestBid > 0 ? (item.highestBid) : item.price}</span>
+                          {/* <span>= $ {item.highestBid > 0 ? (item.highestBid) : item.price}</span> */}
                         </>
                       )}
                     </div>
@@ -116,7 +119,7 @@ const ExploreItem = (props) => {
           </div>
         )}
       </div>
-      <CardModal show={modalShow} onHide={() => setModalShow(false)} />
+      <CardModal show={modalShow} onHide={() => setModalShow(false)} minbid = "debug here"/>
     </Fragment>
   );
 };
