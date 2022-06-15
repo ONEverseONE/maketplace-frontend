@@ -23,8 +23,9 @@ export const CONTRACT_NFT_PUFF = '0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944'; /
 export const CONTRACT_MARKETPLACE = '0x08D3C40eE6Cf29D863b1Bf8463d8Ce0DB6b3bd2b'; //new
 
 export const PUFF_IMAGE_URL = 'https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/'
+export const PUFF_DATA_URL = "https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/";
 
-// puff image URL is broken
+export const HARMOLECULES_IMAGE_URL = 'https://harmolecules.mypinata.cloud/ipfs/QmTdSaXrVuNh2BjPhDPVqCmx2tpYuhn6rpuXJJydkAUKtY/'
 
 //------------------------------Info for connect wallet-----------------------------------
 

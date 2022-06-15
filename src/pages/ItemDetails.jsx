@@ -24,6 +24,7 @@ import {
   CONTRACT_TOKEN,
   PUFF_IMAGE_URL,
   ZERO_ADDRESS,
+  PUFF_DATA_URL,
 } from "../constant";
 // import { PUFF_RARITY } from "../constant/puff.js";
 import { ABI_MARKETPLACE, ABI_NFT_PUFF, ABI_TOKEN } from "../constant/abis.js";
@@ -37,8 +38,6 @@ import { useQuery } from "@apollo/client";
 import CardModal from "../components/layouts/CardModal";
 
 const ItemDetails01 = () => {
-  const DATA_URL =
-    "https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/";
 
   const [dataHistory, setDataHistory] = useState([
     {
@@ -213,7 +212,7 @@ const ItemDetails01 = () => {
   };
 
   const getData = async () => {
-    let response = await fetch(`${DATA_URL}${nftId}.json`);
+    let response = await fetch(`${PUFF_DATA_URL}${nftId}.json`);
     let data = await response.json();
     console.log("######## data here", data.attributes)
     setNftData(data.attributes);
@@ -577,6 +576,7 @@ const ItemDetails01 = () => {
                         </div>
                       </div>
                     </div>
+                    
                     {/* <div className="meta-info">
                                             <div className="author">
                                                 <div className="avatar">
@@ -589,14 +589,33 @@ const ItemDetails01 = () => {
                                             </div>
                                         </div> */}
                   </div>
+                  <hr />
+                  <div className="badges-main">
+                    {nftData.map((item, index) => (
+                        <div key={index} className="details-badge">{item.value}</div>
+                    )
+
+                    )}
+                  </div>
                   <br />
-                  <div className="meta-item-details style2">
+                  <hr />
+                  {/* <br /> */}
+                  <div className="badges-main">
+                    {nftData.map((item, index) => (
+                        <div className="details-badge">{item.trait_type} : {item.value}</div>
+                    )
+
+                    )}
+                  </div>
+                  <br />
+                  <hr />
+                  <br />
+                  {/* <div className="meta-item-details style2">
                     <div className="item meta-price">
                       <span className="heading">Rank</span>
                       <div className="price">
                         <div className="price-box">
                           <h5> {nftData.length === 0 ? "" : nftData[nftData.length-1].value} </h5>
-                          {/* <span>= ${nft.price * ethPrice}</span> */}
                         </div>
                       </div>
                     </div>
@@ -605,11 +624,12 @@ const ItemDetails01 = () => {
                       <div className="price">
                         <div className="price-box">
                           <h5> {nftData.length === 0 ? "" : nftData[3].value} </h5>
-                          {/* <span>= ${nft.price * ethPrice}</span> */}
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
+                  {/*  */}
+                  
 
                   <br />
                   <br />

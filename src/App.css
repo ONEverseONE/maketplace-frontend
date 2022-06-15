@@ -80,6 +80,17 @@ button:disabled {
   transition: all 0s !important;
 }
 
-.home-slider-img{
-    /* object-fit: contain; */
+.badges-main{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+}
+
+.details-badge{
+    padding: 10px;
+    border: 1px solid rgb(83, 215, 202);
+    border-radius: 10px;
+    height: max-content;
+    font-size: 12px;
 }
