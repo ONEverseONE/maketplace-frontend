@@ -13,16 +13,21 @@ import "swiper/scss/pagination";
 const LiveAuction = (props) => {
   const data = props.data;
 
-  console.log("live auction page explore", data)
+  console.log("live auction page explore", data);
 
   const getURL = (id) => {
-    console.log("get url function called")
-    console.log(typeof id.toString())
-    let str = "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/" + id.toString() + ".png"
-    return str
-}
+    console.log("get url function called");
+    console.log(typeof id.toString());
+    let str =
+      "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/" +
+      id.toString() +
+      ".png";
+    return str;
+  };
 
-  
+  const formatAddr = (addr) => {
+    return (addr.slice(0,6) + '...' + addr.slice(addr.length - 4, addr.length))
+  }
 
   const [modalShow, setModalShow] = useState(false);
 
@@ -70,8 +75,11 @@ const LiveAuction = (props) => {
                             <div className="sc-card-product">
                               <div className="card-media">
                                 <Link to={`/nft/${item.tokenId}`}>
-                                    <div className="custom-image-container">
-                                  <img src={getURL(item.tokenId)} alt="axies" />
+                                  <div className="custom-image-container">
+                                    <img
+                                      src={getURL(item.tokenId)}
+                                      alt="axies"
+                                    />
                                   </div>
                                 </Link>
                                 {/* <Link
@@ -82,19 +90,21 @@ const LiveAuction = (props) => {
                                     {item.wishlist}
                                   </span>
                                 </Link> */}
-                                <div className="featured-countdown">
+                                {/* <div className="featured-countdown">
                                   <span className="slogan"></span>
-                                  <Countdown date={Date.now() + 500000000}>
-                                    <span>You are good to go!</span>
+                                  <Countdown date={parseInt(item.bids[0].createdAt + '00') + parseInt(item.auctionDuration + '00')}>
+                                    <span>{parseInt(item.bids[0].createdAt + '00') + parseInt(item.auctionDuration + '00')}</span>
+                                    
                                   </Countdown>
-                                </div>
+                                </div> */}
                                 <div className="button-place-bid">
-                                  <button
-                                    onClick={() => setModalShow(true)}
+                                  <Link
+                                    to={`/nft/${item.tokenId}`}
+                                    // onClick={() => setModalShow(true)}
                                     className="sc-button style-place-bid style bag fl-button pri-3"
                                   >
                                     <span>Place Bid</span>
-                                  </button>
+                                  </Link>
                                 </div>
                               </div>
                               <div className="card-title">
@@ -103,27 +113,33 @@ const LiveAuction = (props) => {
                                     "Puff {item.tokenId}"
                                   </Link>
                                 </h5>
-                                <div className="tags">GRAV</div> {/* this does not exist */}
+                                <div className="tags">GRAV</div>{" "}
+                                {/* this does not exist */}
                               </div>
                               <div className="meta-info">
                                 <div className="author">
-                                  <div className="avatar">
-                                    <img src={item.imgAuthor} alt="axies" /> {/* this does not exist */}
-                                  </div>
+                                  {/* <div className="avatar">
+                                    <img src={item.imgAuthor} alt="axies" /> 
+                                  </div> */}
                                   <div className="info">
                                     <span>Listed By</span>
                                     <h6>
                                       {" "}
                                       {/* <Link to="/authors"> */}
-                                        {/* {item.nameAuthor} this does not exist */}
-                                        me
+                                      {formatAddr(item.owner)}
                                       {/* </Link>{" "} */}
                                     </h6>
                                   </div>
                                 </div>
                                 <div className="price">
                                   <span>Current Bid</span>
-                                  <h5> {item.bids.length === 0 ? item.originalPrice : item.bids[0].price}</h5>
+                                  <h5>
+                                    {" "}
+                                    {item.bids.length === 0
+                                      ? item.originalPrice
+                                      : item.bids[0].price}{" "}
+                                    GRAV
+                                  </h5>
                                 </div>
                               </div>
                             </div>
@@ -138,7 +154,7 @@ const LiveAuction = (props) => {
           </div>
         </div>
       </section>
-      <CardModal show={modalShow} onHide={() => setModalShow(false)} placebidfunc={props.placebidfunc}/>
+      {/* <CardModal show={modalShow} onHide={() => setModalShow(false)} placebidfunc={props.placebidfunc}/> */}
     </Fragment>
   );
 };
