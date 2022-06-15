@@ -10,6 +10,10 @@ import img3 from '../../assets/images/box-item/item-h5.3.png'
 
 import puff from "../../assets/images/a-slider/puff.png"
 
+import { PUFF_IMAGE_URL } from '../../constant';
+import { HARMOLECULES_IMAGE_URL } from '../../constant';
+
+
 const SliderStyle2 = () => {
     const subtitle = 'NFT MARKETPLACE'
     const title = 'Discover All NFTs In The ONEverse'
@@ -44,14 +48,14 @@ const SliderStyle2 = () => {
                         }}
                         speed= {2000}
                     >
-                        <SwiperSlide><img src={img1} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img2} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img3} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img2} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={`${PUFF_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={`${PUFF_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={`${PUFF_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={`${PUFF_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={`${PUFF_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
 
                     </Swiper>
-                    <Swiper
+                    {/* <Swiper
                         modules={[ Autoplay ]}
                         direction={"vertical"}
                         spaceBetween={10}
@@ -70,7 +74,7 @@ const SliderStyle2 = () => {
                         <SwiperSlide><img src={img3} alt="Axies" /></SwiperSlide>
                         <SwiperSlide><img src={img1} alt="Axies" /></SwiperSlide>
 
-                    </Swiper>
+                    </Swiper> */}
                     <Swiper
                         modules={[ Autoplay ]}
                         direction={"vertical"}
@@ -84,11 +88,11 @@ const SliderStyle2 = () => {
                         }}
                         speed= {2200}
                     >
-                        <SwiperSlide><img src={img3} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img1} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img2} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img3} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img1} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={`${HARMOLECULES_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={`${HARMOLECULES_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={`${HARMOLECULES_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={`${HARMOLECULES_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={`${HARMOLECULES_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
 
                     </Swiper>
                     <Swiper
