@@ -127,6 +127,26 @@ const ItemDetails01 = () => {
   //         }).catch(err=>console.log(err))
   //     }).catch(err=>console.log(err))
   // }, [])
+
+  const convertTime = (ts) => {
+    let rem;
+
+    let hours = Math.floor(ts / 1000 / 60 / 60);
+    rem = ts % (hours * 1000 * 60 * 60);
+    let mins = Math.floor(rem / 1000 / 60);
+    rem = rem % (mins * 1000 * 60);
+    let secs = Math.floor(rem / 1000);
+
+    if (hours === 0) {
+      return `${mins} ${mins === 1 ? "minute" : "minutes"} ${secs} ${
+        secs === 1 ? "second" : "seconds"
+      } ago`;
+    }
+    return `${hours} ${hours === 1 ? "hour" : "hours"} ${mins} ${
+      mins === 1 ? "minute" : "minutes"
+    } ago`;
+  };
+
   const getNftInfo = async () => {
     try {
       const contract = new Contract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
@@ -857,39 +877,47 @@ const ItemDetails01 = () => {
 
                         <TabPanel>
                           <ul className="bid-history-list">
-                            {dataHistory.map((item, index) => (
-                              <li key={index} item={item}>
-                                <div className="content">
-                                  <div className="client">
-                                    <div className="sc-author-box style-2">
-                                      <div className="author-avatar">
-                                        {/* <Link to="#">
+                            {getBids(nftId, listed_data.nfts).map(
+                              (item, index) => (
+                                <li key={index} item={item}>
+                                  <div className="content">
+                                    <div className="client">
+                                      <div className="sc-author-box style-2">
+                                        <div className="author-avatar">
+                                          {/* <Link to="#">
                                         <img
                                           src={item.img}
                                           alt="Axies"
                                           className="avatar"
                                         />
                                       </Link> */}
-                                        {/* <div className="badge"></div> */}
-                                      </div>
-                                      <div className="author-infor">
-                                        <div className="name">
-                                          <h6>{item.address}</h6>{" "}
-                                          <span> placed a bid</span>
+                                          {/* <div className="badge"></div> */}
                                         </div>
-                                        <span className="time">
-                                          {item.createdAt}
-                                        </span>
+                                        <div className="author-infor">
+                                          <div className="name">
+                                            <h6>
+                                              {shortAddress(item.address)}
+                                            </h6>{" "}
+                                            <span> placed a bid</span>
+                                          </div>
+                                          <span className="time">
+                                            {convertTime(
+                                              Date.now() -
+                                                (item.createdAt.toString() +
+                                                  "000")
+                                            )}
+                                          </span>
+                                        </div>
                                       </div>
                                     </div>
+                                    <div className="price">
+                                      <h5> {formatEther(item.price)} GRAV</h5>
+                                      <span></span>
+                                    </div>
                                   </div>
-                                  <div className="price">
-                                    <h5>{item.price}GRAV</h5>
-                                    <span></span>
-                                  </div>
-                                </div>
-                              </li>
-                            ))}
+                                </li>
+                              )
+                            )}
                           </ul>
                         </TabPanel>
                         {/* <TabPanel>
