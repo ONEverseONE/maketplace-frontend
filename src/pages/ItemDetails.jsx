@@ -83,7 +83,11 @@ const ItemDetails01 = () => {
     },
   ]);
 
-  const { nftId } = useParams();
+  const splicedId = useParams().nftId;
+  console.log("id here lol", splicedId)
+  const nftId = splicedId.split("-")[0]
+  const nftTokenId = splicedId.split("-")[1]
+
   const { account, library } = useWeb3React();
   const [modalShow, setModalShow] = useState(false);
 
@@ -96,8 +100,9 @@ const ItemDetails01 = () => {
   const [retrieved, retrievedSet] = useState(false);
 
   const [nft, setNft] = useState({
-    id: Number(nftId),
-    img: `${PUFF_IMAGE_URL}${nftId}.png`,
+    id: nftId,
+    tokenId: nftTokenId,
+    img: `${PUFF_IMAGE_URL}${nftTokenId}.png`,
     // rarity: PUFF_RARITY[Number(nftId) - 1].nftRarity,
     currentOwner: "",
     listed: 0,
@@ -151,7 +156,7 @@ const ItemDetails01 = () => {
     try {
       const contract = new Contract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
       console.log("initial", contract);
-      const currentOwner = await contract.ownerOf(nftId);
+      const currentOwner = await contract.ownerOf(nftTokenId);
       console.log(currentOwner, "this is the owner");
 
       // through graphql
@@ -168,9 +173,9 @@ const ItemDetails01 = () => {
 
       const [listed, saleInfo, auctionInfo] = await multicallMarketProvider.all(
         [
-          multicallMarketContract.listed(CONTRACT_NFT_PUFF, nftId),
-          multicallMarketContract.directSales(CONTRACT_NFT_PUFF, nftId),
-          multicallMarketContract.auctionSales(CONTRACT_NFT_PUFF, nftId),
+          multicallMarketContract.listed(CONTRACT_NFT_PUFF, nftTokenId),
+          multicallMarketContract.directSales(CONTRACT_NFT_PUFF, nftTokenId),
+          multicallMarketContract.auctionSales(CONTRACT_NFT_PUFF, nftTokenId),
         ]
       );
 
@@ -180,8 +185,9 @@ const ItemDetails01 = () => {
       console.log(auctionInfo);
 
       console.log({
-        id: Number(nftId),
-        img: `${PUFF_IMAGE_URL}${nftId}.png`,
+        id: nftId,
+        tokenId: nftTokenId,
+        img: `${PUFF_IMAGE_URL}${nftTokenId}.png`,
         // rarity: PUFF_RARITY[Number(nftId) - 1].nftRarity,
         currentOwner: currentOwner,
         listed: Number(listed),
@@ -199,8 +205,9 @@ const ItemDetails01 = () => {
       );
 
       setNft({
-        id: Number(nftId),
-        img: `${PUFF_IMAGE_URL}${nftId}.png`,
+        id: nftId,
+        tokenId: nftTokenId,
+        img: `${PUFF_IMAGE_URL}${nftTokenId}.png`,
         // rarity: PUFF_RARITY[Number(nftId) - 1].nftRarity,
         currentOwner: currentOwner,
         listed: Number(listed),
@@ -235,7 +242,7 @@ const ItemDetails01 = () => {
   };
 
   const getData = async () => {
-    let response = await fetch(`${PUFF_DATA_URL}${nftId}.json`);
+    let response = await fetch(`${PUFF_DATA_URL}${nftTokenId}.json`);
     let data = await response.json();
     console.log("######## data here", data.attributes);
     setNftData(data.attributes);
@@ -307,7 +314,7 @@ const ItemDetails01 = () => {
         }
         const res = await marketContract[
           "listToken(address,uint256,uint256,uint256)"
-        ](CONTRACT_NFT_PUFF, nftId, parseEther(auctionPrice), time); // hard coded rn, get from subgraphs later
+        ](CONTRACT_NFT_PUFF, nftTokenId, parseEther(auctionPrice), time); // hard coded rn, get from subgraphs later
         await res.wait();
         toast.success("Success!");
       } else {
@@ -317,7 +324,7 @@ const ItemDetails01 = () => {
         }
         const res = await marketContract["listToken(address,uint256,uint256)"](
           CONTRACT_NFT_PUFF,
-          nftId,
+          nftTokenId,
           parseEther(fixPrice)
         );
         await res.wait();
@@ -350,7 +357,7 @@ const ItemDetails01 = () => {
         ABI_MARKETPLACE,
         library.getSigner()
       );
-      const res = await contract.delistToken([CONTRACT_NFT_PUFF], [nftId]); // 1 TO 1 ARRAY
+      const res = await contract.delistToken([CONTRACT_NFT_PUFF], [nftTokenId]); // 1 TO 1 ARRAY
       await res.wait();
       toast.success("Success!");
       getNftInfo();
@@ -402,7 +409,7 @@ const ItemDetails01 = () => {
       console.log("price is", nft.price);
       const res = await marketContract.buyToken(
         CONTRACT_NFT_PUFF,
-        nftId
+        nftTokenId
         // parseEther(nft.price.toString())
       );
       console.info("got bp5");
@@ -456,7 +463,7 @@ const ItemDetails01 = () => {
 
       const auctionsales = await marketContract.auctionSales(
         CONTRACT_NFT_PUFF,
-        nftId
+        nftTokenId
       );
       console.log("auction sales here");
       console.log(auctionsales);
@@ -482,13 +489,13 @@ const ItemDetails01 = () => {
       console.log(
         "testing data",
         CONTRACT_NFT_PUFF,
-        nftId,
+        nftTokenId,
         parseEther(fixPrice)
       );
 
       const res = await marketContract.bidToken(
         CONTRACT_NFT_PUFF,
-        nftId,
+        nftTokenId,
         parseEther(bidvalue)
       );
       await res.wait();
@@ -510,7 +517,7 @@ const ItemDetails01 = () => {
         ABI_MARKETPLACE,
         library.getSigner()
       );
-      const res = await contract.retrieveToken(CONTRACT_NFT_PUFF, nftId);
+      const res = await contract.retrieveToken(CONTRACT_NFT_PUFF, nftTokenId);
       await res.wait();
       toast.success("Success!");
       getNftInfo();
@@ -548,7 +555,7 @@ const ItemDetails01 = () => {
                   <li>
                     <Link to="/explore">Explore</Link>
                   </li>
-                  <li>NFT - {nftId}</li>
+                  <li>NFT - {nftTokenId}</li>
                 </ul>
               </div>
             </div>
@@ -561,14 +568,14 @@ const ItemDetails01 = () => {
             <div className="col-xl-6 col-md-12">
               <div className="content-left">
                 <div className="media">
-                  <img src={getURL(nft.id)} alt="Axies" />
+                  <img src={getURL(nft.tokenId)} alt="Axies" />
                 </div>
               </div>
             </div>
             <div className="col-xl-6 col-md-12">
               <div className="content-right">
                 <div className="sc-item-details">
-                  <h2 className="style2">“Puff #{nft.id}” </h2>
+                  <h2 className="style2">“Puff #{nft.tokenId}” </h2>
                   {/* <div className="meta-item">
                                         <div className="left">
                                             <span className="viewed eye">225</span>
@@ -877,7 +884,7 @@ const ItemDetails01 = () => {
 
                         <TabPanel>
                           <ul className="bid-history-list">
-                            {getBids(nftId, listed_data.nfts).map(
+                            {getBids(nftTokenId, listed_data.nfts).map(
                               (item, index) => (
                                 <li key={index} item={item}>
                                   <div className="content">

@@ -23,10 +23,15 @@ import {
 } from "../../../constant/gqls";
 import { useQuery } from "@apollo/client";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
 const axios = require("axios");
 
 const Explore = () => {
+
+  const collectionName = useParams().collection
+  console.log("-----------------------",collectionName)
+
   const count = 12;
   const { account, library } = useWeb3React();
 
@@ -299,7 +304,8 @@ const getURL = (id) => {
       console.log("inside your loop");
 
       const newNfts = your_data.nfts.map((item, index) => ({
-        id: Number(item.tokenId),
+        tokenId: Number(item.tokenId),
+        id: item.id,
         // img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
         // img: getCharacters(Number(item.tokenId)),
         img: getURL(Number(item.tokenId)),
@@ -325,7 +331,8 @@ const getURL = (id) => {
     } else if (!listed_loading && listed_data && isListing) {
       console.log("inside listed loop");
       const newNfts = listed_data.nfts.map((item, index) => ({
-        id: Number(item.tokenId),
+        tokenId: Number(item.tokenId),
+        id: item.id,
         // img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
         img: getURL(Number(item.tokenId)),
     
@@ -350,7 +357,8 @@ const getURL = (id) => {
     } else if (!all_loading && all_data && !isListing) {
       console.log("inside all loop");
       const newNfts = all_data.nfts.map((item, index) => ({
-        id: Number(item.tokenId),
+        tokenId: Number(item.tokenId),
+        id: item.id,
         // img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
         // img: puff,
         // img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVeXX6aYNgHs-EH9PB9xuEU0Y37JN97d9ggw&usqp=CAU",
@@ -499,7 +507,7 @@ const getURL = (id) => {
                   if (x.listed === 2 && !status[1].checked) return false;
                   return true;
                 })
-                .sort((a, b) => a.id - b.id)}
+                .sort((a, b) => a.tokenId - b.tokenId)}
               isAll={isAll}
               isMine={isMine}
               getMore={() => {

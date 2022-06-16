@@ -41,8 +41,9 @@ const LiveAuctions = () => {
   }
 
   const newNfts = listed_data.nfts.map((item, index) => ({
-    id: Number(item.tokenId),
-    img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
+    tokenId: Number(item.tokenId),
+    id: (item.id),
+    img: `${PUFF_IMAGE_URL}${Number(item.tokenId)}.png`,
     // rarity: PUFF_RARITY[Number(item.id) - 1].nftRarity,
     currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
     listed: item.type,
@@ -104,7 +105,7 @@ const LiveAuctions = () => {
           <div className="row">
             <div className="col-md-12">
               <div className="page-title-heading mg-bt-12">
-                <h1 className="heading text-center">Auctions</h1>
+                <h1 className="heading text-center">Auctions hehe</h1>
               </div>
               <div className="breadcrumbs style2">
                 <ul>

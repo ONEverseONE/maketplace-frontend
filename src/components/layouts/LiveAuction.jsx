@@ -72,7 +72,7 @@ const LiveAuction = (props) => {
                           <div className="slider-item">
                             <div className="sc-card-product">
                               <div className="card-media">
-                                <Link to={`/nft/${item.tokenId}`}>
+                                <Link to={`/nft/${item.id}`}>
                                   <div className="custom-image-container">
                                     <img
                                       src={getURL(item.tokenId)}
@@ -91,7 +91,7 @@ const LiveAuction = (props) => {
                                 <div className="featured-countdown">
                                   <span className="slogan"></span>
                                   <Countdown date={parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '000')}>
-                                    <span>{parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '00')}</span>
+                                    {/* <span>{parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '00')}</span> */}
                                     
                                   </Countdown>
                                 </div>
@@ -107,11 +107,11 @@ const LiveAuction = (props) => {
                               </div>
                               <div className="card-title">
                                 <h5>
-                                  <Link to={`/nft/${item.tokenId}`}>
+                                  <Link to={`/nft/${item.id}`}>
                                     "Puff {item.tokenId}"
                                   </Link>
                                 </h5>
-                                <div className="tags">GRAV</div>{" "}
+                                <div className="tags">Rarity</div>{" "}
                                 {/* this does not exist */}
                               </div>
                               <div className="meta-info">

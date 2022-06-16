@@ -75,7 +75,7 @@ const LiveAuctionItem = (props) => {
           <Link to={`/nft/${props.item.id}`}>
             {" "}
             {/* change here */}
-            <img src={getURL(props.item.id)} alt="axies" className="auction-image" />
+            <img src={getURL(props.item.tokenId)} alt="axies" className="auction-image" />
           </Link>
           {/* <Link to="/login" className="wishlist-button heart">
           <span className="number-like">{props.item.wishlist}</span>
@@ -83,7 +83,7 @@ const LiveAuctionItem = (props) => {
           <div className="featured-countdown">
             <span className="slogan"></span>
             <Countdown date={parseInt(props.item.bids[0].createdAt + '000') + parseInt(props.item.auctionDuration + '000')}>
-              <span>You are good to go!</span>
+              {/* <span>Ended</span> */}
             </Countdown>
             
           </div>
@@ -106,10 +106,10 @@ const LiveAuctionItem = (props) => {
         </div>
         <div className="card-title">
           <h5>
-            <Link to={`/nft/${props.item.id}`}>"NFT {props.item.id}"</Link>{" "}
+            <Link to={`/nft/${props.item.id}`}>"NFT {props.item.tokenId}"</Link>{" "}
             {/* change here */}
           </h5>
-          <div className="tags">GRAV</div>
+          <div className="tags">Rarity</div>
         </div>
         <div className="meta-info">
           <div className="author">

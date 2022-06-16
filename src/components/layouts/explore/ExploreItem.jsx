@@ -49,10 +49,10 @@ const ExploreItem = (props) => {
                 </div>
                 <div className="card-title">
                   <h2>
-                    <Link to={`/nft/${item.id}`}>"Puff {item.id}"</Link>
+                    <Link to={`/nft/${item.id}`}>"Puff {item.tokenId}"</Link>
                   </h2>
 
-                  <div className="tags">GRAV</div>
+                  <div className="tags">Rarity</div>
                 </div>
                 <div className="meta-info">
                   <div className="author">
