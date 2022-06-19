@@ -1,32 +1,57 @@
 // import { formatEther, parseEther } from "@ethersproject/units";
 import { formatEther } from "@ethersproject/units";
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CONTRACT_MARKETPLACE } from "../../../constant";
 import { shortAddress } from "../../../utils";
 import CardModal from "../CardModal";
+import axios from "axios";
 
 const ExploreItem = (props) => {
-
-    const names = {
-        puffs: "Puff", 
-        harmolecules: "HarMolecule",
-        eggs: "egg"
-    }
+  const names = {
+    puffs: "Puff",
+    harmolecules: "HarMolecule",
+    eggs: "egg",
+  };
 
   const collectionName = useParams().collection;
   const { data, getMore, isAll, isMine } = props;
   console.log(props);
+
+  const [rarity, setRarity] = useState("______");
+
+  //   const getRarity = async (tokenId) => {
+  //     let response = await fetch(`${props.rarity_url}${tokenId}.json`, {
+  //         mode: "cors",
+  //         headers: {
+  //             'Access-Control-Allow-Origin':'*'
+  //         }
+  //     });
+  //     let data = await response.json();
+  //     console.log("######## data here", data);
+  //     // setNftData(data.attributes);
+  //   };
+
+  async function getRarity(tokenId) {
+    try {
+      const response = await axios.get(`https://cors-anywhere.herokuapp.com/${props.rarity_url}${tokenId}.json`);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   const [visible, setVisible] = useState(12);
   const showMoreItems = () => {
     setVisible((prevValue) => prevValue + 12);
   };
 
+
   const [modalShow, setModalShow] = useState(false);
 
-  console.log("items here hehehehehe")
-  console.log(data)
+  console.log("items here hehehehehe");
+  console.log(data);
   return (
     <Fragment>
       <div className="explore">
@@ -41,13 +66,13 @@ const ExploreItem = (props) => {
               >
                 <div className="card-media">
                   {/* <Link to={`/nft/${item.id}`}> */}
-                    <div className="custom-image-container">
-                      <img src={item.img} alt="Axies" className="img-custom" />
-                    </div>
+                  <div className="custom-image-container">
+                    <img src={item.img} alt="Axies" className="img-custom" />
+                  </div>
                   {/* </Link> */}
                   <div className="button-place-bid">
                     <button
-                    //   onClick={() => setModalShow(true)}
+                      //   onClick={() => setModalShow(true)}
                       className="sc-button style-place-bid style bag fl-button pri-3"
                     >
                       <span>Place Bid</span>
@@ -58,13 +83,15 @@ const ExploreItem = (props) => {
                 <div className="card-title">
                   <h2>
                     {/* <Link to={`/nft/${item.id}`}> */}
-                        {names[collectionName]} #{item.tokenId}
-                        {/* </Link> */}
+                    {names[collectionName]} #{item.tokenId}
+                    {/* </Link> */}
                   </h2>
 
                   {/* <div className="tags">Rarity</div> */}
                 </div>
-                <div className="tags">Rarity 000000</div>
+                <div className="tags">
+                  Rarity {rarity}{" "}
+                </div>
                 <br />
                 <br />
                 <div className="meta-info">
@@ -102,7 +129,9 @@ const ExploreItem = (props) => {
                       ) : (
                         <>
                           <h5>
-                            {item.highestBid > 0 ? formatEther(item.highestBid.toString()) : formatEther(item.price.toString())}{" "}
+                            {item.highestBid > 0
+                              ? formatEther(item.highestBid.toString())
+                              : formatEther(item.price.toString())}{" "}
                             <span>GRAV</span>
                           </h5>
                           {/* <span>= $ {item.highestBid > 0 ? (item.highestBid) : item.price}</span> */}
@@ -131,7 +160,11 @@ const ExploreItem = (props) => {
           </div>
         )}
       </div>
-      <CardModal show={modalShow} onHide={() => setModalShow(false)} minbid = "debug here"/>
+      <CardModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        minbid="debug here"
+      />
     </Fragment>
   );
 };

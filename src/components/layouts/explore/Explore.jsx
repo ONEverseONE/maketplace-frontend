@@ -14,6 +14,8 @@ import {
   PUFF_DATA_URL,
   HARMOLECULES_IMAGE_URL,
   CONTRACT_NFT_HARMOLECULES,
+  PUFF_RARITY_URL,
+  HARMOLECULES_RARITY_URL,
 } from "../../../constant/index.js";
 import { ABI_NFT_PUFF, ABI_MARKETPLACE } from "../../../constant/abis.js";
 import { setupMultiCallContract } from "../../../utils";
@@ -39,22 +41,37 @@ const Explore = () => {
       image: PUFF_IMAGE_URL,
       contract: CONTRACT_NFT_PUFF,
       data: PUFF_DATA_URL,
+      rarity: PUFF_RARITY_URL,
     },
     harmolecules: {
         image: HARMOLECULES_IMAGE_URL,
         contract: CONTRACT_NFT_HARMOLECULES,
-        data: PUFF_DATA_URL // change this
+        data: PUFF_DATA_URL, // change this
+        rarity: HARMOLECULES_RARITY_URL
     },
     eggs: "",
   };
 
 
+
+
+
   const CONTRACT_NFT = collectionAddr[collectionName].contract
   const IMAGE_URL = collectionAddr[collectionName].image
+  const RARITY_URL = collectionAddr[collectionName].rarity
+
+
+  const getRarity = async (tokenId) => {
+    let response = await fetch(`${RARITY_URL}${tokenId}.json`);
+    let data = await response.json();
+    console.log("######## data here", data.attributes);
+    // setNftData(data.attributes);
+  };
 
 
   const count = 12;
   const { account, library } = useWeb3React();
+  console.log(account, "account here")
 
   const [status, setStatus] = useState([
     { field: "Buy Now", checked: true },
@@ -198,8 +215,6 @@ const Explore = () => {
   //   }
 
   const getURL = (id) => {
-    console.log("get url function called");
-    console.log(typeof id.toString());
     let str = IMAGE_URL + id.toString() + ".png";
     return str;
   };
@@ -280,7 +295,7 @@ const Explore = () => {
     refetch: your_refetch,
     fetchMore: your_fetchMore,
   } = useQuery(GQL_GETMYLISTED, {
-    variables: { address: account?.toLowerCase(), contract: CONTRACT_NFT.toLowerCase() },
+    variables: { address: account.toLowerCase(), contract: CONTRACT_NFT.toLowerCase() },
     fetchPolicy: "no-cache",
   });
 
@@ -521,7 +536,6 @@ const Explore = () => {
             <ExploreItem
               data={nfts
                 .filter((x) => {
-                  console.log(!isListing);
                   if (!isListing) return true;
                   if (x.listed === 0) return false;
                   if (x.listed === 1 && !status[0].checked) return false;
@@ -531,6 +545,7 @@ const Explore = () => {
                 .sort((a, b) => a.tokenId - b.tokenId)}
               isAll={isAll}
               isMine={isMine}
+              rarity_url = {RARITY_URL}
               getMore={() => {
                 getMore(startNft);
               }}
