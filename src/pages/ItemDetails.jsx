@@ -582,7 +582,7 @@ const ItemDetails01 = () => {
                   {/* <br /> */}
                   <div className="badges-main">
                     {nftData.map((item, index) => (
-                      <div className="details-badge">
+                      <div className="details-badge" key={index}>
                         {item.trait_type} : {item.value}
                       </div>
                     ))}

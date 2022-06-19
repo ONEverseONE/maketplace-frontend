@@ -34,7 +34,6 @@ const axios = require("axios");
 
 const Explore = () => {
   const collectionName = useParams().collection;
-  console.log("-----------------------", collectionName);
 
   const collectionAddr = {
     puffs: {
@@ -61,14 +60,6 @@ const Explore = () => {
   const RARITY_URL = collectionAddr[collectionName].rarity
 
 
-  const getRarity = async (tokenId) => {
-    let response = await fetch(`${RARITY_URL}${tokenId}.json`);
-    let data = await response.json();
-    console.log("######## data here", data.attributes);
-    // setNftData(data.attributes);
-  };
-
-
   const count = 12;
   const { account, library } = useWeb3React();
   console.log(account, "account here")
@@ -91,50 +82,50 @@ const Explore = () => {
     setStatus(status.map((item) => (item.field === val.field ? val : item)));
   };
   // through graphql
-  const getAllNfts = async (start) => {
-    if (!library) {
-      console.log("No provider");
-      return;
-    }
-    try {
-      const contract = new Contract(CONTRACT_NFT, ABI_NFT_PUFF, library);
-      const nftCount = Number(await contract.totalSupply());
+//   const getAllNfts = async (start) => {
+//     if (!library) {
+//       console.log("No provider");
+//       return;
+//     }
+//     try {
+//       const contract = new Contract(CONTRACT_NFT, ABI_NFT_PUFF, library);
+//       const nftCount = Number(await contract.totalSupply());
 
-      console.log("total supply", nftCount);
+//       console.log("total supply", nftCount);
 
-      const [multicallProvider, multicallContract] =
-        await setupMultiCallContract(CONTRACT_NFT, ABI_NFT_PUFF, library); // use this for multicalls
+//       const [multicallProvider, multicallContract] =
+//         await setupMultiCallContract(CONTRACT_NFT, ABI_NFT_PUFF, library); // use this for multicalls
 
-      const possibleCount = Math.min(count, nftCount - start);
-      setIsAll(nftCount <= count + start);
-      const nftIds = await multicallProvider.all(
-        Array.from(Array(possibleCount).keys()).map((u, index) =>
-          multicallContract.tokenByIndex(start + index)
-        )
-      );
+//       const possibleCount = Math.min(count, nftCount - start);
+//       setIsAll(nftCount <= count + start);
+//       const nftIds = await multicallProvider.all(
+//         Array.from(Array(possibleCount).keys()).map((u, index) =>
+//           multicallContract.tokenByIndex(start + index)
+//         )
+//       );
 
-      const owners = await multicallProvider.all(
-        nftIds.map((id) => multicallContract.ownerOf(id))
-      );
+//       const owners = await multicallProvider.all(
+//         nftIds.map((id) => multicallContract.ownerOf(id))
+//       );
 
-      const [multicallMarketProvider, multicallMarketContract] =
-        await setupMultiCallContract(
-          CONTRACT_MARKETPLACE,
-          ABI_MARKETPLACE,
-          library
-        );
+//       const [multicallMarketProvider, multicallMarketContract] =
+//         await setupMultiCallContract(
+//           CONTRACT_MARKETPLACE,
+//           ABI_MARKETPLACE,
+//           library
+//         );
 
-      const listed = await multicallMarketProvider.all(
-        nftIds.map((id) => multicallMarketContract.listed(id))
-      );
+//       const listed = await multicallMarketProvider.all(
+//         nftIds.map((id) => multicallMarketContract.listed(id))
+//       );
 
-      const infos = await multicallMarketProvider.all(
-        listed.map((listed, index) =>
-          Number(listed) === 1
-            ? multicallMarketContract.directSales(nftIds[index])
-            : multicallMarketContract.auctionSales(nftIds[index])
-        )
-      );
+//       const infos = await multicallMarketProvider.all(
+//         listed.map((listed, index) =>
+//           Number(listed) === 1
+//             ? multicallMarketContract.directSales(nftIds[index])
+//             : multicallMarketContract.auctionSales(nftIds[index])
+//         )
+//       );
 
       //   const { loading, error, data, refetch, fetchMore } = useQuery(GQL_GETALL, {
       //     // variables: { address: account?.toLowerCase() },
@@ -174,10 +165,10 @@ const Explore = () => {
       // console.log(newNfts)
       // setNfts(start === 0 ? newNfts : [...nfts, ...newNfts]);
       // setStartNft(start + possibleCount);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
 
   //   const getCharacters = async (id) => {
   //     console.log("trying to get chars of ", id)
@@ -220,73 +211,73 @@ const Explore = () => {
   };
 
   // through graphql
-  const getListedNfts = async (start) => {
-    if (!library) {
-      console.log("No provider");
-      return;
-    }
-    try {
-      const contract = new Contract(CONTRACT_NFT, ABI_NFT_PUFF, library);
+//   const getListedNfts = async (start) => {
+//     if (!library) {
+//       console.log("No provider");
+//       return;
+//     }
+//     try {
+//       const contract = new Contract(CONTRACT_NFT, ABI_NFT_PUFF, library);
 
-      const nftCount = Number(await contract.balanceOf(CONTRACT_MARKETPLACE));
+//       const nftCount = Number(await contract.balanceOf(CONTRACT_MARKETPLACE));
 
-      const [multicallProvider, multicallContract] =
-        await setupMultiCallContract(CONTRACT_NFT, ABI_NFT_PUFF, library);
-      const possibleCount = Math.min(count, nftCount - start);
-      const nftIds = await multicallProvider.all(
-        Array.from(Array(possibleCount).keys()).map((u, index) =>
-          multicallContract.tokenOfOwnerByIndex(
-            CONTRACT_MARKETPLACE,
-            start + index
-          )
-        )
-      );
+//       const [multicallProvider, multicallContract] =
+//         await setupMultiCallContract(CONTRACT_NFT, ABI_NFT_PUFF, library);
+//       const possibleCount = Math.min(count, nftCount - start);
+//       const nftIds = await multicallProvider.all(
+//         Array.from(Array(possibleCount).keys()).map((u, index) =>
+//           multicallContract.tokenOfOwnerByIndex(
+//             CONTRACT_MARKETPLACE,
+//             start + index
+//           )
+//         )
+//       );
 
-      const [multicallMarketProvider, multicallMarketContract] =
-        await setupMultiCallContract(
-          CONTRACT_MARKETPLACE,
-          ABI_MARKETPLACE,
-          library
-        );
+//       const [multicallMarketProvider, multicallMarketContract] =
+//         await setupMultiCallContract(
+//           CONTRACT_MARKETPLACE,
+//           ABI_MARKETPLACE,
+//           library
+//         );
 
-      const listed = await multicallMarketProvider.all(
-        nftIds.map((id) => multicallMarketContract.listed(id))
-      );
+//       const listed = await multicallMarketProvider.all(
+//         nftIds.map((id) => multicallMarketContract.listed(id))
+//       );
 
-      const infos = await multicallMarketProvider.all(
-        listed.map((listed, index) =>
-          Number(listed) === 1
-            ? multicallMarketContract.directSales(nftIds[index])
-            : multicallMarketContract.auctionSales(nftIds[index])
-        )
-      );
+//       const infos = await multicallMarketProvider.all(
+//         listed.map((listed, index) =>
+//           Number(listed) === 1
+//             ? multicallMarketContract.directSales(nftIds[index])
+//             : multicallMarketContract.auctionSales(nftIds[index])
+//         )
+//       );
 
-      const newNfts = infos.map((info, index) => ({
-        id: Number(nftIds[index]),
-        // img: `${PUFF_IMAGE_URL}${Number(nftIds[index])}.png`,
-        // img: getCharacters(Number(nftIds[index])),
-        rarity: PUFF_RARITY[Number(nftIds[index]) - 1].nftRarity,
-        currentOwner: CONTRACT_MARKETPLACE,
-        listed: Number(listed[index]),
-        originalOwner: info.owner,
-        price:
-          Number(listed[index]) === 1 ? Number(formatEther(info.price)) : 0,
-        highestBid:
-          Number(listed[index]) === 2
-            ? Number(formatEther(info.highestBid))
-            : 0,
-        highestBidder:
-          Number(listed[index]) === 2 ? info.highestBidder : ZERO_ADDRESS,
-        timeEnd: Number(listed[index]) === 2 ? Number(info.timeEnd) * 1000 : 0,
-      }));
+//       const newNfts = infos.map((info, index) => ({
+//         id: Number(nftIds[index]),
+//         // img: `${PUFF_IMAGE_URL}${Number(nftIds[index])}.png`,
+//         // img: getCharacters(Number(nftIds[index])),
+//         rarity: PUFF_RARITY[Number(nftIds[index]) - 1].nftRarity,
+//         currentOwner: CONTRACT_MARKETPLACE,
+//         listed: Number(listed[index]),
+//         originalOwner: info.owner,
+//         price:
+//           Number(listed[index]) === 1 ? Number(formatEther(info.price)) : 0,
+//         highestBid:
+//           Number(listed[index]) === 2
+//             ? Number(formatEther(info.highestBid))
+//             : 0,
+//         highestBidder:
+//           Number(listed[index]) === 2 ? info.highestBidder : ZERO_ADDRESS,
+//         timeEnd: Number(listed[index]) === 2 ? Number(info.timeEnd) * 1000 : 0,
+//       }));
 
-      console.log(newNfts);
-      setNfts(start === 0 ? newNfts : [...nfts, ...newNfts]);
-      setStartNft(start);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+//       console.log(newNfts);
+//       setNfts(start === 0 ? newNfts : [...nfts, ...newNfts]);
+//       setStartNft(start);
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
 
   const {
     loading: your_loading,
@@ -363,13 +354,12 @@ const Explore = () => {
       }));
       console.log("############", your_data.nfts, newNfts);
       setNfts(newNfts);
-      //   getStatus(data);
+
     } else if (!listed_loading && listed_data && isListing) {
       console.log("inside listed loop");
       const newNfts = listed_data.nfts.map((item, index) => ({
         tokenId: Number(item.tokenId),
         id: item.id,
-        // img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
         img: getURL(Number(item.tokenId)),
 
         // img: `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${Number(item.tokenID)}.json`,
@@ -432,13 +422,13 @@ const Explore = () => {
     isListing,
   ]);
 
-  const getMore = (start) => {
-    if (isMine) {
-    } else {
-      if (isListing) getListedNfts(start);
-      getAllNfts(start);
-    }
-  };
+//   const getMore = (start) => {
+//     if (isMine) {
+//     } else {
+//       if (isListing) getListedNfts(start);
+//       getAllNfts(start);
+//     }
+//   };
 
   //   useEffect(() => {
   //     if (library) {
@@ -547,7 +537,7 @@ const Explore = () => {
               isMine={isMine}
               rarity_url = {RARITY_URL}
               getMore={() => {
-                getMore(startNft);
+                console.log("get more called");
               }}
             />
           </div>

@@ -93,12 +93,11 @@ const LiveAuction = (props) => {
                                   { item.bids.length === 0 ? <></>:
                                   <Countdown date={parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '000')}>
                                     {/* <span>{parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '00')}</span> */}
-                                    
                                   </Countdown>}
                                 </div>
                                 <div className="button-place-bid">
                                   <Link
-                                    to={`/nft/${item.tokenId}`}
+                                    to={`/nft/${item.id}`}
                                     // onClick={() => setModalShow(true)}
                                     className="sc-button style-place-bid style bag fl-button pri-3"
                                   >
