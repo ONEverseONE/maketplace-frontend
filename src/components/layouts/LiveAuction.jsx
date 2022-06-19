@@ -90,10 +90,11 @@ const LiveAuction = (props) => {
                                 </Link> */}
                                 <div className="featured-countdown">
                                   <span className="slogan"></span>
+                                  { item.bids.length === 0 ? <></>:
                                   <Countdown date={parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '000')}>
                                     {/* <span>{parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '00')}</span> */}
                                     
-                                  </Countdown>
+                                  </Countdown>}
                                 </div>
                                 <div className="button-place-bid">
                                   <Link
@@ -125,8 +126,7 @@ const LiveAuction = (props) => {
                                       {" "}
                                       {/* <Link to="/authors"> */}
                                       {/* krishanu fix this */}
-                                      fix here
-                                      {/* {formatAddr(item.owner)} */}
+                                      {formatAddr(item.owner)}
                                       {/* </Link>{" "} */}
                                     </h6>
                                   </div>

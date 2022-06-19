@@ -16,15 +16,17 @@ export const CONTRACT_TOKEN = '0xa36A484Ccd2Dff252314cc92531EF09D767BaFCC'; //ne
 
 // export const CONTRACT_NFT_PUFF = '0x701d1907fd9Ed5A1B4d6f005D602C723F9fD47fa'; //old
 // export const CONTRACT_NFT_PUFF = '0x943AE671811877abf303a60d1827C8e5AFf76e83'; //new
-export const CONTRACT_NFT_PUFF = '0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944'; //new
+
 
 // export const CONTRACT_MARKETPLACE = '0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944'; //old
 // export const CONTRACT_MARKETPLACE = '0xfFC0Fe2Edb4C506Fe3D97Fa3d397EF71d90CEB55'; //new
 export const CONTRACT_MARKETPLACE = '0x08D3C40eE6Cf29D863b1Bf8463d8Ce0DB6b3bd2b'; //new
 
+export const CONTRACT_NFT_PUFF = '0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944'; //new
 export const PUFF_IMAGE_URL = 'https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/'
 export const PUFF_DATA_URL = "https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/";
 
+export const CONTRACT_NFT_HARMOLECULES = '0x9542a61F170478d31d37522E2082aB3d46c28775'
 export const HARMOLECULES_IMAGE_URL = 'https://harmolecules.mypinata.cloud/ipfs/QmTdSaXrVuNh2BjPhDPVqCmx2tpYuhn6rpuXJJydkAUKtY/'
 
 //------------------------------Info for connect wallet-----------------------------------

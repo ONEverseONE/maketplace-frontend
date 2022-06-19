@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import { formatEther, parseEther } from "@ethersproject/units";
 
 import Countdown from "react-countdown";
+import { HARMOLECULES_IMAGE_URL, PUFF_IMAGE_URL } from "../../../constant";
 
 const LiveAuction = (props) => {
   const data = props.data;
 
-  console.log("-------- live auction data --------")
-  console.log(data)
-  console.log("-------- end of transmission --------")
+  console.log("-------- live auction data --------");
+  console.log(data);
+  console.log("-------- end of transmission --------");
 
   const [visible, setVisible] = useState(8);
   const showMoreItems = () => {
@@ -58,12 +59,38 @@ LiveAuction.propTypes = {
 };
 
 const LiveAuctionItem = (props) => {
-    const getURL = (id) => {
-        console.log("get url function called")
-        console.log(typeof id.toString())
-        let str = "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/" + id.toString() + ".png"
-        return str
+
+
+
+  const contract_forData = props.item.id.split("-")[0]
+
+  console.log("===============", contract_forData)
+
+  // replace this to add more collections
+
+  const collectionData = {
+    "0xc4eb0f03fb6d0eee602943a92ca26acf3501f944": {
+        image: PUFF_IMAGE_URL,
+        name: "Puff"
+    },
+    harmol: {
+        image:  HARMOLECULES_IMAGE_URL,
+        name: "HarMolecule"
     }
+  }
+
+  const IMAGE_URL = collectionData[contract_forData].image
+  const NAME = collectionData[contract_forData].name
+
+  const getURL = (id) => {
+    console.log("get url function called");
+    console.log(typeof id.toString());
+    let str =
+      IMAGE_URL +
+      id.toString() +
+      ".png";
+    return str;
+  };
 
   return (
     <div className="fl-item col-xl-3 col-lg-6 col-md-6">
@@ -75,17 +102,29 @@ const LiveAuctionItem = (props) => {
           <Link to={`/nft/${props.item.id}`}>
             {" "}
             {/* change here */}
-            <img src={getURL(props.item.tokenId)} alt="axies" className="auction-image" />
+            <img
+              src={getURL(props.item.tokenId)}
+              alt="axies"
+              className="auction-image"
+            />
           </Link>
           {/* <Link to="/login" className="wishlist-button heart">
           <span className="number-like">{props.item.wishlist}</span>
         </Link> */}
           <div className="featured-countdown">
             <span className="slogan"></span>
-            <Countdown date={parseInt(props.item.bids[0].createdAt + '000') + parseInt(props.item.auctionDuration + '000')}>
-              {/* <span>Ended</span> */}
-            </Countdown>
-            
+            {props.item.bids.length === 0 ? (
+              <></>
+            ) : (
+              <Countdown
+                date={
+                  parseInt(props.item.bids[0].createdAt + "000") +
+                  parseInt(props.item.auctionDuration + "000")
+                }
+              >
+                {/* <span>{parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '00')}</span> */}
+              </Countdown>
+            )}
           </div>
           <div className="button-place-bid">
             <Link
@@ -106,7 +145,7 @@ const LiveAuctionItem = (props) => {
         </div>
         <div className="card-title">
           <h5>
-            <Link to={`/nft/${props.item.id}`}>"NFT {props.item.tokenId}"</Link>{" "}
+            <Link to={`/nft/${props.item.id}`}>{NAME} #{props.item.tokenId}</Link>{" "}
             {/* change here */}
           </h5>
           <div className="tags">Rarity</div>
@@ -127,7 +166,7 @@ const LiveAuctionItem = (props) => {
           </div>
           <div className="price">
             <span>Current Bid</span>
-            <h5> {props.item.highestBid} GRAV</h5> {/* change needed here */}
+            <h5> {props.item.highestBid === 0 ? props.item.price : props.item.highestBid} GRAV</h5> {/* change needed here */}
           </div>
         </div>
       </div>

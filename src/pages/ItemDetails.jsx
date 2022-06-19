@@ -5,15 +5,9 @@ import { Link } from "react-router-dom";
 import Countdown from "react-countdown";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-// import liveAuctionData from "../assets/fake-data/data-live-auction";
+
 import LiveAuction from "../components/layouts/LiveAuction";
-import img1 from "../assets/images/avatar/avt-3.jpg";
-import img2 from "../assets/images/avatar/avt-11.jpg";
-import img3 from "../assets/images/avatar/avt-1.jpg";
-import img4 from "../assets/images/avatar/avt-5.jpg";
-import img5 from "../assets/images/avatar/avt-7.jpg";
-import img6 from "../assets/images/avatar/avt-8.jpg";
-import imgdetail1 from "../assets/images/box-item/images-item-details.jpg";
+
 import { useParams } from "react-router";
 import { useWeb3React } from "@web3-react/core";
 import { Contract } from "@ethersproject/contracts";
@@ -38,50 +32,6 @@ import { useQuery } from "@apollo/client";
 import CardModal from "../components/layouts/CardModal";
 
 const ItemDetails01 = () => {
-  const [dataHistory, setDataHistory] = useState([
-    {
-      img: img1,
-      name: "Mason Woodward",
-      time: "8 hours ago",
-      price: "4.89 ETH",
-      priceChange: "$12.246",
-    },
-    {
-      img: img2,
-      name: "Mason Woodward",
-      time: "at 06/10/2021, 3:20 AM",
-      price: "4.89 ETH",
-      priceChange: "$12.246",
-    },
-    {
-      img: img3,
-      name: "Mason Woodward",
-      time: "8 hours ago",
-      price: "4.89 ETH",
-      priceChange: "$12.246",
-    },
-    {
-      img: img4,
-      name: "Mason Woodward",
-      time: "8 hours ago",
-      price: "4.89 ETH",
-      priceChange: "$12.246",
-    },
-    {
-      img: img5,
-      name: "Mason Woodward",
-      time: "8 hours ago",
-      price: "4.89 ETH",
-      priceChange: "$12.246",
-    },
-    {
-      img: img6,
-      name: "Mason Woodward",
-      time: "8 hours ago",
-      price: "4.89 ETH",
-      priceChange: "$12.246",
-    },
-  ]);
 
   const splicedId = useParams().nftId;
   console.log("id here lol", splicedId)
@@ -117,7 +67,7 @@ const ItemDetails01 = () => {
     refetch: listed_refetch,
     fetchMore: listed_fetchMore,
   } = useQuery(GQL_GETLIVE, {
-    // variables: { address: account?.toLowerCase() },
+    variables: { contract: nftId.toLowerCase() },
     fetchPolicy: "no-cache",
   });
 
@@ -691,7 +641,7 @@ const ItemDetails01 = () => {
                         <span className="heading">Price</span>
                         <div className="price">
                           <div className="price-box">
-                            <h5> {nft.price} GRAV</h5>
+                            <h5>  {formatEther(nft.price.toString())} GRAV</h5>
                             {/* <span>= ${nft.price * ethPrice}</span> */}
                           </div>
                         </div>
@@ -724,7 +674,8 @@ const ItemDetails01 = () => {
                           <span>
                             {nft.timeEnd === 0
                               ? "No bidder yet"
-                              : Date(nft.timeEnd - Date.now())}
+                            //   : Date(nft.timeEnd - Date.now())}
+                            : ""}
                           </span>
                         </Countdown>
                       </div>

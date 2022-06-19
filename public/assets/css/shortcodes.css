@@ -1017,7 +1017,7 @@
 
 .sc-card-product .card-media .coming-soon {
     position        : absolute;
-    top             : 15px;
+    bottom             : 15px;
     left            : 14px;
     font-weight     : bold;
     font-size       : 14px;
@@ -1026,7 +1026,7 @@
     color           : #343444;
     padding         : 3px 19px;
     border-radius   : 13px;
-    background-color: #FFBD0C;
+    background-color: #ffbe0c;
 }
 .sc-card-product .card-media .coming-soon {
     display: none;
@@ -1088,7 +1088,9 @@
 }
 
 .sc-card-product .tags {
-    width           : 49px;
+    /* width           : 49px; */
+    width: max-content;
+    padding: 0 10px 0 10px;
     height          : 24px;
     line-height     : 24px;
     text-align      : center;

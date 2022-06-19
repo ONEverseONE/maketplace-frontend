@@ -6,7 +6,7 @@ import liveAuctionData from "../assets/fake-data/data-live-auction";
 import LiveAuction from "../components/layouts/auctions/LiveAuction";
 import fuzzysort from "fuzzysort";
 import { useQuery } from "@apollo/client";
-import { GQL_GETLIVE } from "../constant/gqls";
+import { GQL_GETAUCTION, GQL_GETLIVE } from "../constant/gqls";
 import { formatEther } from "@ethersproject/units";
 import {
   CONTRACT_MARKETPLACE,
@@ -26,7 +26,7 @@ const LiveAuctions = () => {
     data: listed_data,
     refetch: listed_refetch,
     fetchMore: listed_fetchMore,
-  } = useQuery(GQL_GETLIVE, {
+  } = useQuery(GQL_GETAUCTION, {
     // variables: { address: account?.toLowerCase() },
     fetchPolicy: "no-cache",
   });
@@ -105,7 +105,7 @@ const LiveAuctions = () => {
           <div className="row">
             <div className="col-md-12">
               <div className="page-title-heading mg-bt-12">
-                <h1 className="heading text-center">Auctions hehe</h1>
+                <h1 className="heading text-center">Auctions</h1>
               </div>
               <div className="breadcrumbs style2">
                 <ul>
@@ -126,7 +126,7 @@ const LiveAuctions = () => {
             <input
               className="style-2"
               type="text"
-              placeholder="Enter your word art"
+              placeholder="Enter keywords, collections..."
               ref={searchParam}
               required
             />

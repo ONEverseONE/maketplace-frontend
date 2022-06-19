@@ -1,9 +1,9 @@
 import gql from "graphql-tag";
 
 export const GQL_GETMYLISTED = gql`
-  query GetMyListedNft($address: String!) {
+  query GetMyListedNft($address: String!, $contract: String!) {
     nfts(
-      where: { owner: $address, type: 0 }
+      where: { owner: $address, type: 0,  contract: $contract}
       orderBy: id
       orderDirection: desc
     ) {
@@ -11,6 +11,7 @@ export const GQL_GETMYLISTED = gql`
       tokenId
       owner
       type
+      contract
       originalPrice
       bids {
         id
@@ -24,8 +25,12 @@ export const GQL_GETMYLISTED = gql`
 // update getlisted to get only listed nfts
 
 export const GQL_GETLISTED = gql`
-  query GetListedNft {
-    nfts {
+  query GetListedNft($contract: String!) {
+    nfts (
+        where: {contract: $contract}
+        orderBy: id
+        orderDirection: desc
+      ){
       id
       lastListedBy
       type
@@ -45,8 +50,8 @@ export const GQL_GETLISTED = gql`
 `;
 
 export const GQL_GETLIVE = gql`
-  query GetListedNft {
-    nfts(where: { type: 2 }) {
+  query GetListedNft($contract: String!) {
+    nfts(where: { type: 2, contract: $contract }) {
       id
       lastListedBy
       type
@@ -66,8 +71,29 @@ export const GQL_GETLIVE = gql`
 `;
 
 export const GQL_GETALL = gql`
-  query GetAllNft {
-    nfts {
+  query GetAllNft($contract: String!) {
+    nfts (where: { contract: $contract }){
+      id
+      lastListedBy
+      type
+      bids {
+        id
+        price
+        address
+        createdAt
+      }
+      owner
+      tokenId
+      contract
+      originalPrice
+      auctionDuration
+    }
+  }
+`;
+
+export const GQL_GETAUCTION = gql`
+  query GetAll {
+    nfts (where: { type: 2 }){
       id
       lastListedBy
       type

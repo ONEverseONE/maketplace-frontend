@@ -1,12 +1,20 @@
 // import { formatEther, parseEther } from "@ethersproject/units";
 import { formatEther } from "@ethersproject/units";
 import React, { useState, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CONTRACT_MARKETPLACE } from "../../../constant";
 import { shortAddress } from "../../../utils";
 import CardModal from "../CardModal";
 
 const ExploreItem = (props) => {
+
+    const names = {
+        puffs: "Puff", 
+        harmolecules: "HarMolecule",
+        eggs: "egg"
+    }
+
+  const collectionName = useParams().collection;
   const { data, getMore, isAll, isMine } = props;
   console.log(props);
 
@@ -32,11 +40,11 @@ const ExploreItem = (props) => {
                 key={index}
               >
                 <div className="card-media">
-                  <Link to={`/nft/${item.id}`}>
+                  {/* <Link to={`/nft/${item.id}`}> */}
                     <div className="custom-image-container">
                       <img src={item.img} alt="Axies" className="img-custom" />
                     </div>
-                  </Link>
+                  {/* </Link> */}
                   <div className="button-place-bid">
                     <button
                     //   onClick={() => setModalShow(true)}
@@ -49,23 +57,27 @@ const ExploreItem = (props) => {
                 </div>
                 <div className="card-title">
                   <h2>
-                    <Link to={`/nft/${item.id}`}>"Puff {item.tokenId}"</Link>
+                    {/* <Link to={`/nft/${item.id}`}> */}
+                        {names[collectionName]} #{item.tokenId}
+                        {/* </Link> */}
                   </h2>
 
-                  <div className="tags">Rarity</div>
+                  {/* <div className="tags">Rarity</div> */}
                 </div>
+                <div className="tags">Rarity 000000</div>
+                <br />
+                <br />
                 <div className="meta-info">
                   <div className="author">
                     <div className="info">
                       <span>Owner</span>
                       <h6>
-                        fix here
                         {/* krishanu fix this */}
-                        {/* {shortAddress(
+                        {shortAddress(
                           item.currentOwner === CONTRACT_MARKETPLACE
                             ? item.originalOwner
                             : item.currentOwner
-                        )} */}
+                        )}
                       </h6>
                     </div>
                   </div>

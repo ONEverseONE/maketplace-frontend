@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ExploreItem from "./ExploreItem";
 import Switch from "react-switch";
-import puff from "../../../assets/images/a-slider/puff.png"
+import puff from "../../../assets/images/a-slider/puff.png";
 
 import { useWeb3React } from "@web3-react/core";
 import { Contract } from "@ethersproject/contracts";
@@ -11,6 +11,9 @@ import {
   CONTRACT_MARKETPLACE,
   ZERO_ADDRESS,
   PUFF_IMAGE_URL,
+  PUFF_DATA_URL,
+  HARMOLECULES_IMAGE_URL,
+  CONTRACT_NFT_HARMOLECULES,
 } from "../../../constant/index.js";
 import { ABI_NFT_PUFF, ABI_MARKETPLACE } from "../../../constant/abis.js";
 import { setupMultiCallContract } from "../../../utils";
@@ -28,9 +31,27 @@ import { useParams } from "react-router-dom";
 const axios = require("axios");
 
 const Explore = () => {
+  const collectionName = useParams().collection;
+  console.log("-----------------------", collectionName);
 
-  const collectionName = useParams().collection
-  console.log("-----------------------",collectionName)
+  const collectionAddr = {
+    puffs: {
+      image: PUFF_IMAGE_URL,
+      contract: CONTRACT_NFT_PUFF,
+      data: PUFF_DATA_URL,
+    },
+    harmolecules: {
+        image: HARMOLECULES_IMAGE_URL,
+        contract: CONTRACT_NFT_HARMOLECULES,
+        data: PUFF_DATA_URL // change this
+    },
+    eggs: "",
+  };
+
+
+  const CONTRACT_NFT = collectionAddr[collectionName].contract
+  const IMAGE_URL = collectionAddr[collectionName].image
+
 
   const count = 12;
   const { account, library } = useWeb3React();
@@ -59,13 +80,13 @@ const Explore = () => {
       return;
     }
     try {
-      const contract = new Contract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
+      const contract = new Contract(CONTRACT_NFT, ABI_NFT_PUFF, library);
       const nftCount = Number(await contract.totalSupply());
 
       console.log("total supply", nftCount);
 
       const [multicallProvider, multicallContract] =
-        await setupMultiCallContract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library); // use this for multicalls
+        await setupMultiCallContract(CONTRACT_NFT, ABI_NFT_PUFF, library); // use this for multicalls
 
       const possibleCount = Math.min(count, nftCount - start);
       setIsAll(nftCount <= count + start);
@@ -153,35 +174,35 @@ const Explore = () => {
   //     return(req)
   //   }
 
-//   async function getCharacters(id) {
-//     try {
-//       const response = await fetch(
-//         `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${id}.json`
-//       );
-//       if (!response.ok) {
-//         throw new Error(`HTTP error: ${response.status}`);
-//       }
-//       const json = await response.json();
-//       return json;
-//     } catch (error) {
-//       console.error(`Could not get products: ${error}`);
-//     }
-//   }
+  //   async function getCharacters(id) {
+  //     try {
+  //       const response = await fetch(
+  //         `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${id}.json`
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error: ${response.status}`);
+  //       }
+  //       const json = await response.json();
+  //       return json;
+  //     } catch (error) {
+  //       console.error(`Could not get products: ${error}`);
+  //     }
+  //   }
 
-//   function callingfunc(id) {
-//     const jsonPromise = getCharacters(id);
-//     jsonPromise.then((json) => {
-//       console.log("inner loop shit json", json.image);
-//       return json.image;
-//     });
-//   }
+  //   function callingfunc(id) {
+  //     const jsonPromise = getCharacters(id);
+  //     jsonPromise.then((json) => {
+  //       console.log("inner loop shit json", json.image);
+  //       return json.image;
+  //     });
+  //   }
 
-const getURL = (id) => {
-    console.log("get url function called")
-    console.log(typeof id.toString())
-    let str = "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/" + id.toString() + ".png"
-    return str
-}
+  const getURL = (id) => {
+    console.log("get url function called");
+    console.log(typeof id.toString());
+    let str = IMAGE_URL + id.toString() + ".png";
+    return str;
+  };
 
   // through graphql
   const getListedNfts = async (start) => {
@@ -190,12 +211,12 @@ const getURL = (id) => {
       return;
     }
     try {
-      const contract = new Contract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
+      const contract = new Contract(CONTRACT_NFT, ABI_NFT_PUFF, library);
 
       const nftCount = Number(await contract.balanceOf(CONTRACT_MARKETPLACE));
 
       const [multicallProvider, multicallContract] =
-        await setupMultiCallContract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
+        await setupMultiCallContract(CONTRACT_NFT, ABI_NFT_PUFF, library);
       const possibleCount = Math.min(count, nftCount - start);
       const nftIds = await multicallProvider.all(
         Array.from(Array(possibleCount).keys()).map((u, index) =>
@@ -259,7 +280,7 @@ const getURL = (id) => {
     refetch: your_refetch,
     fetchMore: your_fetchMore,
   } = useQuery(GQL_GETMYLISTED, {
-    variables: { address: account?.toLowerCase() },
+    variables: { address: account?.toLowerCase(), contract: CONTRACT_NFT.toLowerCase() },
     fetchPolicy: "no-cache",
   });
 
@@ -270,7 +291,7 @@ const getURL = (id) => {
     refetch: listed_refetch,
     fetchMore: listed_fetchMore,
   } = useQuery(GQL_GETLISTED, {
-    // variables: { address: account?.toLowerCase() },
+    variables: { contract: CONTRACT_NFT.toLowerCase() },
     fetchPolicy: "no-cache",
   });
 
@@ -281,7 +302,7 @@ const getURL = (id) => {
     refetch: all_refetch,
     fetchMore: all_fetchMore,
   } = useQuery(GQL_GETALL, {
-    // variables: { address: account?.toLowerCase() },
+    variables: { contract: CONTRACT_NFT.toLowerCase() },
     fetchPolicy: "no-cache",
   });
 
@@ -335,16 +356,16 @@ const getURL = (id) => {
         id: item.id,
         // img: `${PUFF_IMAGE_URL}${Number(item.id)}.png`,
         img: getURL(Number(item.tokenId)),
-    
+
         // img: `https://puffs.mypinata.cloud/ipfs/QmSNZ4yb1caWZB9bu18xeeqGLnyhaoCD3WoDkkpbhvQPhj/${Number(item.tokenID)}.json`,
         // rarity: PUFF_RARITY[Number(item.id) - 1].nftRarity,
         currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
         listed: item.type,
         originalOwner: item.owner,
-        price: item.type > 0 ? Number((item.originalPrice)) : 0,
+        price: item.type > 0 ? Number(item.originalPrice) : 0,
         highestBid:
           item.type === 2 && item.bids.length > 0
-            ? Number((item.bids[item.bids.length - 1].price))
+            ? Number(item.bids[item.bids.length - 1].price)
             : 0,
         highestBidder:
           item.type === 2 && item.bids.length > 0
@@ -368,10 +389,10 @@ const getURL = (id) => {
         currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
         listed: item.type,
         originalOwner: item.owner,
-        price: item.type > 0 ? Number((item.originalPrice)) : 0,
+        price: item.type > 0 ? Number(item.originalPrice) : 0,
         highestBid:
           item.type === 2 && item.bids.length > 0
-            ? Number((item.bids[item.bids.length - 1].price))
+            ? Number(item.bids[item.bids.length - 1].price)
             : 0,
         highestBidder:
           item.type === 2 && item.bids.length > 0
@@ -404,11 +425,11 @@ const getURL = (id) => {
     }
   };
 
-  useEffect(() => {
-    if (library) {
-      getMore(startNft);
-    }
-  }, [library]);
+  //   useEffect(() => {
+  //     if (library) {
+  //       getMore(startNft);
+  //     }
+  //   }, [library]);
 
   return (
     <section className="tf-explore tf-section">
