@@ -15,7 +15,7 @@ const Contact01 = () => {
           <div className="row">
             <div className="col-md-12">
               <div className="page-title-heading mg-bt-12">
-                <h1 className="heading text-center">Contact</h1>
+                <h1 className="heading text-center">Contact Us</h1>
               </div>
               <div className="breadcrumbs style2">
                 <ul>
@@ -23,7 +23,7 @@ const Contact01 = () => {
                     <Link to="/">Home</Link>
                   </li>
                   {/* <li><Link to="#">Contact</Link></li> */}
-                  <li>Contact</li>
+                  <li>Contact Us</li>
                 </ul>
               </div>
             </div>
@@ -59,6 +59,9 @@ const Contact01 = () => {
                             </div>
                         </div> */}
           <h2 className="heading text-center">Join our discord server</h2>
+          <br />
+          <br />
+          <h6 className="heading text-center">... And head over to the #support channel</h6>
           <div className="text-center custom-discord">
             <form action="https://discord.gg/ONEverse" target="_blank">
               <input
