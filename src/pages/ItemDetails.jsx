@@ -62,13 +62,15 @@ const ItemDetails01 = () => {
       contract: CONTRACT_NFT_PUFF,
       data: PUFF_DATA_URL,
       rarity: PUFF_RARITY_URL,
+      name: "Puff"
     }
 
     collectionAddr[CONTRACT_NFT_HARMOLECULES.toLowerCase()] = {
         image: HARMOLECULES_IMAGE_URL,
         contract: CONTRACT_NFT_HARMOLECULES,
         data: HARMOLECULES_DATA_URL ,
-        rarity: HARMOLECULES_RARITY_URL
+        rarity: HARMOLECULES_RARITY_URL,
+        name: "HarMolecule"
     }
 
     console.log(collectionAddr)
@@ -77,6 +79,7 @@ const ItemDetails01 = () => {
     const CONTRACT_NFT = collectionAddr[nftId].contract
     const DATA_URL = collectionAddr[nftId].data
     const RARITY_URL = collectionAddr[nftId].rarity
+    const NAME = collectionAddr[nftId].name
 
     console.log(IMAGE_URL, DATA_URL, "check this")
 
@@ -420,6 +423,8 @@ const ItemDetails01 = () => {
   };
 
   const placeBid = async (bidvalue) => {
+
+    setModalShow(false)
     console.log("place bid try");
     console.log("nftID", nftId);
     try {
@@ -484,6 +489,7 @@ const ItemDetails01 = () => {
       );
       await res.wait();
       toast.success("Success!");
+
       getNftInfo();
     } catch (err) {
       console.log(err);
@@ -559,7 +565,7 @@ const ItemDetails01 = () => {
             <div className="col-xl-6 col-md-12">
               <div className="content-right">
                 <div className="sc-item-details">
-                  <h2 className="style2">“Puff #{nft.tokenId}” </h2>
+                  <h2 className="style2">{NAME} #{nft.tokenId}” </h2>
                   {/* <div className="meta-item">
                                         <div className="left">
                                             <span className="viewed eye">225</span>
@@ -704,6 +710,7 @@ const ItemDetails01 = () => {
                       </div>
                       <div className="item count-down">
                         <span className="heading style-2">Countdown</span>
+                        {modalShow ? 
                         <Countdown date={nft.timeEnd}>
                           <span>
                             {nft.timeEnd === 0
@@ -711,7 +718,14 @@ const ItemDetails01 = () => {
                             //   : Date(nft.timeEnd - Date.now())}
                             : ""}
                           </span>
-                        </Countdown>
+                        </Countdown> : <Countdown date={nft.timeEnd}>
+                          <span>
+                            {nft.timeEnd === 0
+                              ? "No bidder yet"
+                            //   : Date(nft.timeEnd - Date.now())}
+                            : ""}
+                          </span>
+                        </Countdown>}
                       </div>
                     </div>
                   ) : (
@@ -812,13 +826,13 @@ const ItemDetails01 = () => {
                         {nft.originalOwner !== account &&
                         nft.highestBidder !== account
                           ? "Auction is ended"
-                          : "End auction"}
+                          : "Transfer Tokens"}
                       </span>
                     </button>
                   ) : nft.originalOwner === account ? (
                     <button
                       className="sc-button loadmore style bag fl-button pri-3 w-100"
-                      disabled={nft.timeEnd < Date.now()}
+                    //   disabled={nft.timeEnd < Date.now()}
                       onClick={delistOnSale}
                     >
                       <span>Cancel auction</span>

@@ -9,25 +9,48 @@ import "swiper/scss";
 import "swiper/scss/navigation";
 import "swiper/scss/pagination";
 import { formatEther } from "@ethersproject/units";
+import { shortAddress } from "../../utils";
+import {
+  CONTRACT_NFT_HARMOLECULES,
+  CONTRACT_NFT_PUFF,
+  HARMOLECULES_IMAGE_URL,
+  PUFF_IMAGE_URL,
+} from "../../constant";
 
 const LiveAuction = (props) => {
   const data = props.data;
 
+  const [name, setName] = useState("NFT");
+
   console.log("live auction page explore", data);
 
+  let collectionData = {};
+
+  collectionData[CONTRACT_NFT_PUFF.toLowerCase()] = {
+    image: PUFF_IMAGE_URL,
+    name: "Puff",
+  };
+
+  collectionData[CONTRACT_NFT_HARMOLECULES.toLowerCase()] = {
+    image: HARMOLECULES_IMAGE_URL,
+    name: "HarMolecule",
+  };
+
   const getURL = (id) => {
+    const contract_string = id.split("-")[0];
+    const tokenId = id.split("-")[1];
     console.log("get url function called");
     console.log(typeof id.toString());
-    let str =
-      "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/" +
-      id.toString() +
-      ".png";
+    const IMAGE_URL = collectionData[contract_string].image;
+    let str = IMAGE_URL + tokenId.toString() + ".png";
     return str;
   };
 
-  const formatAddr = (addr) => {
-    return (addr.slice(0,6) + '...' + addr.slice(addr.length - 4, addr.length))
-  }
+  const getName = (id) => {
+    const contract_string = id.split("-")[0];
+    const NAME = collectionData[contract_string].name;
+    return NAME;
+  };
 
   return (
     <Fragment>
@@ -74,10 +97,7 @@ const LiveAuction = (props) => {
                               <div className="card-media">
                                 <Link to={`/nft/${item.id}`}>
                                   <div className="custom-image-container">
-                                    <img
-                                      src={getURL(item.tokenId)}
-                                      alt="axies"
-                                    />
+                                    <img src={getURL(item.id)} alt="axies" />
                                   </div>
                                 </Link>
                                 {/* <Link
@@ -89,11 +109,23 @@ const LiveAuction = (props) => {
                                   </span>
                                 </Link> */}
                                 <div className="featured-countdown">
-                                  <span className="slogan"></span>
-                                  { item.bids.length === 0 ? <></>:
-                                  <Countdown date={parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '000')}>
-                                    {/* <span>{parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '00')}</span> */}
-                                  </Countdown>}
+                                  {item.bids.length === 0 ? (
+                                    <>No bids yet</>
+                                  ) : (
+                                    <>
+                                      <span className="slogan"></span>
+                                      <Countdown
+                                        date={
+                                          parseInt(
+                                            item.bids[0].createdAt + "000"
+                                          ) +
+                                          parseInt(item.auctionDuration + "000")
+                                        }
+                                      >
+                                        {/* <span>{parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '00')}</span> */}
+                                      </Countdown>{" "}
+                                    </>
+                                  )}
                                 </div>
                                 <div className="button-place-bid">
                                   <Link
@@ -108,7 +140,7 @@ const LiveAuction = (props) => {
                               <div className="card-title">
                                 <h5>
                                   <Link to={`/nft/${item.id}`}>
-                                    "Puff {item.tokenId}"
+                                    {getName(item.id)} #{item.tokenId}
                                   </Link>
                                 </h5>
                                 <div className="tags">Rarity</div>{" "}
@@ -125,7 +157,7 @@ const LiveAuction = (props) => {
                                       {" "}
                                       {/* <Link to="/authors"> */}
                                       {/* krishanu fix this */}
-                                      {formatAddr(item.owner)}
+                                      {shortAddress(item.owner)}
                                       {/* </Link>{" "} */}
                                     </h6>
                                   </div>
@@ -135,8 +167,14 @@ const LiveAuction = (props) => {
                                   <h5>
                                     {" "}
                                     {item.bids.length === 0
-                                      ? formatEther(item.originalPrice.toString())
-                                      : formatEther(item.bids[item.bids.length - 1].price.toString())}{" "}
+                                      ? formatEther(
+                                          item.originalPrice.toString()
+                                        )
+                                      : formatEther(
+                                          item.bids[
+                                            item.bids.length - 1
+                                          ].price.toString()
+                                        )}{" "}
                                     GRAV
                                   </h5>
                                 </div>

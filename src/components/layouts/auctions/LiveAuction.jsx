@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 import { formatEther, parseEther } from "@ethersproject/units";
 
 import Countdown from "react-countdown";
-import { HARMOLECULES_IMAGE_URL, PUFF_IMAGE_URL } from "../../../constant";
+import {
+  CONTRACT_NFT_HARMOLECULES,
+  CONTRACT_NFT_PUFF,
+  HARMOLECULES_IMAGE_URL,
+  PUFF_IMAGE_URL,
+} from "../../../constant";
 
 const LiveAuction = (props) => {
   const data = props.data;
@@ -59,36 +64,33 @@ LiveAuction.propTypes = {
 };
 
 const LiveAuctionItem = (props) => {
+  const contract_forData = props.item.id.split("-")[0];
 
-
-
-  const contract_forData = props.item.id.split("-")[0]
-
-  console.log("===============", contract_forData)
+  console.log("===============", contract_forData);
 
   // replace this to add more collections
 
-  const collectionData = {
-    "0xc4eb0f03fb6d0eee602943a92ca26acf3501f944": {
-        image: PUFF_IMAGE_URL,
-        name: "Puff"
-    },
-    harmol: {
-        image:  HARMOLECULES_IMAGE_URL,
-        name: "HarMolecule"
-    }
-  }
+  let collectionData = {};
 
-  const IMAGE_URL = collectionData[contract_forData].image
-  const NAME = collectionData[contract_forData].name
+  collectionData[CONTRACT_NFT_PUFF.toLowerCase()] = {
+    image: PUFF_IMAGE_URL,
+    name: "Puff",
+  };
+
+  collectionData[CONTRACT_NFT_HARMOLECULES.toLowerCase()] = {
+    image: HARMOLECULES_IMAGE_URL,
+    name: "HarMolecule",
+  };
+
+  console.log(collectionData, contract_forData)
+
+  const IMAGE_URL = collectionData[contract_forData].image;
+  const NAME = collectionData[contract_forData].name;
 
   const getURL = (id) => {
     console.log("get url function called");
     console.log(typeof id.toString());
-    let str =
-      IMAGE_URL +
-      id.toString() +
-      ".png";
+    let str = IMAGE_URL + id.toString() + ".png";
     return str;
   };
 
@@ -112,10 +114,12 @@ const LiveAuctionItem = (props) => {
           <span className="number-like">{props.item.wishlist}</span>
         </Link> */}
           <div className="featured-countdown">
-            <span className="slogan"></span>
+
             {props.item.bids.length === 0 ? (
-              <></>
+              <>No Bids yet</>
             ) : (
+                <>
+                <span className="slogan"></span>
               <Countdown
                 date={
                   parseInt(props.item.bids[0].createdAt + "000") +
@@ -124,6 +128,7 @@ const LiveAuctionItem = (props) => {
               >
                 {/* <span>{parseInt(item.bids[0].createdAt + '000') + parseInt(item.auctionDuration + '00')}</span> */}
               </Countdown>
+              </>
             )}
           </div>
           <div className="button-place-bid">
@@ -145,7 +150,9 @@ const LiveAuctionItem = (props) => {
         </div>
         <div className="card-title">
           <h5>
-            <Link to={`/nft/${props.item.id}`}>{NAME} #{props.item.tokenId}</Link>{" "}
+            <Link to={`/nft/${props.item.id}`}>
+              {NAME} #{props.item.tokenId}
+            </Link>{" "}
             {/* change here */}
           </h5>
           <div className="tags">Rarity</div>
@@ -166,7 +173,14 @@ const LiveAuctionItem = (props) => {
           </div>
           <div className="price">
             <span>Current Bid</span>
-            <h5> {props.item.highestBid === 0 ? props.item.price : props.item.highestBid} GRAV</h5> {/* change needed here */}
+            <h5>
+              {" "}
+              {props.item.highestBid === 0
+                ? props.item.price
+                : props.item.highestBid}{" "}
+              GRAV
+            </h5>{" "}
+            {/* change needed here */}
           </div>
         </div>
       </div>

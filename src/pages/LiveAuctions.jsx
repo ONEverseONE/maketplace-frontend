@@ -43,7 +43,7 @@ const LiveAuctions = () => {
   const newNfts = listed_data.nfts.map((item, index) => ({
     tokenId: Number(item.tokenId),
     id: (item.id),
-    img: `${PUFF_IMAGE_URL}${Number(item.tokenId)}.png`,
+    img: `${PUFF_IMAGE_URL}${Number(item.tokenId)}.png`, // fix this
     // rarity: PUFF_RARITY[Number(item.id) - 1].nftRarity,
     currentOwner: item.type === 0 ? item.owner : CONTRACT_MARKETPLACE,
     listed: item.type,
