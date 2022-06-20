@@ -10,6 +10,7 @@ import {
   HARMOLECULES_IMAGE_URL,
   PUFF_IMAGE_URL,
 } from "../../../constant";
+import { shortAddress } from "../../../utils";
 
 const LiveAuction = (props) => {
   const data = props.data;
@@ -166,8 +167,7 @@ const LiveAuctionItem = (props) => {
               <span>Owner</span>
               <h6>
                 {" "}
-                {/* <Link to="/authors">{props.item.originalOwner}</Link>{" "} */}
-                me
+                {shortAddress(props.item.originalOwner)}
               </h6>
             </div>
           </div>

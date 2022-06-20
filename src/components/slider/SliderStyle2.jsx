@@ -9,6 +9,7 @@ import img2 from '../../assets/images/box-item/item-h5.2.png'
 import img3 from '../../assets/images/box-item/item-h5.3.png'
 
 import puff from "../../assets/images/a-slider/puff.png"
+import harm from '../../assets/images/a-slider/harmolecule.png'
 
 import { PUFF_IMAGE_URL } from '../../constant';
 import { HARMOLECULES_IMAGE_URL } from '../../constant';
@@ -48,11 +49,11 @@ const SliderStyle2 = () => {
                         }}
                         speed= {2000}
                     >
-                        <SwiperSlide><img className='swiper-img' src={`${PUFF_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img className='swiper-img' src={`${PUFF_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img className='swiper-img' src={`${PUFF_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img className='swiper-img' src={`${PUFF_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img className='swiper-img' src={`${PUFF_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
 
                     </Swiper>
                     {/* <Swiper
@@ -88,11 +89,11 @@ const SliderStyle2 = () => {
                         }}
                         speed= {2200}
                     >
-                        <SwiperSlide><img className='swiper-img' src={`${HARMOLECULES_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img className='swiper-img' src={`${HARMOLECULES_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img className='swiper-img' src={`${HARMOLECULES_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img className='swiper-img' src={`${HARMOLECULES_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img className='swiper-img' src={`${HARMOLECULES_IMAGE_URL}${Math.floor(Math.random() * 100)}${'.png'}`} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={harm} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={harm} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={harm} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={harm} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={harm} alt="Axies" /></SwiperSlide>
 
                     </Swiper>
                     <Swiper
@@ -109,11 +110,11 @@ const SliderStyle2 = () => {
                         speed= {2000}
                         className="end"
                     >
-                        <SwiperSlide><img src={img3} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img2} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img3} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img1} alt="Axies" /></SwiperSlide>
-                        <SwiperSlide><img src={img2} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
+                        <SwiperSlide><img className='swiper-img' src={puff} alt="Axies" /></SwiperSlide>
 
                     </Swiper>
                    

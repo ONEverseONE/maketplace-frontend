@@ -50,18 +50,18 @@ const Collections = () => {
                 tags: "COMING SOON",
                 name: 'land'
             },
-            {
-                // img: img1,
-                title: "Land Items",
-                tags: "COMING SOON",
-                name: 'land-items'
-            },
-            {
-                img: harm,
-                title: "Puff Skins/Ship Skins",
-                tags: "COMING SOON",
-                name: 'skins'
-            },
+            // {
+            //     // img: img1,
+            //     title: "Land Items",
+            //     tags: "COMING SOON",
+            //     name: 'land-items'
+            // },
+            // {
+            //     img: harm,
+            //     title: "Puff Skins/Ship Skins",
+            //     tags: "COMING SOON",
+            //     name: 'skins'
+            // },
         ]
     )
 
