@@ -63,7 +63,7 @@ const Explore = () => {
 
   const count = 12;
   const { account, library } = useWeb3React();
-  console.log(account, "account here")
+  console.log(account, typeof account, typeof account === undefined ,"account here")
 
   const [status, setStatus] = useState([
     { field: "Buy Now", checked: true },
@@ -287,7 +287,7 @@ const Explore = () => {
     refetch: your_refetch,
     fetchMore: your_fetchMore,
   } = useQuery(GQL_GETMYLISTED, {
-    variables: { address: account.toLowerCase(), contract: CONTRACT_NFT.toLowerCase() },
+    variables: { address: typeof account === 'undefined' ? "this" : account.toLowerCase(), contract: CONTRACT_NFT.toLowerCase() },
     fetchPolicy: "no-cache",
   });
 
