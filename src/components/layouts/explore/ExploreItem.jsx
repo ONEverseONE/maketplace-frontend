@@ -67,7 +67,7 @@ const ExploreItem = (props) => {
                 <div className="card-media">
                   {/* <Link to={`/nft/${item.id}`}> */}
                   <div className="custom-image-container">
-                    <img src={item.img} alt="Axies" className="img-custom" />
+                    <img src={item.img} alt="Axies" className="img-custom" loading="lazy"/>
                   </div>
                   {/* </Link> */}
                   <div className="button-place-bid">

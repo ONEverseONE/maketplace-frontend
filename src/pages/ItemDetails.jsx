@@ -19,6 +19,11 @@ import {
   PUFF_IMAGE_URL,
   ZERO_ADDRESS,
   PUFF_DATA_URL,
+  PUFF_RARITY_URL,
+  HARMOLECULES_IMAGE_URL,
+  CONTRACT_NFT_HARMOLECULES,
+  HARMOLECULES_DATA_URL,
+  HARMOLECULES_RARITY_URL,
 } from "../constant";
 // import { PUFF_RARITY } from "../constant/puff.js";
 import { ABI_MARKETPLACE, ABI_NFT_PUFF, ABI_TOKEN } from "../constant/abis.js";
@@ -37,6 +42,7 @@ const ItemDetails01 = () => {
   console.log("id here lol", splicedId)
   const nftId = splicedId.split("-")[0]
   const nftTokenId = splicedId.split("-")[1]
+  console.log(nftId, nftTokenId)
 
   const { account, library } = useWeb3React();
   const [modalShow, setModalShow] = useState(false);
@@ -49,10 +55,36 @@ const ItemDetails01 = () => {
 
   const [retrieved, retrievedSet] = useState(false);
 
+  let collectionAddr = {}
+    
+  collectionAddr[CONTRACT_NFT_PUFF.toLowerCase()] = {
+      image: PUFF_IMAGE_URL,
+      contract: CONTRACT_NFT_PUFF,
+      data: PUFF_DATA_URL,
+      rarity: PUFF_RARITY_URL,
+    }
+
+    collectionAddr[CONTRACT_NFT_HARMOLECULES.toLowerCase()] = {
+        image: HARMOLECULES_IMAGE_URL,
+        contract: CONTRACT_NFT_HARMOLECULES,
+        data: HARMOLECULES_DATA_URL ,
+        rarity: HARMOLECULES_RARITY_URL
+    }
+
+    console.log(collectionAddr)
+
+    const IMAGE_URL = collectionAddr[nftId].image
+    const CONTRACT_NFT = collectionAddr[nftId].contract
+    const DATA_URL = collectionAddr[nftId].data
+    const RARITY_URL = collectionAddr[nftId].rarity
+
+    console.log(IMAGE_URL, DATA_URL, "check this")
+
+
   const [nft, setNft] = useState({
     id: nftId,
     tokenId: nftTokenId,
-    img: `${PUFF_IMAGE_URL}${nftTokenId}.png`,
+    img: `${IMAGE_URL}${nftTokenId}.png`,
     // rarity: PUFF_RARITY[Number(nftId) - 1].nftRarity,
     currentOwner: "",
     listed: 0,
@@ -84,27 +116,28 @@ const ItemDetails01 = () => {
   // }, [])
 
   const convertTime = (ts) => {
-    let rem;
+    console.log("timestamp here", ts)
 
-    let hours = Math.floor(ts / 1000 / 60 / 60);
-    rem = ts % (hours * 1000 * 60 * 60);
-    let mins = Math.floor(rem / 1000 / 60);
-    rem = rem % (mins * 1000 * 60);
-    let secs = Math.floor(rem / 1000);
+    const sec = parseInt(ts/1000, 10); // convert value to number if it's string
+    let hours   = Math.floor(sec / 3600); // get hours
+    let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
+    let seconds = sec - (hours * 3600) - (minutes * 60); //  get seconds
+
+    console.log(hours, minutes, seconds)
 
     if (hours === 0) {
-      return `${mins} ${mins === 1 ? "minute" : "minutes"} ${secs} ${
-        secs === 1 ? "second" : "seconds"
+      return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ${seconds} ${
+        seconds === 1 ? "second" : "seconds"
       } ago`;
     }
-    return `${hours} ${hours === 1 ? "hour" : "hours"} ${mins} ${
-      mins === 1 ? "minute" : "minutes"
+    return `${hours} ${hours === 1 ? "hour" : "hours"} ${minutes} ${
+      minutes === 1 ? "minute" : "minutes"
     } ago`;
   };
 
   const getNftInfo = async () => {
     try {
-      const contract = new Contract(CONTRACT_NFT_PUFF, ABI_NFT_PUFF, library);
+      const contract = new Contract(CONTRACT_NFT, ABI_NFT_PUFF, library);
       console.log("initial", contract);
       const currentOwner = await contract.ownerOf(nftTokenId);
       console.log(currentOwner, "this is the owner");
@@ -123,9 +156,9 @@ const ItemDetails01 = () => {
 
       const [listed, saleInfo, auctionInfo] = await multicallMarketProvider.all(
         [
-          multicallMarketContract.listed(CONTRACT_NFT_PUFF, nftTokenId),
-          multicallMarketContract.directSales(CONTRACT_NFT_PUFF, nftTokenId),
-          multicallMarketContract.auctionSales(CONTRACT_NFT_PUFF, nftTokenId),
+          multicallMarketContract.listed(CONTRACT_NFT, nftTokenId),
+          multicallMarketContract.directSales(CONTRACT_NFT, nftTokenId),
+          multicallMarketContract.auctionSales(CONTRACT_NFT, nftTokenId),
         ]
       );
 
@@ -137,7 +170,7 @@ const ItemDetails01 = () => {
       console.log({
         id: nftId,
         tokenId: nftTokenId,
-        img: `${PUFF_IMAGE_URL}${nftTokenId}.png`,
+        img: `${IMAGE_URL}${nftTokenId}.png`,
         // rarity: PUFF_RARITY[Number(nftId) - 1].nftRarity,
         currentOwner: currentOwner,
         listed: Number(listed),
@@ -157,7 +190,7 @@ const ItemDetails01 = () => {
       setNft({
         id: nftId,
         tokenId: nftTokenId,
-        img: `${PUFF_IMAGE_URL}${nftTokenId}.png`,
+        img: `${IMAGE_URL}${nftTokenId}.png`,
         // rarity: PUFF_RARITY[Number(nftId) - 1].nftRarity,
         currentOwner: currentOwner,
         listed: Number(listed),
@@ -192,7 +225,7 @@ const ItemDetails01 = () => {
   };
 
   const getData = async () => {
-    let response = await fetch(`${PUFF_DATA_URL}${nftTokenId}.json`);
+    let response = await fetch(`${DATA_URL}${nftTokenId}.json`);
     let data = await response.json();
     console.log("######## data here", data.attributes);
     setNftData(data.attributes);
@@ -230,7 +263,7 @@ const ItemDetails01 = () => {
   const listOnSale = async () => {
     try {
       const nftContract = new Contract(
-        CONTRACT_NFT_PUFF,
+        CONTRACT_NFT,
         ABI_NFT_PUFF,
         library.getSigner()
       );
@@ -264,7 +297,7 @@ const ItemDetails01 = () => {
         }
         const res = await marketContract[
           "listToken(address,uint256,uint256,uint256)"
-        ](CONTRACT_NFT_PUFF, nftTokenId, parseEther(auctionPrice), time); // hard coded rn, get from subgraphs later
+        ](CONTRACT_NFT, nftTokenId, parseEther(auctionPrice), time); // hard coded rn, get from subgraphs later
         await res.wait();
         toast.success("Success!");
       } else {
@@ -273,7 +306,7 @@ const ItemDetails01 = () => {
           return;
         }
         const res = await marketContract["listToken(address,uint256,uint256)"](
-          CONTRACT_NFT_PUFF,
+          CONTRACT_NFT,
           nftTokenId,
           parseEther(fixPrice)
         );
@@ -299,6 +332,7 @@ const ItemDetails01 = () => {
         return data[i].bids;
       }
     }
+    return []
   };
   const delistOnSale = async () => {
     try {
@@ -307,7 +341,7 @@ const ItemDetails01 = () => {
         ABI_MARKETPLACE,
         library.getSigner()
       );
-      const res = await contract.delistToken([CONTRACT_NFT_PUFF], [nftTokenId]); // 1 TO 1 ARRAY
+      const res = await contract.delistToken([CONTRACT_NFT], [nftTokenId]); // 1 TO 1 ARRAY
       await res.wait();
       toast.success("Success!");
       getNftInfo();
@@ -358,7 +392,7 @@ const ItemDetails01 = () => {
       console.info("got bp4");
       console.log("price is", nft.price);
       const res = await marketContract.buyToken(
-        CONTRACT_NFT_PUFF,
+        CONTRACT_NFT,
         nftTokenId
         // parseEther(nft.price.toString())
       );
@@ -379,7 +413,7 @@ const ItemDetails01 = () => {
     console.log("get url function called");
     console.log(typeof id.toString());
     let str =
-      "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/" +
+      IMAGE_URL +
       id.toString() +
       ".png";
     return str;
@@ -412,7 +446,7 @@ const ItemDetails01 = () => {
       );
 
       const auctionsales = await marketContract.auctionSales(
-        CONTRACT_NFT_PUFF,
+        CONTRACT_NFT,
         nftTokenId
       );
       console.log("auction sales here");
@@ -438,13 +472,13 @@ const ItemDetails01 = () => {
 
       console.log(
         "testing data",
-        CONTRACT_NFT_PUFF,
+        CONTRACT_NFT,
         nftTokenId,
         parseEther(fixPrice)
       );
 
       const res = await marketContract.bidToken(
-        CONTRACT_NFT_PUFF,
+        CONTRACT_NFT,
         nftTokenId,
         parseEther(bidvalue)
       );
@@ -467,7 +501,7 @@ const ItemDetails01 = () => {
         ABI_MARKETPLACE,
         library.getSigner()
       );
-      const res = await contract.retrieveToken(CONTRACT_NFT_PUFF, nftTokenId);
+      const res = await contract.retrieveToken(CONTRACT_NFT, nftTokenId);
       await res.wait();
       toast.success("Success!");
       getNftInfo();

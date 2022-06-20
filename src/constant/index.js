@@ -22,6 +22,7 @@ export const CONTRACT_MARKETPLACE =
   "0x08D3C40eE6Cf29D863b1Bf8463d8Ce0DB6b3bd2b"; //new
 
 export const CONTRACT_NFT_PUFF = "0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944"; //new
+
 export const PUFF_IMAGE_URL =
   "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/";
 export const PUFF_DATA_URL =
@@ -35,6 +36,7 @@ export const HARMOLECULES_IMAGE_URL =
   "https://harmolecules.mypinata.cloud/ipfs/QmTdSaXrVuNh2BjPhDPVqCmx2tpYuhn6rpuXJJydkAUKtY/";
 export const HARMOLECULES_RARITY_URL =
   "https://oneverse-backend.onrender.com/molecule/sign/";
+export const HARMOLECULES_DATA_URL = "https://harmolecules.mypinata.cloud/ipfs/QmTQfazmn4sXcte6TjVmY7NkxNqj8meqjpXxtC2xuzg6cA/"
 
 //------------------------------Info for connect wallet-----------------------------------
 

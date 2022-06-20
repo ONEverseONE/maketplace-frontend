@@ -16,6 +16,7 @@ import {
   CONTRACT_NFT_HARMOLECULES,
   PUFF_RARITY_URL,
   HARMOLECULES_RARITY_URL,
+  HARMOLECULES_DATA_URL,
 } from "../../../constant/index.js";
 import { ABI_NFT_PUFF, ABI_MARKETPLACE } from "../../../constant/abis.js";
 import { setupMultiCallContract } from "../../../utils";
@@ -45,7 +46,7 @@ const Explore = () => {
     harmolecules: {
         image: HARMOLECULES_IMAGE_URL,
         contract: CONTRACT_NFT_HARMOLECULES,
-        data: PUFF_DATA_URL, // change this
+        data: HARMOLECULES_DATA_URL ,
         rarity: HARMOLECULES_RARITY_URL
     },
     eggs: "",
