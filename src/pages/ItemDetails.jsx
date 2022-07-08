@@ -155,15 +155,20 @@ const ItemDetails01 = () => {
 
       console.log(multicallMarketProvider);
 
+      const mktplace = new Contract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library)
+      const listed = await mktplace.listed(CONTRACT_NFT, nftTokenId)
+      const saleInfo = await mktplace.directSales(CONTRACT_NFT, nftTokenId)
+      const auctionInfo = await mktplace.auctionSales(CONTRACT_NFT, nftTokenId)
+
       console.log("breakpoint 1");
 
-      const [listed, saleInfo, auctionInfo] = await multicallMarketProvider.all(
-        [
-          multicallMarketContract.listed(CONTRACT_NFT, nftTokenId),
-          multicallMarketContract.directSales(CONTRACT_NFT, nftTokenId),
-          multicallMarketContract.auctionSales(CONTRACT_NFT, nftTokenId),
-        ]
-      );
+    //   const [listed, saleInfo, auctionInfo] = await multicallMarketProvider.all(
+    //     [
+    //       multicallMarketContract.listed(CONTRACT_NFT, nftTokenId),
+    //       multicallMarketContract.directSales(CONTRACT_NFT, nftTokenId),
+    //       multicallMarketContract.auctionSales(CONTRACT_NFT, nftTokenId),
+    //     ]
+    //   );
 
       console.log("breakpoint 2");
       console.log(listed);
