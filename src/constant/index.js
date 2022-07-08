@@ -18,10 +18,12 @@ export const CONTRACT_TOKEN = "0xa36A484Ccd2Dff252314cc92531EF09D767BaFCC"; //ne
 
 // export const CONTRACT_MARKETPLACE = '0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944'; //old
 // export const CONTRACT_MARKETPLACE = '0xfFC0Fe2Edb4C506Fe3D97Fa3d397EF71d90CEB55'; //new
-export const CONTRACT_MARKETPLACE =
-  "0x08D3C40eE6Cf29D863b1Bf8463d8Ce0DB6b3bd2b"; //new
+// export const CONTRACT_MARKETPLACE = "0x08D3C40eE6Cf29D863b1Bf8463d8Ce0DB6b3bd2b"; //new
+export const CONTRACT_MARKETPLACE = "0xE856001b910Be56e038ab9282E9653dBeB5bD7ca"; //new
 
-export const CONTRACT_NFT_PUFF = "0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944"; //new
+// export const CONTRACT_NFT_PUFF = "0xc4EB0f03fb6D0eEE602943a92CA26ACf3501f944"; //new
+export const CONTRACT_NFT_PUFF = "0xee72907AcCbd60Db5A5F6d8107E378A6E0f0252F"; //new
+
 
 export const PUFF_IMAGE_URL =
   "https://puffs.mypinata.cloud/ipfs/QmcfT6TK8BpuptbGaabPes8eJM37Py7Kq4Jj2E37mGH6LU/";
@@ -30,8 +32,10 @@ export const PUFF_DATA_URL =
 export const PUFF_RARITY_URL =
   "https://oneverse-backend.onrender.com/puff/sign/";
 
-export const CONTRACT_NFT_HARMOLECULES =
-  "0x9542a61F170478d31d37522E2082aB3d46c28775";
+// export const CONTRACT_NFT_HARMOLECULES = "0x9542a61F170478d31d37522E2082aB3d46c28775";
+
+export const CONTRACT_NFT_HARMOLECULES = "0xCe3649f7233c713f1D6AAD095f2784605906f260";
+
 export const HARMOLECULES_IMAGE_URL =
   "https://harmolecules.mypinata.cloud/ipfs/QmTdSaXrVuNh2BjPhDPVqCmx2tpYuhn6rpuXJJydkAUKtY/";
 export const HARMOLECULES_RARITY_URL =
@@ -70,4 +74,5 @@ export const networkInfo = [
 ];
 
 export const GRAPHQL_ENDPOINT =
-  "http://34.224.81.163:8000/subgraphs/name/oneverse/oneverse-subgraph";
+//   "http://34.224.81.163:8000/subgraphs/name/oneverse/oneverse-subgraph";
+  "https://api.thegraph.com/subgraphs/name/flex-luthor/oneverse";
