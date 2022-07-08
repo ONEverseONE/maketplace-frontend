@@ -1,4 +1,5 @@
-export const CHAIN_ID = 1666600000;
+// export const CHAIN_ID = 1666600000;
+export const CHAIN_ID = 80001;
 export const MULTICALL_ADDRESS = "0x34b415f4d3b332515e66f70595ace1dcf36254c5";
 
 //----------------------------------MAIN NET------------------------------------------//
@@ -49,29 +50,45 @@ export const DefaultNetwork = Number(CHAIN_ID);
 export const supportedChainIds = [Number(CHAIN_ID)];
 
 export const NETWORK_ID = CHAIN_ID.toString();
+
+// export const RPC_URLS = {
+//   1666600000: "https://api.harmony.one",
+//   1666700000: "https://api.s0.b.hmny.io",
+// };
+
 export const RPC_URLS = {
-  1666600000: "https://api.harmony.one",
-  1666700000: "https://api.s0.b.hmny.io",
-};
+    80001: "https://rpc-mumbai.matic.today",
+  };
+
+// export const networkInfo = [
+//   {
+//     name: "Harmony Mainnet",
+//     label: "Harmony Mainnet",
+//     chainId: 1666600000,
+//     nativeCurrency: { name: "ONE", symbol: "ONE", decimals: 18 },
+//     rpcUrl: ["https://api.harmony.one"],
+//     explorer: ["https://explorer.harmony.one/"],
+//   },
+//   {
+//     name: "Harmony Testnet",
+//     label: "Harmony Testnet",
+//     chainId: 1666700000,
+//     nativeCurrency: { name: "ONE", symbol: "ONE", decimals: 18 },
+//     rpcUrl: ["https://api.s0.b.hmny.io"],
+//     explorer: ["https://explorer.pops.one/"],
+//   },
+// ];
 
 export const networkInfo = [
-  {
-    name: "Harmony Mainnet",
-    label: "Harmony Mainnet",
-    chainId: 1666600000,
-    nativeCurrency: { name: "ONE", symbol: "ONE", decimals: 18 },
-    rpcUrl: ["https://api.harmony.one"],
-    explorer: ["https://explorer.harmony.one/"],
-  },
-  {
-    name: "Harmony Testnet",
-    label: "Harmony Testnet",
-    chainId: 1666700000,
-    nativeCurrency: { name: "ONE", symbol: "ONE", decimals: 18 },
-    rpcUrl: ["https://api.s0.b.hmny.io"],
-    explorer: ["https://explorer.pops.one/"],
-  },
-];
+    {
+      name: "Mumbai Testnet",
+      label: "Polygon Testnet",
+      chainId: 80001,
+      nativeCurrency: { name: "MATIC", symbol: "MATIC", decimals: 18 },
+      rpcUrl: ["https://rpc-mumbai.matic.today"],
+      explorer: ["https://mumbai.polygonscan.com/"],
+    },
+  ];
 
 export const GRAPHQL_ENDPOINT =
 //   "http://34.224.81.163:8000/subgraphs/name/oneverse/oneverse-subgraph";
