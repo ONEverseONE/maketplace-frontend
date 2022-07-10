@@ -24,10 +24,11 @@ import {
   CONTRACT_NFT_HARMOLECULES,
   HARMOLECULES_DATA_URL,
   HARMOLECULES_RARITY_URL,
+  CONTRACT_NFT_EGGS,
 } from "../constant";
 // import { PUFF_RARITY } from "../constant/puff.js";
 import { ABI_MARKETPLACE, ABI_NFT_PUFF, ABI_TOKEN } from "../constant/abis.js";
-import { setupMultiCallContract, shortAddress } from "../utils";
+import { shortAddress } from "../utils";
 import { formatEther, parseEther } from "@ethersproject/units";
 import Switch from "react-switch";
 import InputMask from "react-input-mask";
@@ -71,6 +72,10 @@ const ItemDetails01 = () => {
         data: HARMOLECULES_DATA_URL ,
         rarity: HARMOLECULES_RARITY_URL,
         name: "HarMolecule"
+    }
+
+    collectionAddr[CONTRACT_NFT_EGGS.toLowerCase()] = {
+        
     }
 
     console.log(collectionAddr)
@@ -144,16 +149,6 @@ const ItemDetails01 = () => {
       console.log("initial", contract);
       const currentOwner = await contract.ownerOf(nftTokenId);
       console.log(currentOwner, "this is the owner");
-
-      // through graphql
-      const [multicallMarketProvider, multicallMarketContract] =
-        await setupMultiCallContract(
-          CONTRACT_MARKETPLACE,
-          ABI_MARKETPLACE,
-          library
-        );
-
-      console.log(multicallMarketProvider);
 
       const mktplace = new Contract(CONTRACT_MARKETPLACE, ABI_MARKETPLACE, library)
       const listed = await mktplace.listed(CONTRACT_NFT, nftTokenId)

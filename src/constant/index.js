@@ -44,6 +44,8 @@ export const HARMOLECULES_RARITY_URL =
   "https://oneverse-backend.onrender.com/molecule/sign/";
 export const HARMOLECULES_DATA_URL = "https://harmolecules.mypinata.cloud/ipfs/QmTQfazmn4sXcte6TjVmY7NkxNqj8meqjpXxtC2xuzg6cA/"
 
+export const CONTRACT_NFT_EGGS = "0xE1Ba839E5a113cF84608b528A0ef55bd818c759a"
+
 //------------------------------Info for connect wallet-----------------------------------
 
 export const DefaultNetwork = Number(CHAIN_ID);

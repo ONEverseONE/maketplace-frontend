@@ -9,7 +9,7 @@ import 'swiper/scss/pagination';
 
 import puff from '../../../assets/images/a-slider/puff.png'
 import harm from '../../../assets/images/a-slider/harmolecule.png'
-import img3 from '../../../assets/images/box-item/image-box-28.jpg'
+import img3 from '../../../assets/images/box-item/comingsoon.jpeg'
 
 const Collections = () => {
     const [data] = useState(
@@ -29,17 +29,17 @@ const Collections = () => {
             {
                 img: img3,
                 title: "Eggs",
-                tags: "",
+                tags: "COMING SOON",
                 name: 'eggs'
             },
             {
-                // img: img1,
+                img: img3,
                 title: "Ship Blueprints",
                 tags: "COMING SOON",
                 name: 'ship-blueprints'
             },
             {
-                img: harm,
+                img: img3,
                 title: "Ships",
                 tags: "COMING SOON",
                 name: 'ship'
